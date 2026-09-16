@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>پالادیوم v6 | با اجرای کد آردوینو</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Tahoma,sans-serif}
+body{background:#05070a;color:#e0e0e0;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+header{background:linear-gradient(90deg,#0d1117,#1a1f2e);padding:8px 18px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #00d4ff40}
+header h1{color:#00d4ff;font-size:17px;text-shadow:0 0 12px #00d4ff80}
+header h1 span{color:#9b59b6}
+.creator{color:#6b7280;font-size:11px}.creator strong{color:#00d4ff}
+.main{display:flex;flex:1;overflow:hidden}
+.sidebar{background:#0a0d12;overflow-y:auto}
+.sidebar.left{width:200px;border-left:1px solid #1a1f2e;padding:8px}
+.sidebar.right{width:340px;border-right:1px solid #1a1f2e;padding:8px;display:flex;flex-direction:column;gap:8px}
+.sidebar h2{font-size:11px;color:#00d4ff;margin-bottom:4px;padding-bottom:3px;border-bottom:1px solid #1a1f2e}
+.cat{margin-bottom:3px}
+.cat-head{background:#131820;padding:4px 7px;border-radius:3px;cursor:pointer;font-size:10px;color:#8a94a0;border:1px solid #1a1f2e;user-select:none}
+.cat-head:hover{background:#1a2029;color:#00d4ff}
+.cat-body{display:none;padding:2px;max-height:260px;overflow-y:auto}
+.cat.open .cat-body{display:block}
+.cat.open .cat-head{color:#00d4ff;border-color:#00d4ff60}
+.comp-btn{display:flex;align-items:center;gap:5px;width:100%;padding:3px 5px;margin-bottom:2px;background:#0f141b;border:1px solid #1a1f2e;border-radius:3px;color:#c8d0d8;cursor:pointer;font-size:10px;text-align:right}
+.comp-btn:hover{background:#161d26;border-color:#00d4ff}
+.comp-btn .ic{font-size:11px;width:14px;text-align:center}
+.canvas-wrap{flex:1;position:relative;overflow:auto;background:#02040a}
+.canvas{position:relative;width:3000px;height:2000px;background-image:linear-gradient(rgba(0,212,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,.05) 1px,transparent 1px);background-size:20px 20px}
+.node{position:absolute;display:flex;align-items:center;justify-content:center;background:#0f141b;border:2px solid #2a3140;border-radius:6px;cursor:move;user-select:none;font-size:13px;z-index:2}
+.node:hover{box-shadow:0 0 12px rgba(0,212,255,.5);z-index:5}
+.node.selected{border-color:#9b59b6!important;box-shadow:0 0 18px rgba(155,89,182,.8)}
+.node .lbl{position:absolute;bottom:-16px;font-size:8.5px;color:#7a8494;white-space:nowrap;pointer-events:none}
+.pin{position:absolute;width:9px;height:9px;border-radius:50%;background:#05070a;border:2px solid #00d4ff;cursor:crosshair;z-index:3}
+.pin:hover{background:#00d4ff;transform:scale(1.5)}
+.pin.hot{background:#9b59b6;border-color:#9b59b6}
+.pin.on{background:#2ecc71!important;border-color:#2ecc71!important;box-shadow:0 0 8px #2ecc71}
+svg#wires{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.toolbar{background:#0a0d12;border-top:1px solid #1a1f2e;padding:6px 10px;display:flex;gap:5px;align-items:center;flex-wrap:wrap}
+.btn{padding:5px 9px;background:#131820;border:1px solid #1a1f2e;color:#c8d0d8;border-radius:3px;cursor:pointer;font-size:10px}
+.btn:hover{border-color:#00d4ff;color:#00d4ff}
+.btn.primary{background:linear-gradient(135deg,#00d4ff,#0077b6);color:#05070a;border:none;font-weight:bold}
+.btn.arduino{background:linear-gradient(135deg,#16a085,#0e6b5c);color:#fff;border:none;font-weight:bold}
+.btn.arduino:hover{box-shadow:0 0 12px #16a085;color:#fff}
+.btn.danger:hover{border-color:#e74c3c;color:#e74c3c}
+.btn.warn:hover{border-color:#f39c12;color:#f39c12}
+.btn.ok:hover{border-color:#27ae60;color:#27ae60}
+.btn.active{background:#9b59b6;color:#fff;border-color:#9b59b6}
+.prop-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;font-size:10px}
+.prop-row label{color:#7a8494}
+.prop-row input,.prop-row select{background:#05070a;border:1px solid #1a1f2e;color:#00d4ff;padding:3px 5px;border-radius:3px;width:110px;font-size:10px;font-family:monospace;direction:ltr;text-align:left}
+#log{flex:1;overflow-y:auto;font-size:10px;min-height:60px}
+.log-item{padding:3px 5px;margin-bottom:2px;border-radius:3px;background:#0f141b;border-right:3px solid #00d4ff;line-height:1.5}
+.log-item.error{border-color:#e74c3c;color:#ff8a80}
+.log-item.success{border-color:#27ae60;color:#81c784}
+.log-item.warn{border-color:#f39c12;color:#ffcc80}
+.log-item.info{border-color:#3498db;color:#90caf9}
+.log-item.data{border-color:#9b59b6;color:#ce93d8;font-family:monospace;direction:ltr;font-size:9px}
+#status{color:#5a6474;font-size:9.5px;margin-right:auto}
+#scope{background:#000;border:1px solid #00d4ff60;border-radius:3px;width:100%;height:140px;display:block}
+
+/* مودال آردوینو */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:1000}
+.modal.show{display:flex}
+.modal-box{background:#0a0d12;border:1px solid #00d4ff60;border-radius:8px;width:90%;max-width:900px;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 0 30px rgba(0,212,255,.3)}
+.modal-head{padding:10px 15px;border-bottom:1px solid #1a1f2e;display:flex;justify-content:space-between;align-items:center}
+.modal-head h2{color:#00d4ff;font-size:15px}
+.modal-body{padding:15px;overflow-y:auto;flex:1;display:flex;gap:15px}
+.code-area{flex:1;display:flex;flex-direction:column}
+.code-area textarea{width:100%;height:380px;background:#05070a;color:#00d4ff;border:1px solid #1a1f2e;border-radius:4px;padding:10px;font-family:'Consolas',monospace;font-size:12px;direction:ltr;text-align:left;line-height:1.6;resize:none}
+.code-area textarea:focus{outline:none;border-color:#00d4ff}
+.examples{width:180px;display:flex;flex-direction:column;gap:5px}
+.examples h3{font-size:11px;color:#00d4ff;margin-bottom:5px}
+.ex-btn{padding:8px;background:#131820;border:1px solid #1a1f2e;color:#c8d0d8;border-radius:4px;cursor:pointer;font-size:11px;text-align:right}
+.ex-btn:hover{background:#16a08520;border-color:#16a085;color:#16a085}
+.modal-foot{padding:10px 15px;border-top:1px solid #1a1f2e;display:flex;gap:8px;justify-content:flex-end}
+
+/* نمایش پین‌های آردوینو */
+.pin-display{background:#05070a;border:1px solid #1a1f2e;border-radius:4px;padding:8px;margin-top:5px}
+.pin-display h3{font-size:10px;color:#00d4ff;margin-bottom:5px}
+.pin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;font-size:9.5px}
+.pin-cell{background:#0f141b;padding:3px 5px;border-radius:3px;border-left:3px solid #333;display:flex;justify-content:space-between}
+.pin-cell.high{background:#16a08520;border-left-color:#2ecc71;color:#2ecc71}
+.pin-cell.low{border-left-color:#444;color:#666}
+.pin-cell span:last-child{font-family:monospace;font-weight:bold}
+.avr-status{font-size:10px;color:#16a085;padding:3px 5px;border-radius:3px;background:#16a08515;border-right:2px solid #16a085;margin-bottom:5px;display:none}
+.avr-status.on{display:block}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>⚡ پالادیوم v6 <span>| با avr8js</span></h1>
+  <div class="creator">طراحی: <strong>مهندس یزدیان</strong></div>
+</header>
+
+<div class="main">
+  <aside class="sidebar left">
+    <h2>🧰 کتابخانه</h2>
+    <div id="palette"></div>
+  </aside>
+  <div class="canvas-wrap">
+    <div class="canvas" id="canvas"><svg id="wires"></svg></div>
+  </div>
+  <aside class="sidebar right">
+    <div><h2>⚙️ خصوصیات</h2>
+      <div id="props"><div style="color:#5a6474;font-size:9.5px;padding:4px;">قطعه‌ای انتخاب نشده</div></div>
+    </div>
+    <div>
+      <h2>🖥 آردوینو</h2>
+      <div class="avr-status" id="avrStatus">▶ AVR در حال اجرا — 16MHz</div>
+      <div class="pin-display">
+        <h3>وضعیت پین‌های دیجیتال</h3>
+        <div class="pin-grid" id="pinGrid"></div>
+      </div>
+    </div>
+    <div><h2>📈 اسیلوسکوپ</h2>
+      <canvas id="scope" width="320" height="140"></canvas>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;min-height:0">
+      <h2>📋 گزارش</h2>
+      <div id="log"><div class="log-item info">آماده. برای آردوینو روی «🖥 کد آردوینو» بزنید.</div></div>
+    </div>
+  </aside>
+</div>
+
+<div class="toolbar">
+  <button class="btn active" id="selectBtn">🖱</button>
+  <button class="btn" id="wireBtn">🔌 سیم</button>
+  <button class="btn primary" id="runBtn">▶ DC</button>
+  <button class="btn primary" id="transientBtn" style="background:linear-gradient(135deg,#9b59b6,#6a3d9a)">⏱ گذرا</button>
+  <button class="btn arduino" id="arduinoBtn">🖥 کد آردوینو</button>
+  <button class="btn ok" id="stopAvrBtn" style="display:none">⏹ توقف AVR</button>
+  <button class="btn ok" id="downloadBtn">💾</button>
+  <button class="btn danger" id="clearBtn">🗑</button>
+  <span id="status">آماده</span>
+</div>
+
+<!-- مودال آردوینو -->
+<div class="modal" id="arduinoModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2>🖥 ویرایشگر کد آردوینو</h2>
+      <button class="btn danger" onclick="document.getElementById('arduinoModal').classList.remove('show')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="examples">
+        <h3>📚 برنامه‌های آماده</h3>
+        <button class="ex-btn" data-ex="blink">💡 Blink (پین 13)</button>
+        <button class="ex-btn" data-ex="blink2">💡 Blink (پین 12)</button>
+        <button class="ex-btn" data-ex="fade">🌗 Fade (PWM پین 9)</button>
+        <button class="ex-btn" data-ex="counter">🔢 شمارنده دودویی (8 پین)</button>
+        <button class="ex-btn" data-ex="sos">🆘 سیگنال SOS</button>
+        <button class="ex-btn" data-ex="knight">🐎 روشنایی چرخشی</button>
+        <div style="margin-top:15px;color:#5a6474;font-size:10px;line-height:1.7">
+          ⚠️ کد C++ به صورت خودکار کامپایل نمی‌شود.<br>
+          این نسخه از HEX از پیش آماده استفاده می‌کند.<br>
+          برای کد سفارشی، از <b>HEX paste</b> استفاده کنید.
+        </div>
+      </div>
+      <div class="code-area">
+        <textarea id="codeEditor" spellcheck="false">// Blink - Arduino Uno Pin 13
+// برنامه از پیش کامپایل شده
+
+void setup() {
+  pinMode(13, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(13, HIGH);
+  delay(500);
+  digitalWrite(13, LOW);
+  delay(500);
+}
+
+// برای اجرا: دکمه «▶ اجرا روی AVR» را بزنید</textarea>
+        <div style="margin-top:8px;display:flex;gap:6px">
+          <button class="btn" id="pasteHexBtn">📋 Paste HEX سفارشی</button>
+          <button class="btn warn" id="clearCodeBtn">🗑 پاک</button>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" onclick="document.getElementById('arduinoModal').classList.remove('show')">انصراف</button>
+      <button class="btn arduino" id="runAvrBtn">▶ اجرا روی AVR</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+// بارگذاری avr8js به صورت ESM
+try {
+  const avr8js = await import('https://esm.sh/avr8js@0.21.0');
+  window.avr8js = avr8js;
+  window.dispatchEvent(new Event('avr8js-ready'));
+  console.log('avr8js loaded:', Object.keys(avr8js));
+} catch(e) {
+  console.error('avr8js load failed:', e);
+  window.dispatchEvent(new Event('avr8js-error'));
+}
+</script>
+
+<script>
+/* ============================================================
+   پالادیوم v6 — با avr8js برای اجرای کد آردوینو
+   طراحی: مهندس یزدیان
+   ============================================================ */
+
+// ---------- برنامه‌های HEX از پیش کامپایل شده (AVR) ----------
+// Blink pin 13 (PB5): LDI/OUT loop with delay
+const AVR_PROGRAMS = {
+  // Blink pin 13 (PB5) — تأخیر ~12ms
+  blink: [
+    0xE200, 0xB804, 0xE010, 0xB805, 0xD003, 0xB815, 0xD001, 0xC7FB,
+    0xEF2F, 0xEF3F, 0x943A, 0xF7FE, 0x942A, 0xF7FB, 0x9508
+  ],
+  // Blink pin 12 (PB4)
+  blink2: [
+    0xE200, 0xB804, 0xE010, 0xB804+0x10, 0xB815, 0xD001, 0xC7FB,
+    0xEF2F, 0xEF3F, 0x943A, 0xF7FE, 0x942A, 0xF7FB, 0x9508
+  ],
+  // جایگزین‌های دیگر (به صورت ساده)
+  fade: null,
+  counter: null,
+  sos: null,
+  knight: null,
+};
+
+// ---------- مدل‌های قطعه ----------
+const BJT_MODELS = {
+  bc547:{type:'npn',Is:1e-14,Bf:200,Br:6,Vaf:100,name:'BC547'},
+  bc557:{type:'pnp',Is:1e-14,Bf:150,Br:6,Vaf:100,name:'BC557'},
+  '2n2222':{type:'npn',Is:1.4e-14,Bf:200,Br:6,Vaf:100,name:'2N2222'},
+  '2n3904':{type:'npn',Is:6.7e-15,Bf:220,Br:6,Vaf:74,name:'2N3904'},
+  '2n3906':{type:'pnp',Is:1.4e-14,Bf:180,Br:6,Vaf:90,name:'2N3906'},
+  bc337:{type:'npn',Is:2e-14,Bf:250,Br:6,Vaf:100,name:'BC337'},
+  bd139:{type:'npn',Is:1e-12,Bf:100,Br:5,Vaf:120,name:'BD139'},
+  '2n3055':{type:'npn',Is:1e-6,Bf:40,Br:5,Vaf:100,name:'2N3055'},
+  tip120:{type:'npn',Is:1e-11,Bf:1000,Br:10,Vaf:100,name:'TIP120'},
+};
+const MOS_MODELS = {
+  irf540:{type:'nmos',Kp:20,Vth:3.5,name:'IRF540'},
+  '2n7000':{type:'nmos',Kp:0.15,Vth:2.1,name:'2N7000'},
+};
+const DIODE_MODELS = {
+  '1n4148':{Is:2.52e-9,N:1.752,name:'1N4148'},
+  '1n4007':{Is:7.02e-9,N:1.808,name:'1N4007'},
+  '1n5408':{Is:2.10e-6,N:2.342,name:'1N5408'},
+  led_r:{Is:1e-20,N:1.8,name:'LED قرمز'},
+  led_g:{Is:1e-20,N:2.2,name:'LED سبز'},
+};
+
+// ---------- کتابخانه ----------
+const LIB = {
+  passive:[
+    {id:'resistor',name:'مقاومت',icon:'▬',color:'#e74c3c',w:56,h:24,pins:[{n:'1',x:-28,y:12},{n:'2',x:28,y:12}],props:{value:{label:'Ω',val:1000}}},
+    {id:'capacitor',name:'خازن',icon:'⊣⊢',color:'#3498db',w:50,h:28,pins:[{n:'1',x:-25,y:14},{n:'2',x:25,y:14}],props:{value:{label:'µF',val:10}}},
+  ],
+  diode:[
+    {id:'d_1n4148',name:'1N4148',icon:'▶|',color:'#f39c12',w:50,h:24,pins:[{n:'A',x:-25,y:12},{n:'K',x:25,y:12}],props:{model:{label:'',val:'1n4148',type:'select',options:['1n4148']}}},
+    {id:'d_1n4007',name:'1N4007',icon:'▶|',color:'#f39c12',w:50,h:24,pins:[{n:'A',x:-25,y:12},{n:'K',x:25,y:12}],props:{model:{label:'',val:'1n4007',type:'select',options:['1n4007']}}},
+    {id:'led_r',name:'LED قرمز',icon:'💡',color:'#e74c3c',w:50,h:24,pins:[{n:'A',x:-25,y:12},{n:'K',x:25,y:12}],props:{model:{label:'',val:'led_r',type:'select',options:['led_r']}}},
+    {id:'led_g',name:'LED سبز',icon:'💡',color:'#2ecc71',w:50,h:24,pins:[{n:'A',x:-25,y:12},{n:'K',x:25,y:12}],props:{model:{label:'',val:'led_g',type:'select',options:['led_g']}}},
+  ],
+  bjt:Object.keys(BJT_MODELS).slice(0,6).map(k=>({
+    id:k,name:BJT_MODELS[k].name,icon:'Q',color:BJT_MODELS[k].type==='npn'?'#e91e63':'#c2185b',w:60,h:60,
+    pins:BJT_MODELS[k].type==='npn'?[{n:'B',x:-30,y:30},{n:'C',x:30,y:-4},{n:'E',x:30,y:64}]:[{n:'B',x:-30,y:30},{n:'C',x:30,y:64},{n:'E',x:30,y:-4}],
+    props:{model:{label:'',val:k,type:'select',options:Object.keys(BJT_MODELS).filter(x=>BJT_MODELS[x].type===BJT_MODELS[k].type)}}
+  })),
+  power:[
+    {id:'battery',name:'باتری',icon:'🔋',color:'#27ae60',w:56,h:32,pins:[{n:'+',x:-28,y:16},{n:'-',x:28,y:16}],props:{value:{label:'V',val:9}}},
+    {id:'vcc',name:'VCC',icon:'↑',color:'#e74c3c',w:26,h:26,pins:[{n:'V',x:13,y:26}],props:{}},
+    {id:'gnd',name:'GND',icon:'⏚',color:'#7f8c8d',w:26,h:26,pins:[{n:'G',x:13,y:0}],props:{}},
+  ],
+  arduino:[
+    {id:'arduino_uno',name:'Arduino UNO',icon:'▣',color:'#16a085',w:130,h:110,
+     pins:[
+       // دیجیتال (پایین): D2..D13
+       {n:'D2',x:-65,y:15},{n:'D3',x:-65,y:25},{n:'D4',x:-65,y:35},{n:'D5',x:-65,y:45},{n:'D6',x:-65,y:55},{n:'D7',x:-65,y:65},
+       {n:'D8',x:-65,y:75},{n:'D9',x:-65,y:85},{n:'D10',x:-65,y:95},{n:'D11',x:-65,y:105},{n:'D12',x:-65,y:115},{n:'D13',x:-65,y:125},
+       // تغذیه (بالا)
+       {n:'5V',x:65,y:15},{n:'GND',x:65,y:35},{n:'3V3',x:65,y:55},{n:'VIN',x:65,y:75},{n:'A0',x:65,y:95}
+     ],
+     props:{}}
+  ],
+  misc:[
+    {id:'probe1',name:'پروب CH1',icon:'🔍',color:'#f1c40f',w:24,h:24,pins:[{n:'P',x:12,y:24}],props:{}},
+    {id:'probe2',name:'پروب CH2',icon:'🔍',color:'#2ecc71',w:24,h:24,pins:[{n:'P',x:12,y:24}],props:{}},
+  ]
+};
+
+let nodes=[], wires=[], idCounter=1;
+let mode='select', wireStart=null, dragState=null, dragMoved=false, selectedNode=null;
+let avrState = {
+  cpu:null, timer:null, portB:null, portD:null,
+  pinStates:{}, running:false, rafId:null,
+  arduinoNodeId:null, cycles:0
+};
+
+const canvas = document.getElementById('canvas');
+const svgWires = document.getElementById('wires');
+const GRID = 20;
+
+const catNames = {passive:'پسیو',diode:'دیود',bjt:'BJT',power:'منابع',arduino:'آردوینو',misc:'متفرقه'};
+const palette = document.getElementById('palette');
+Object.keys(LIB).forEach(cat=>{
+  const div = document.createElement('div');
+  div.className='cat';
+  div.innerHTML = `<div class="cat-head">${catNames[cat]} ▼</div><div class="cat-body"></div>`;
+  const body = div.querySelector('.cat-body');
+  div.querySelector('.cat-head').onclick = ()=>div.classList.toggle('open');
+  LIB[cat].forEach(c=>{
+    const btn = document.createElement('button');
+    btn.className='comp-btn';
+    btn.innerHTML = `<span class="ic" style="color:${c.color}">${c.icon}</span>${c.name}`;
+    btn.onclick = ()=>addComponent(c);
+    body.appendChild(btn);
+  });
+  palette.appendChild(div);
+});
+
+function addComponent(comp, px, py) {
+  const props = {};
+  if (comp.props) Object.keys(comp.props).forEach(k => props[k] = comp.props[k].val);
+  const node = {
+    id: idCounter++, type: comp.id, name: comp.name, icon: comp.icon, color: comp.color,
+    w: comp.w, h: comp.h, pins: comp.pins.map(p=>({...p})),
+    propsMeta: comp.props||{}, props,
+    x: px !== undefined ? px : Math.round((100+Math.random()*600)/GRID)*GRID,
+    y: py !== undefined ? py : Math.round((80+Math.random()*400)/GRID)*GRID
+  };
+  nodes.push(node);
+  renderNode(node);
+  updateStatus();
+  return node;
+}
+
+function renderNode(node) {
+  const el = document.createElement('div');
+  el.className='node';
+  el.id = 'node-'+node.id;
+  el.style.cssText = `width:${node.w}px;height:${node.h}px;left:${node.x}px;top:${node.y}px;border-color:${node.color}80;background:linear-gradient(135deg,#0f141b,${node.color}15)`;
+  el.dataset.id = node.id;
+  const icon = document.createElement('span');
+  icon.textContent = node.icon;
+  icon.style.cssText = `color:${node.color};font-size:${Math.min(node.w,node.h)/2.4}px`;
+  el.appendChild(icon);
+  const lbl = document.createElement('div');
+  lbl.className='lbl';
+  lbl.textContent = `${node.name} #${node.id}`;
+  el.appendChild(lbl);
+  node.pins.forEach((p,i)=>{
+    const pin = document.createElement('div');
+    pin.className='pin';
+    pin.dataset.node = node.id; pin.dataset.pin = i;
+    pin.style.left = (p.x-4.5)+'px'; pin.style.top = (p.y-4.5)+'px';
+    pin.title = p.n;
+    pin.onmousedown = e=>e.stopPropagation();
+    pin.onclick = e=>{e.stopPropagation(); handlePinClick(node,i,pin);};
+    el.appendChild(pin);
+  });
+  el.onmousedown = e=>{
+    if (mode==='wire' || e.target.classList.contains('pin')) return;
+    dragState = {node,el,sx:e.clientX,sy:e.clientY,ox:node.x,oy:node.y};
+    dragMoved=false; e.preventDefault();
+  };
+  el.onclick = e=>{ if (dragMoved||mode==='wire') return; selectNode(node,el); };
+  canvas.appendChild(el);
+}
+
+document.addEventListener('mousemove', e=>{
+  if (!dragState) return;
+  const dx=e.clientX-dragState.sx, dy=e.clientY-dragState.sy;
+  if (Math.abs(dx)>3||Math.abs(dy)>3) dragMoved=true;
+  if (!dragMoved) return;
+  const {node,el,ox,oy}=dragState;
+  node.x = Math.max(0, Math.round((ox+dx)/GRID)*GRID);
+  node.y = Math.max(0, Math.round((oy+dy)/GRID)*GRID);
+  el.style.left = node.x+'px'; el.style.top = node.y+'px';
+  drawWires();
+});
+document.addEventListener('mouseup', ()=>{ setTimeout(()=>{dragState=null;dragMoved=false;},0); });
+
+function selectNode(node, el) {
+  if (selectedNode && selectedNode.id!==node.id) {
+    const old = document.getElementById('node-'+selectedNode.id);
+    if (old) old.classList.remove('selected');
+  }
+  selectedNode = node; el.classList.add('selected'); renderProps(node);
+}
+
+function renderProps(node) {
+  const props = document.getElementById('props');
+  if (!node) { props.innerHTML='<div style="color:#5a6474;font-size:9.5px;">انتخاب نشده</div>'; return; }
+  let html = `<div style="color:${node.color};font-size:10.5px;margin-bottom:5px;">${node.icon} ${node.name} — #${node.id}</div>`;
+  const meta = node.propsMeta||{};
+  if (!Object.keys(meta).length) html += '<div style="color:#5a6474;font-size:9.5px;">بدون خصوصیت</div>';
+  else Object.keys(meta).forEach(k=>{
+    const m = meta[k];
+    if (m.type==='select') html += `<div class="prop-row"><label>${m.label}</label><select data-key="${k}">${m.options.map(o=>`<option ${node.props[k]===o?'selected':''}>${o}</option>`).join('')}</select></div>`;
+    else html += `<div class="prop-row"><label>${m.label}</label><input type="number" data-key="${k}" value="${node.props[k]}" step="any"></div>`;
+  });
+  props.innerHTML = html;
+  props.querySelectorAll('input,select').forEach(inp=>{
+    inp.onchange = ()=>{
+      const k = inp.dataset.key;
+      const v = inp.type==='number' ? parseFloat(inp.value) : inp.value;
+      selectedNode.props[k] = v;
+    };
+  });
+}
+
+function handlePinClick(node, pinIdx, pinEl) {
+  if (mode!=='wire') { selectNode(node, document.getElementById('node-'+node.id)); return; }
+  if (!wireStart) {
+    wireStart = {nodeId:node.id, pinIdx};
+    pinEl.classList.add('hot');
+  } else {
+    if (wireStart.nodeId===node.id && wireStart.pinIdx===pinIdx) {
+      document.querySelectorAll('.pin.hot').forEach(p=>p.classList.remove('hot'));
+      wireStart = null; return;
+    }
+    wires.push({a:wireStart, b:{nodeId:node.id, pinIdx}});
+    document.querySelectorAll('.pin.hot').forEach(p=>p.classList.remove('hot'));
+    wireStart = null;
+    drawWires(); updateStatus();
+  }
+}
+
+function pinPos(nodeId, pinIdx) {
+  const node = nodes.find(n=>n.id===nodeId);
+  if (!node) return null;
+  const p = node.pins[pinIdx];
+  return {x:node.x+p.x+4.5, y:node.y+p.y+4.5};
+}
+
+function drawWires() {
+  svgWires.innerHTML = '';
+  wires.forEach(w=>{
+    const a = pinPos(w.a.nodeId, w.a.pinIdx), b = pinPos(w.b.nodeId, w.b.pinIdx);
+    if (!a||!b) return;
+    const dx = Math.abs(b.x-a.x)*0.4+20;
+    const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d', `M ${a.x} ${a.y} C ${a.x+dx} ${a.y}, ${b.x-dx} ${b.y}, ${b.x} ${b.y}`);
+    path.setAttribute('stroke', '#00d4ff');
+    path.setAttribute('stroke-dasharray', '7 4');
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke-width', 2);
+    svgWires.appendChild(path);
+  });
+}
+
+document.getElementById('selectBtn').onclick = e=>{
+  mode='select';
+  document.querySelectorAll('.pin.hot').forEach(p=>p.classList.remove('hot'));
+  wireStart=null;
+  e.target.classList.add('active');
+  document.getElementById('wireBtn').classList.remove('active');
+};
+document.getElementById('wireBtn').onclick = e=>{
+  mode='wire'; wireStart=null;
+  e.target.classList.add('active');
+  document.getElementById('selectBtn').classList.remove('active');
+};
+document.getElementById('clearBtn').onclick = ()=>{
+  if (!confirm('پاک شود؟')) return;
+  stopAVR();
+  nodes=[]; wires=[]; selectedNode=null; idCounter=1;
+  document.querySelectorAll('.node').forEach(n=>n.remove());
+  svgWires.innerHTML='';
+  document.getElementById('log').innerHTML='';
+  updateStatus();
+};
+document.getElementById('downloadBtn').onclick = ()=>{
+  const proj = {app:'Palladium v6', creator:'مهندس یزدیان', nodes, wires};
+  const blob = new Blob([JSON.stringify(proj,null,2)],{type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href=url; a.download='palladium-v6.json'; a.click();
+  URL.revokeObjectURL(url);
+};
+
+function log(msg, type='info') {
+  const el = document.createElement('div');
+  el.className = 'log-item '+type;
+  el.textContent = msg;
+  const box = document.getElementById('log');
+  box.appendChild(el);
+  box.scrollTop = box.scrollHeight;
+}
+function updateStatus(s) {
+  document.getElementById('status').textContent = s || `${nodes.length} قطعه | ${wires.length} سیم`;
+}
+
+// ============================================================
+//  موتور DC (خلاصه‌شده از v5)
+// ============================================================
+const VT = 0.025852, GMIN = 1e-12;
+
+function buildNets() {
+  const pinKey = (nid,pi)=>`${nid}:${pi}`;
+  const parent = {};
+  nodes.forEach(n=>n.pins.forEach((_,i)=>parent[pinKey(n.id,i)]=pinKey(n.id,i)));
+  const find = x=>{ while(parent[x]!==x){parent[x]=parent[parent[x]];x=parent[x];} return x; };
+  const union = (a,b)=>{ const ra=find(a),rb=find(b); if(ra!==rb)parent[ra]=rb; };
+  wires.forEach(w=>union(pinKey(w.a.nodeId,w.a.pinIdx), pinKey(w.b.nodeId,w.b.pinIdx)));
+  const netMap={}, nets=[];
+  Object.keys(parent).forEach(k=>{
+    const r = find(k);
+    if (netMap[r]===undefined) { netMap[r]=nets.length; nets.push({pins:[]}); }
+    nets[netMap[r]].pins.push(k);
+  });
+  const pinNet = {};
+  Object.keys(parent).forEach(k=>pinNet[k]=netMap[find(k)]);
+  return {nets, pinNet, pinKey};
+}
+
+function gauss(A, N) {
+  for (let i=0;i<N;i++) {
+    let m=i;
+    for (let k=i+1;k<N;k++) if (Math.abs(A[k][i])>Math.abs(A[m][i])) m=k;
+    if (m!==i) [A[i],A[m]]=[A[m],A[i]];
+    if (Math.abs(A[i][i])<1e-15) A[i][i]=1e-15;
+    for (let k=i+1;k<N;k++) {
+      const f = A[k][i]/A[i][i];
+      if (f===0) continue;
+      for (let j=i;j<=N;j++) A[k][j]-=f*A[i][j];
+    }
+  }
+  const x = new Array(N).fill(0);
+  for (let i=N-1;i>=0;i--) {
+    if (Math.abs(A[i][i])<1e-15) { x[i]=0; continue; }
+    let s = A[i][N];
+    for (let j=i+1;j<N;j++) s -= A[i][j]*x[j];
+    x[i] = s/A[i][i];
+  }
+  return x;
+}
+
+document.getElementById('runBtn').onclick = ()=>{
+  document.getElementById('log').innerHTML = '';
+  log('🔬 DC...', 'info');
+  if (!nodes.length) { log('خالی.', 'error'); return; }
+  const {nets, pinNet, pinKey} = buildNets();
+  let gndNet = -1;
+  nodes.forEach(n=>{ if (n.type==='gnd') gndNet = pinNet[pinKey(n.id,0)]; });
+  const bat = nodes.find(n=>n.type==='battery');
+  if (gndNet===-1 && bat) gndNet = pinNet[pinKey(bat.id,1)];
+  if (gndNet===-1) gndNet = 0;
+
+  const linR=[], vSources=[], diodes=[], bjts=[], moss=[];
+  const avrNode = nodes.find(n=>n.type==='arduino_uno');
+  if (avrNode) avrState.arduinoNodeId = avrNode.id;
+
+  nodes.forEach(n=>{
+    const p = i=>pinNet[pinKey(n.id,i)];
+    const pr = n.props;
+    switch (n.type) {
+      case 'resistor': linR.push({n1:p(0),n2:p(1),R:pr.value,node:n}); break;
+      case 'battery': vSources.push({nPlus:p(0),nMinus:p(1),V:pr.value,node:n}); break;
+      case 'arduino_uno':
+        // پین‌های 5V و GND به عنوان منبع ثابت
+        vSources.push({nPlus:p(12),nMinus:p(13),V:5,node:n});
+        // پین‌های دیجیتال: بر اساس وضعیت AVR
+        for (let i=0;i<12;i++) {
+          const pinNum = i+2;
+          const state = avrState.pinStates[pinNum] || 0;
+          vSources.push({nPlus:p(i),nMinus:p(13),V: state ? 5 : 0,node:n,isArd:true,pin:pinNum});
+        }
+        break;
+      default:
+        if (DIODE_MODELS[n.type.replace(/^d_/,'')] || DIODE_MODELS[n.type]) {
+          const key = n.type.replace(/^d_/,'');
+          const model = DIODE_MODELS[key] || DIODE_MODELS[n.type];
+          if (model) diodes.push({n1:p(0),n2:p(1),model,node:n});
+        } else if (BJT_MODELS[pr.model]) {
+          bjts.push({nb:p(0),nc:p(1),ne:p(2),model:BJT_MODELS[pr.model],node:n,isPNP:BJT_MODELS[pr.model].type==='pnp'});
+        } else if (MOS_MODELS[pr.model]) {
+          moss.push({ng:p(0),nd:p(1),ns:p(2),model:MOS_MODELS[pr.model],node:n});
+        }
+    }
+  });
+
+  const netCount = nets.length;
+  const netIdxMap={}, unknown=[];
+  for (let i=0;i<netCount;i++) if (i!==gndNet) { netIdxMap[i]=unknown.length; unknown.push(i); }
+  const N = unknown.length + vSources.length;
+  if (N===0) { log('⚠ گره نیست.', 'warn'); return; }
+  const Abase = Array.from({length:N},()=>new Array(N+1).fill(0));
+
+  linR.forEach(r=>{
+    if (r.R<=0) r.R=0.01;
+    const g=1/r.R;
+    const i1=netIdxMap[r.n1], i2=netIdxMap[r.n2];
+    if (i1!==undefined) Abase[i1][i1]+=g;
+    if (i2!==undefined) Abase[i2][i2]+=g;
+    if (i1!==undefined && i2!==undefined) { Abase[i1][i2]-=g; Abase[i2][i1]-=g; }
+  });
+  vSources.forEach((vs,k)=>{
+    const row = unknown.length + k;
+    const i1=netIdxMap[vs.nPlus], i2=netIdxMap[vs.nMinus];
+    if (i1!==undefined) { Abase[i1][row]+=1; Abase[row][i1]+=1; }
+    if (i2!==undefined) { Abase[i2][row]-=1; Abase[row][i2]-=1; }
+    Abase[row][N] = vs.V;
+  });
+  for (let i=0;i<unknown.length;i++) Abase[i][i]+=GMIN;
+
+  let V = new Array(N).fill(0);
+  for (let iter=0; iter<80; iter++) {
+    const A = Abase.map(row=>[...row]);
+    diodes.forEach(d=>{
+      const i1=netIdxMap[d.n1], i2=netIdxMap[d.n2];
+      const Vd = (i1!==undefined?V[i1]:0) - (i2!==undefined?V[i2]:0);
+      const VdC = Math.max(-5, Math.min(Vd, 0.9));
+      const Nvt = d.model.N*VT;
+      const expV = Math.exp(VdC/Nvt);
+      const Id = d.model.Is*(expV-1);
+      const Gd = Math.max(d.model.Is/Nvt*expV, 1e-12)+GMIN;
+      const Ieq = Id - Gd*VdC;
+      if (i1!==undefined) A[i1][i1]+=Gd;
+      if (i2!==undefined) A[i2][i2]+=Gd;
+      if (i1!==undefined && i2!==undefined) { A[i1][i2]-=Gd; A[i2][i1]-=Gd; }
+      if (i1!==undefined) A[i1][N]-=Ieq;
+      if (i2!==undefined) A[i2][N]+=Ieq;
+    });
+    bjts.forEach(t=>stampBJT(A, V, netIdxMap, N, t));
+    moss.forEach(m=>stampMOS(A, V, netIdxMap, N, m));
+    let Vnew;
+    try { Vnew = gauss(A, N); if (Vnew.some(v=>!isFinite(v))) throw 0; } catch(e) { break; }
+    let md=0; for (let i=0;i<N;i++) md=Math.max(md, Math.abs(Vnew[i]-V[i]));
+    V = Vnew;
+    if (md<1e-4) break;
+  }
+
+  const volts = {};
+  unknown.forEach((netIdx,i)=>volts[netIdx]=V[i]);
+  volts[gndNet] = 0;
+
+  log('✅ DC حل شد.', 'success');
+  Object.keys(volts).forEach(netIdx=>{
+    const v = volts[netIdx];
+    if (Math.abs(v)<1e-4) return;
+    const labels = nets[netIdx].pins.slice(0,2).map(k=>{
+      const [nid,pi]=k.split(':');
+      const nd = nodes.find(n=>n.id==nid);
+      return nd ? `${nd.name}#${nd.id}.${nd.pins[+pi].n}` : k;
+    }).join('، ');
+    log(`  ${v.toFixed(3)}V [${labels}]`, 'data');
+  });
+
+  // نمایش روی LEDها
+  diodes.forEach(d=>{
+    const V1 = volts[d.n1]??0, V2 = volts[d.n2]??0;
+    const Vd = V1-V2;
+    const Nvt = d.model.N*VT;
+    const Id = d.model.Is*(Math.exp(Math.max(-5,Math.min(Vd,0.9))/Nvt)-1);
+    if (d.model.name.includes('LED') && Id>0.001) {
+      const el = document.getElementById('node-'+d.node.id);
+      if (el) el.style.boxShadow = `0 0 25px ${d.model.name.includes('قرمز')?'#ff4444':'#44ff44'}`;
+    } else {
+      const el = document.getElementById('node-'+d.node.id);
+      if (el) el.style.boxShadow = '';
+    }
+  });
+};
+
+function stampBJT(A, V, netIdxMap, N, t) {
+  const {nb,nc,ne,model,isPNP} = t;
+  const sign = isPNP?-1:1;
+  const ib=netIdxMap[nb], ic=netIdxMap[nc], ie=netIdxMap[ne];
+  const Vb=ib!==undefined?V[ib]:0, Vc=ic!==undefined?V[ic]:0, Ve=ie!==undefined?V[ie]:0;
+  let Vbe=Math.max(-0.5,Math.min(sign*(Vb-Ve),0.9));
+  let Vbc=Math.max(-0.5,Math.min(sign*(Vb-Vc),0.9));
+  const {Is,Bf,Br,Vaf}=model;
+  const expB=Math.exp(Vbe/VT), expC=Math.exp(Vbc/VT);
+  const If=Is*(expB-1), Ir=Is*(expC-1);
+  const qb=1/(1-Vbc/(Vaf||100));
+  const gif=Math.max(Is/VT*expB,1e-14);
+  const gir=Math.max(Is/VT*expC,1e-14);
+  const gpi=gif/Bf+GMIN, gmu=gir/Br+GMIN;
+  const gm=gif*qb, go=gir+GMIN;
+  const g=[[0,0,0],[0,0,0],[0,0,0]];
+  g[0][0]+=gpi+gmu; g[0][1]-=gmu; g[0][2]-=gpi;
+  g[1][0]-=gmu+gm; g[1][1]+=gmu+go; g[1][2]-=go-gm;
+  g[2][0]-=gpi-gm; g[2][1]-=go; g[2][2]+=gpi+go+gm;
+  const ni=[ib,ic,ie];
+  for (let a=0;a<3;a++) if (ni[a]!==undefined)
+    for (let b=0;b<3;b++) if (ni[b]!==undefined) A[ni[a]][ni[b]]+=g[a][b];
+  const Ife=If*qb;
+  const Ic=(Ife-Ir)-Ir/Br, Ib=Ife/Bf+Ir/Br, Ie=-(Ic+Ib);
+  const Ib_lin=Ib-gpi*Vbe-gmu*Vbc;
+  const Ic_lin=Ic-gm*Vbe-go*(Vbc-Vbe);
+  const Ie_lin=Ie+(gpi+gm)*Vbe+(gmu-go)*Vbc;
+  if (ib!==undefined) A[ib][N]-=sign*Ib_lin;
+  if (ic!==undefined) A[ic][N]-=sign*Ic_lin;
+  if (ie!==undefined) A[ie][N]-=sign*Ie_lin;
+}
+
+function stampMOS(A, V, netIdxMap, N, m) {
+  const {ng,nd,ns,model}=m;
+  const ig=netIdxMap[ng], id=netIdxMap[nd], is=netIdxMap[ns];
+  const Vg=ig!==undefined?V[ig]:0, Vd=id!==undefined?V[id]:0, Vs=is!==undefined?V[is]:0;
+  const Vgs=Vg-Vs, Vds=Vd-Vs;
+  const {Kp,Vth}=model;
+  let Ids,gm,gds;
+  if (Vgs<=Vth) { Ids=0; gm=0; gds=GMIN; }
+  else if (Vds<Vgs-Vth) { Ids=Kp*((Vgs-Vth)*Vds-Vds*Vds/2); gm=Kp*Vds; gds=Kp*((Vgs-Vth)-Vds)+GMIN; }
+  else { Ids=Kp/2*Math.pow(Vgs-Vth,2); gm=Kp*(Vgs-Vth); gds=GMIN; }
+  const Ieq=Ids-gm*Vgs-gds*Vds;
+  if (id!==undefined) A[id][id]+=gds;
+  if (is!==undefined) A[is][is]+=gds;
+  if (id!==undefined && is!==undefined) { A[id][is]-=gds; A[is][id]-=gds; }
+  if (id!==undefined && ig!==undefined) A[id][ig]+=gm;
+  if (id!==undefined && is!==undefined) A[id][is]-=gm;
+  if (is!==undefined && ig!==undefined) A[is][ig]-=gm;
+  if (id!==undefined) A[id][N]-=Ieq;
+  if (is!==undefined) A[is][N]+=Ieq;
+}
+
+document.getElementById('transientBtn').onclick = ()=>{
+  log('⏱ برای گذرا، از v5 استفاده کنید یا دکمه اجرای DC را بزنید.', 'info');
+};
+
+// ============================================================
+//  یکپارچه‌سازی avr8js
+// ============================================================
+
+// نمایش پین‌های آردوینو
+function initPinGrid() {
+  const grid = document.getElementById('pinGrid');
+  grid.innerHTML = '';
+  for (let i=2;i<=13;i++) {
+    const cell = document.createElement('div');
+    cell.className = 'pin-cell low';
+    cell.id = 'pinCell'+i;
+    cell.innerHTML = `<span>D${i}</span><span id="pinVal${i}">0</span>`;
+    grid.appendChild(cell);
+  }
+  // A0
+  const a0 = document.createElement('div');
+  a0.className = 'pin-cell low';
+  a0.innerHTML = '<span>A0</span><span>—</span>';
+  grid.appendChild(a0);
+}
+initPinGrid();
+
+function updatePinUI() {
+  for (let i=2;i<=13;i++) {
+    const cell = document.getElementById('pinCell'+i);
+    const val = document.getElementById('pinVal'+i);
+    if (!cell) continue;
+    const state = avrState.pinStates[i] || 0;
+    if (state) { cell.className = 'pin-cell high'; val.textContent = '1'; }
+    else { cell.className = 'pin-cell low'; val.textContent = '0'; }
+    // رنگ پین در مدار
+    if (avrState.arduinoNodeId) {
+      const nodeEl = document.getElementById('node-'+avrState.arduinoNodeId);
+      if (nodeEl) {
+        const pinEl = nodeEl.querySelector(`.pin[data-pin="${i-2}"]`);
+        if (pinEl) {
+          if (state) pinEl.classList.add('on'); else pinEl.classList.remove('on');
+        }
+      }
+    }
+  }
+}
+
+async function loadAvr8js() {
+  return new Promise(resolve=>{
+    if (window.avr8js) { resolve(window.avr8js); return; }
+    const handler = ()=>{
+      window.removeEventListener('avr8js-ready', handler);
+      resolve(window.avr8js);
+    };
+    window.addEventListener('avr8js-ready', handler);
+    setTimeout(()=>{ if (window.avr8js) resolve(window.avr8js); else resolve(null); }, 8000);
+  });
+}
+
+async function runAVR(programWords) {
+  const avr = await loadAvr8js();
+  if (!avr) { log('❌ avr8js بارگذاری نشد. اینترنت را بررسی کنید.', 'error'); return; }
+
+  stopAVR();
+
+  const { CPU, avrInstruction, AVRTimer, AVRIOPort, portBConfig, portCConfig, portDConfig, timer0Config } = avr;
+
+  const cpu = new CPU(new Uint16Array(0x8000));
+  // نوشتن برنامه در flash
+  for (let i=0;i<programWords.length;i++) cpu.flash[i] = programWords[i];
+
+  const timer0 = new AVRTimer(cpu, timer0Config);
+  const portB = new AVRIOPort(cpu, portBConfig);
+  const portC = new AVRIOPort(cpu, portCConfig);
+  const portD = new AVRIOPort(cpu, portDConfig);
+
+  // نگاشت PB0-PB5 → D8-D13, PD0-PD7 → D0-D7
+  portB.addListener((val, old)=>{
+    const bits = [8,9,10,11,12,13,-1,-1];
+    for (let i=0;i<8;i++) {
+      const pin = bits[i];
+      if (pin<0) continue;
+      avrState.pinStates[pin] = (val>>i)&1;
+    }
+    updatePinUI();
+  });
+  portD.addListener((val, old)=>{
+    for (let i=0;i<8;i++) avrState.pinStates[i] = (val>>i)&1;
+    updatePinUI();
+  });
+
+  avrState.cpu = cpu;
+  avrState.timer = timer0;
+  avrState.portB = portB;
+  avrState.portD = portD;
+  avrState.running = true;
+
+  document.getElementById('avrStatus').classList.add('on');
+  document.getElementById('stopAvrBtn').style.display = 'inline-block';
+  log('▶ AVR شروع به کار کرد (16MHz).', 'success');
+
+  const INSTRUCTIONS_PER_FRAME = 5000; // حدوداً
+
+  function step() {
+    if (!avrState.running) return;
+    timer0.tick();
+    for (let i=0;i<INSTRUCTIONS_PER_FRAME;i++) {
+      avrInstruction(cpu);
+      cpu.tick();
+    }
+    avrState.cycles += INSTRUCTIONS_PER_FRAME;
+    avrState.rafId = requestAnimationFrame(step);
+  }
+  step();
+}
+
+function stopAVR() {
+  if (avrState.rafId) cancelAnimationFrame(avrState.rafId);
+  avrState.running = false;
+  avrState.rafId = null;
+  document.getElementById('avrStatus').classList.remove('on');
+  document.getElementById('stopAvrBtn').style.display = 'none';
+}
+
+document.getElementById('stopAvrBtn').onclick = ()=>{
+  stopAVR();
+  log('⏹ AVR متوقف شد.', 'warn');
+};
+
+// ---------- مودال آردوینو ----------
+document.getElementById('arduinoBtn').onclick = ()=>{
+  document.getElementById('arduinoModal').classList.add('show');
+};
+
+document.querySelectorAll('.ex-btn').forEach(btn=>{
+  btn.onclick = ()=>{
+    const ex = btn.dataset.ex;
+    const editor = document.getElementById('codeEditor');
+    const templates = {
+      blink: `// Blink - Pin 13\nvoid setup() {\n  pinMode(13, OUTPUT);\n}\nvoid loop() {\n  digitalWrite(13, HIGH);\n  delay(500);\n  digitalWrite(13, LOW);\n  delay(500);\n}`,
+      blink2: `// Blink - Pin 12\nvoid setup() {\n  pinMode(12, OUTPUT);\n}\nvoid loop() {\n  digitalWrite(12, HIGH);\n  delay(500);\n  digitalWrite(12, LOW);\n  delay(500);\n}`,
+      fade: `// Fade - PWM Pin 9\nvoid setup() {}\nvoid loop() {\n  for (int i = 0; i <= 255; i += 5) {\n    analogWrite(9, i);\n    delay(30);\n  }\n  for (int i = 255; i >= 0; i -= 5) {\n    analogWrite(9, i);\n    delay(30);\n  }\n}`,
+      counter: `// Binary Counter - Pins 2-9\nvoid setup() {\n  for (int i = 2; i <= 9; i++) pinMode(i, OUTPUT);\n}\nvoid loop() {\n  for (int n = 0; n < 256; n++) {\n    for (int i = 0; i < 8; i++) digitalWrite(i + 2, (n >> i) & 1);\n    delay(100);\n  }\n}`,
+      sos: `// Morse SOS on Pin 13\nvoid setup() {\n  pinMode(13, OUTPUT);\n}\nvoid dot() { digitalWrite(13, HIGH); delay(150); digitalWrite(13, LOW); delay(150); }\nvoid dash() { digitalWrite(13, HIGH); delay(450); digitalWrite(13, LOW); delay(150); }\nvoid loop() {\n  for (int i = 0; i < 3; i++) dot();\n  delay(150);\n  for (int i = 0; i < 3; i++) dash();\n  delay(150);\n  for (int i = 0; i < 3; i++) dot();\n  delay(1500);\n}`,
+      knight: `// Knight Rider - Pins 2..11\nvoid setup() {\n  for (int i = 2; i <= 11; i++) pinMode(i, OUTPUT);\n}\nvoid loop() {\n  for (int i = 2; i <= 11; i++) { digitalWrite(i, HIGH); delay(80); digitalWrite(i, LOW); }\n  for (int i = 10; i >= 3; i--) { digitalWrite(i, HIGH); delay(80); digitalWrite(i, LOW); }\n}`
+    };
+    editor.value = templates[ex] || '';
+    log(`📚 برنامه «${ex}» بارگذاری شد.`, 'info');
+  };
+});
+
+document.getElementById('clearCodeBtn').onclick = ()=>{
+  document.getElementById('codeEditor').value = '';
+};
+
+document.getElementById('pasteHexBtn').onclick = ()=>{
+  const hex = prompt('HEX را به صورت بایت‌های جدا شده با فاصله وارد کنید (مثال: 00 E2 04 B8 ...):');
+  if (!hex) return;
+  try {
+    const bytes = hex.trim().split(/\s+/).map(b=>parseInt(b, 16));
+    if (bytes.some(isNaN)) throw 0;
+    // تبدیل به words (little-endian)
+    const words = [];
+    for (let i=0;i<bytes.length;i+=2) {
+      words.push(bytes[i] | ((bytes[i+1]||0)<<8));
+    }
+    AVR_PROGRAMS.custom = words;
+    log(`✅ HEX سفارشی با ${words.length} کلمه آماده شد.`, 'success');
+    document.getElementById('codeEditor').value = `// HEX سفارشی — ${bytes.length} بایت\n// برای اجرا دکمه «▶ اجرا روی AVR» را بزنید`;
+  } catch(e) {
+    log('❌ HEX نامعتبر.', 'error');
+  }
+};
+
+document.getElementById('runAvrBtn').onclick = async ()=>{
+  // اجرا با توجه به برنامه انتخاب شده (بر اساس متن ادیتور یا برنامه آماده)
+  const editor = document.getElementById('codeEditor').value;
+  let programWords = null;
+
+  // تشخیص از محتوای کد
+  if (editor.includes('Pin 13') || editor.includes('pinMode(13')) programWords = AVR_PROGRAMS.blink;
+  else if (editor.includes('Pin 12') || editor.includes('pinMode(12')) programWords = AVR_PROGRAMS.blink2;
+  else if (editor.includes('HEX سفارشی') && AVR_PROGRAMS.custom) programWords = AVR_PROGRAMS.custom;
+
+  if (!programWords) {
+    // اگر فقط یک آردوینو روی بوم باشد، از blink پیش‌فرض استفاده کن
+    log('⚠ کد قابل کامپایل نیست — از برنامه Blink پیش‌فرض استفاده می‌شود.', 'warn');
+    programWords = AVR_PROGRAMS.blink;
+  }
+
+  document.getElementById('arduinoModal').classList.remove('show');
+
+  // اگر آردوینو در بوم نیست، یکی بساز
+  let avrNode = nodes.find(n=>n.type==='arduino_uno');
+  if (!avrNode) {
+    avrNode = addComponent(LIB.arduino.find(c=>c.id==='arduino_uno'), 200, 200);
+    log('🔧 یک آردوینو روی بوم ساخته شد.', 'info');
+  }
+  avrState.arduinoNodeId = avrNode.id;
+
+  await runAVR(programWords);
+
+  // اجرای DC اولیه
+  setTimeout(()=>{ if (nodes.length) document.getElementById('runBtn').click(); }, 500);
+};
+
+// ---------- اسیلوسکوپ ----------
+(function initScope(){
+  const cvs = document.getElementById('scope');
+  const ctx = cvs.getContext('2d');
+  const W = cvs.width, H = cvs.height;
+  const history = { ch1: [], ch2: [] };
+  const MAX = 320;
+
+  function drawFrame() {
+    ctx.fillStyle = '#000'; ctx.fillRect(0,0,W,H);
+    ctx.strokeStyle = '#0a2030'; ctx.lineWidth = 0.5;
+    for (let i=0;i<W;i+=20) { ctx.beginPath(); ctx.moveTo(i,0); ctx.lineTo(i,H); ctx.stroke(); }
+    for (let i=0;i<H;i+=20) { ctx.beginPath(); ctx.moveTo(0,i); ctx.lineTo(W,i); ctx.stroke(); }
+
+    // از پین D13 به عنوان سیگنال CH1 استفاده کن
+    const pinV = (avrState.pinStates[13]||0) * 5;
+    history.ch1.push(pinV);
+    if (history.ch1.length > MAX) history.ch1.shift();
+
+    ctx.strokeStyle = '#f1c40f'; ctx.lineWidth = 1.5;
+    ctx.shadowBlur = 6; ctx.shadowColor = '#f1c40f';
+    ctx.beginPath();
+    history.ch1.forEach((v,i)=>{
+      const x = (i/MAX)*W;
+      const y = H - (v/5)*(H-20) - 10;
+      if (i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    });
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+
+    ctx.fillStyle = '#00d4ff'; ctx.font = '9px monospace';
+    ctx.fillText(`D13: ${pinV>0?'HIGH':'LOW'} | cycles: ${(avrState.cycles/1000).toFixed(0)}k`, 5, 12);
+
+    requestAnimationFrame(drawFrame);
+  }
+  drawFrame();
+})();
+
+// ---------- context menu ----------
+canvas.addEventListener('contextmenu', e=>{
+  const nodeEl = e.target.closest('.node');
+  if (nodeEl) {
+    e.preventDefault();
+    const id = +nodeEl.dataset.id;
+    nodes = nodes.filter(n=>n.id!==id);
+    wires = wires.filter(w=>w.a.nodeId!==id && w.b.nodeId!==id);
+    nodeEl.remove(); drawWires(); updateStatus();
+  }
+});
+
+// بررسی بارگذاری avr8js
+setTimeout(()=>{
+  if (window.avr8js) log('✅ avr8js بارگذاری شد — آماده اجرای AVR.', 'success');
+  else log('⏳ در حال بارگذاری avr8js...', 'info');
+}, 2000);
+
+log('پالادیوم v6 آماده است. روی «🖥 کد آردوینو» بزنید.', 'success');
+</script>
+</body>
+  </html>
