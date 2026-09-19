@@ -7,7 +7,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lalezar&display=swap" rel="stylesheet">
 <style>
@@ -23,8 +22,8 @@
 html,body{
   margin:0; padding:0; background:#c8c8c8;
   font-family:'Vazirmatn', Tahoma, sans-serif;
-  font-weight:600; font-size:12.5pt; color:var(--text);
-  direction:rtl; line-height:2;
+  font-weight:600; font-size:12pt; color:var(--text);
+  direction:rtl; line-height:1.9;
 }
 .screen-frame{
   position:fixed; inset:8px; pointer-events:none; z-index:50;
@@ -45,14 +44,14 @@ html,body{
 .corner.bl{ bottom:12px; right:12px; transform:scaleY(-1); }
 .corner.br{ bottom:12px; left:12px; transform:scale(-1,-1); }
 .document{
-  max-width:21cm; margin:44px auto; background:#fff;
-  padding:2.1cm 1.6cm 2.1cm 2cm; border-radius:2px;
+  max-width:21cm; margin:30px auto; background:#fff;
+  padding:2cm 2cm 2cm 2cm; border-radius:2px;
   box-shadow:0 14px 55px rgba(0,0,0,.4);
   position:relative;
 }
 .document::before{
   content:'جزوه ماشین‌های الکتریکی ۱  ❖  محمدرسول یزدیان  ❖  فصل دوم';
-  position:absolute; top:.55cm; right:1.6cm; left:2cm;
+  position:absolute; top:.55cm; right:2cm; left:2cm;
   font-size:9pt; color:#aaa; text-align:center;
   border-bottom:.6pt solid #eee; padding-bottom:4px;
   font-family:'Amiri', serif;
@@ -69,7 +68,7 @@ html,body{
 }
 .ornament{ color:var(--gold); font-size:15pt; letter-spacing:1em; margin:.4cm 0 .4cm 1em; opacity:.85; }
 .cover-title{
-  font-size:36pt; color:var(--primary); font-weight:800;
+  font-size:34pt; color:var(--primary); font-weight:800;
   margin:.4cm 0; letter-spacing:1px; font-family:'Lalezar', 'Vazirmatn', sans-serif;
   text-shadow:2px 3px 0 rgba(26,58,92,.12);
 }
@@ -93,109 +92,115 @@ html,body{
 }
 .cover-poem span{ display:block; }
 .content h1{
-  font-size:22pt; color:var(--primary); text-align:center;
-  margin:1.2em 0 .8em; padding:.25em 0 .35em;
-  border-bottom:3.5pt double var(--gold);
+  font-size:19pt; color:var(--primary); text-align:center;
+  margin:.9em 0 .5em; padding:.2em 0 .25em;
+  border-bottom:3pt double var(--gold);
   border-top:1pt solid var(--gold-light);
   font-family:'Lalezar', 'Vazirmatn', sans-serif;
   page-break-before:always;
   page-break-after:avoid;
-  letter-spacing:.5px;
+  letter-spacing:.3px;
 }
 .content h1:first-of-type{ page-break-before:auto; margin-top:0; }
 .content h2{
-  font-size:16.5pt; color:#fff; margin:1.2em 0 .6em;
-  padding:7px 14px; background:linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
-  border-radius:6px; font-weight:700;
-  box-shadow:3px 3px 0 var(--gold-light);
+  font-size:14.5pt; color:#fff; margin:.9em 0 .4em;
+  padding:6px 12px; background:linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
+  border-radius:5px; font-weight:700;
+  box-shadow:2px 2px 0 var(--gold-light);
   page-break-after:avoid;
 }
 .content h3{
-  font-size:14pt; color:var(--accent); margin:1em 0 .4em;
-  padding-right:12px; border-right:6px solid var(--gold);
+  font-size:13pt; color:var(--accent); margin:.8em 0 .35em;
+  padding-right:10px; border-right:5px solid var(--gold);
   font-weight:800; page-break-after:avoid;
 }
 .content h4{
-  font-size:12.5pt; color:var(--gold-dark); margin:.9em 0 .4em;
+  font-size:12pt; color:var(--gold-dark); margin:.7em 0 .3em;
   font-weight:800; page-break-after:avoid;
 }
-.content p{ margin:.55em 0; text-align:justify; line-height:2; }
-.content ul,.content ol{ padding-right:1.6em; margin:.5em 0; }
-.content li{ margin:.25em 0; }
+.content p{ margin:.4em 0; text-align:justify; line-height:1.85; }
+.content ul,.content ol{ padding-right:1.5em; margin:.4em 0; }
+.content li{ margin:.2em 0; }
 .content strong{ font-weight:800; color:#111; }
 .content em{ font-style:italic; color:#333; }
 .content a{ color:var(--primary); }
 .sidenote{
-  float:right; clear:right; width:2.9cm; margin-right:-3.4cm; margin-bottom:.7em;
-  padding:7px 9px; font-size:8.5pt; line-height:1.6;
-  background:var(--note-bg); border-right:3.5px solid var(--note-border);
-  border-radius:5px; color:#5a4a10; box-shadow:0 2px 4px rgba(0,0,0,.08);
-  font-weight:600;
+  display:block; clear:both;
+  margin:.7em 0; padding:9px 13px;
+  background:var(--note-bg); border-right:4px solid var(--note-border);
+  border-radius:6px; color:#5a4a10; box-shadow:0 1px 3px rgba(0,0,0,.06);
+  font-weight:600; font-size:11pt;
+  page-break-inside:avoid;
 }
-.sidenote::before{ content:"📝 "; }
+.sidenote::before{ content:"📝 نکته: "; font-weight:800; color:#8b6914; }
 .def-box{
   background:linear-gradient(180deg, #eaf4fb 0%, #d9ecf7 100%);
-  border-right:5px solid var(--blue-border);
-  border-radius:6px; padding:10px 14px; margin:.85em 0;
-  box-shadow:0 2px 6px rgba(26,82,118,.08);
+  border-right:4px solid var(--blue-border);
+  border-radius:5px; padding:9px 13px; margin:.7em 0;
+  box-shadow:0 1px 4px rgba(26,82,118,.08);
+  page-break-inside:avoid;
 }
 .def-box::before{
   content:"تعریف"; display:inline-block; background:var(--blue-border);
-  color:#fff; font-size:9pt; padding:3px 10px; border-radius:4px;
-  margin-bottom:6px; font-weight:800; letter-spacing:.5px;
+  color:#fff; font-size:9pt; padding:2px 9px; border-radius:3px;
+  margin-bottom:5px; font-weight:800; letter-spacing:.3px;
 }
 .ex-box{
   background:linear-gradient(180deg, #fdf6e3 0%, #faecd0 100%);
-  border-right:5px solid var(--orange);
-  border-radius:6px; padding:10px 14px; margin:.85em 0;
-  box-shadow:0 2px 6px rgba(212,160,23,.12);
+  border-right:4px solid var(--orange);
+  border-radius:5px; padding:9px 13px; margin:.7em 0;
+  box-shadow:0 1px 4px rgba(212,160,23,.12);
+  page-break-inside:avoid;
 }
 .ex-box::before{
   content:"📌 مثال"; display:inline-block; background:var(--orange); color:#fff;
-  font-size:9pt; padding:3px 10px; border-radius:4px;
-  margin-bottom:6px; font-weight:800; letter-spacing:.5px;
+  font-size:9pt; padding:2px 9px; border-radius:3px;
+  margin-bottom:5px; font-weight:800; letter-spacing:.3px;
 }
 .sol-box{
   background:linear-gradient(180deg, #e8f5e9 0%, #d5ebd7 100%);
-  border-right:5px solid var(--green);
-  border-radius:6px; padding:10px 14px; margin:.85em 0;
-  box-shadow:0 2px 6px rgba(27,94,32,.1);
+  border-right:4px solid var(--green);
+  border-radius:5px; padding:9px 13px; margin:.7em 0;
+  box-shadow:0 1px 4px rgba(27,94,32,.1);
+  page-break-inside:avoid;
 }
 .sol-box::before{
   content:"✅ حل"; display:inline-block; background:var(--green); color:#fff;
-  font-size:9pt; padding:3px 10px; border-radius:4px;
-  margin-bottom:6px; font-weight:800; letter-spacing:.5px;
+  font-size:9pt; padding:2px 9px; border-radius:3px;
+  margin-bottom:5px; font-weight:800; letter-spacing:.3px;
 }
 .note-box{
   background:linear-gradient(180deg, #fdf2f2 0%, #fbe0e0 100%);
-  border-right:5px solid var(--accent);
-  border-radius:6px; padding:10px 14px; margin:.85em 0;
-  box-shadow:0 2px 6px rgba(139,0,0,.1);
+  border-right:4px solid var(--accent);
+  border-radius:5px; padding:9px 13px; margin:.7em 0;
+  box-shadow:0 1px 4px rgba(139,0,0,.1);
+  page-break-inside:avoid;
 }
 .note-box::before{
   content:"⚠️ نکته مهم"; display:inline-block; background:var(--accent);
-  color:#fff; font-size:9pt; padding:3px 10px; border-radius:4px;
-  margin-bottom:6px; font-weight:800; letter-spacing:.5px;
+  color:#fff; font-size:9pt; padding:2px 9px; border-radius:3px;
+  margin-bottom:5px; font-weight:800; letter-spacing:.3px;
 }
 .hl-y{ background:#fff59d; padding:1px 5px; border-radius:3px; }
 .hl-g{ background:#c8f7c5; padding:1px 5px; border-radius:3px; }
 .hl-b{ background:#c9e5ff; padding:1px 5px; border-radius:3px; }
 .hl-r{ background:#ffc9c9; padding:1px 5px; border-radius:3px; }
-.katex{ font-size:1.05em; }
-.katex-display{ margin:.7em 0; overflow-x:auto; overflow-y:hidden; padding:4px 0; }
+.katex{ font-size:1.02em; }
+.katex-display{ margin:.55em 0; overflow-x:auto; overflow-y:hidden; padding:2px 0; }
 .content table{
-  width:100%; border-collapse:collapse; margin:1em 0; font-size:10.5pt;
-  box-shadow:0 3px 10px rgba(0,0,0,.08);
+  width:100%; border-collapse:collapse; margin:.8em 0; font-size:10.5pt;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+  page-break-inside:avoid;
 }
 .content table th{
   background:linear-gradient(180deg, var(--primary), var(--primary-dark));
-  color:#fff; padding:8px 10px; border:1px solid #ccc;
-  font-weight:800; font-size:11pt;
+  color:#fff; padding:7px 9px; border:1px solid #ccc;
+  font-weight:800; font-size:10.5pt;
 }
-.content table td{ padding:7px 10px; border:1px solid #ccc; }
+.content table td{ padding:6px 9px; border:1px solid #ccc; }
 .content table tr:nth-child(even){ background:#f9f9f9; }
-.diagram{ margin:.3em auto; display:block; max-width:100%; }
-.diagram-wrap{ text-align:center; margin:.85em 0; page-break-inside:avoid; }
+.diagram{ margin:.25em auto; display:block; max-width:90%; }
+.diagram-wrap{ text-align:center; margin:.6em 0; page-break-inside:avoid; }
 .float-bar{
   position:fixed; bottom:24px; left:24px; z-index:100;
   display:flex; flex-direction:column; gap:10px;
@@ -210,23 +215,7 @@ html,body{
 }
 .float-bar button:hover{ transform:translateY(-2px); box-shadow:0 10px 26px rgba(0,0,0,.35); }
 .btn-pdf{ background:linear-gradient(135deg,#8b0000,#c0392b); }
-.btn-print{ background:linear-gradient(135deg,#1a3a5c,#2e5a86); }
 .btn-top{ background:linear-gradient(135deg,#b8860b,#d4af37); }
-.loader-overlay{
-  display:none; position:fixed; inset:0; z-index:2000;
-  background:rgba(26,58,92,.85); backdrop-filter:blur(6px);
-  align-items:center; justify-content:center; flex-direction:column;
-  color:#fff; font-family:'Vazirmatn',sans-serif;
-}
-.loader-overlay.active{ display:flex; }
-.spinner{
-  width:70px; height:70px; border:6px solid rgba(255,255,255,.2);
-  border-top-color:#d4af37; border-radius:50%;
-  animation:spin 1s linear infinite; margin-bottom:20px;
-}
-@keyframes spin{ to{ transform:rotate(360deg); } }
-.loader-text{ font-size:16px; font-weight:700; }
-.loader-sub{ font-size:12px; color:#d4af37; margin-top:8px; }
 .guide-modal{
   display:none; position:fixed; inset:0; z-index:1500;
   background:rgba(0,0,0,.6); align-items:center; justify-content:center;
@@ -235,7 +224,7 @@ html,body{
 .guide-modal.active{ display:flex; }
 .guide-content{
   background:#fff; border-radius:14px; padding:26px 30px;
-  max-width:520px; width:100%; direction:rtl;
+  max-width:540px; width:100%; direction:rtl;
   font-family:'Vazirmatn',sans-serif;
   box-shadow:0 20px 60px rgba(0,0,0,.4);
   border-top:6px solid var(--gold);
@@ -264,7 +253,7 @@ html,body{
     background:#fff !important;
     -webkit-print-color-adjust:exact; print-color-adjust:exact;
   }
-  .screen-frame, .corner, .float-bar, .loader-overlay, .guide-modal{ display:none !important; }
+  .screen-frame, .corner, .float-bar, .guide-modal{ display:none !important; }
   .print-frame{
     display:block; position:fixed;
     top:8mm; left:8mm; right:8mm; bottom:22mm;
@@ -301,16 +290,18 @@ html,body{
     font-weight:800;
   }
   .document{
-    max-width:none; margin:0; padding:1.8cm 1.6cm 2.6cm 2cm;
+    max-width:none; margin:0; padding:1.6cm 1.7cm 2.3cm 1.7cm;
     box-shadow:none; border-radius:0;
   }
   .document::before{ display:none; }
   .cover{ min-height:0; height:29.7cm; padding:2cm 1.5cm; page-break-after:always; }
+  .content h1{ page-break-before:always; }
+  .content h1:first-of-type{ page-break-before:auto; }
   .content h1, .content h2, .content h3, .content h4{ page-break-after:avoid; }
-  .def-box,.ex-box,.sol-box,.note-box,.diagram-wrap,.content table{
+  .def-box,.ex-box,.sol-box,.note-box,.sidenote,.diagram-wrap,.content table{
     page-break-inside:avoid;
   }
-  .content p, .content li{ orphans:3; widows:3; }
+  .content p, .content li{ orphans:2; widows:2; }
   .sidenote{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
 }
 </style>
@@ -327,29 +318,25 @@ html,body{
 <div class="print-footer"></div>
 
 <div class="float-bar no-print">
-  <button class="btn-pdf" onclick="downloadPDF()">📥 دانلود PDF</button>
-  <button class="btn-print" onclick="window.print()">🖨️ چاپ مستقیم</button>
+  <button class="btn-pdf" onclick="saveAsPDF()">📥 دانلود PDF</button>
   <button class="btn-top" onclick="scrollTo({top:0,behavior:'smooth'})">⬆️ بالا</button>
-</div>
-
-<div class="loader-overlay" id="loader">
-  <div class="spinner"></div>
-  <div class="loader-text">در حال ساخت PDF با کیفیت بالا...</div>
-  <div class="loader-sub">لطفاً صبر کنید — حدود ۱۰ تا ۳۰ ثانیه</div>
 </div>
 
 <div class="guide-modal" id="guideModal">
   <div class="guide-content">
     <h3>📄 راهنمای دانلود PDF رنگی با کادر طلایی</h3>
-    <p style="font-size:13.5px;line-height:2;margin:0 0 12px">برای بهترین کیفیت:</p>
     <ol>
-      <li>دکمه <code>🖨️ چاپ مستقیم</code> را بزن (یا <code>Ctrl + P</code>)</li>
+      <li>دکمه <code>📥 دانلود PDF</code> را بزن</li>
+      <li>پنجره چاپ مرورگر باز می‌شود</li>
       <li><b>Destination</b> → <code>Save as PDF</code></li>
-      <li><b>Paper</b> → <code>A4</code></li>
-      <li><b>Margins</b> → <code>None</code></li>
-      <li>گزینه <b>Background graphics</b> را ✅ تیک بزن</li>
+      <li><b>Paper size</b> → <code>A4</code></li>
+      <li><b>Margins</b> → <code>None</code> ← <b style="color:#8b0000">مهم!</b></li>
+      <li>گزینه <b>Background graphics</b> را ✅ تیک بزن ← <b style="color:#8b0000">خیلی مهم!</b></li>
       <li>روی <b>Save</b> بزن</li>
     </ol>
+    <p style="font-size:12.5px;color:#777;margin-top:14px;line-height:1.8">
+      نکته: برای بهترین نتیجه از <b>Google Chrome</b> استفاده کن.
+    </p>
     <button class="guide-close" onclick="closeGuide()">متوجه شدم</button>
   </div>
 </div>
@@ -514,21 +501,6 @@ $$\boxed{\;W_f = w_{f_c} \cdot V_c + w_{f_g} \cdot V_g = \bar{W}_{f_c} + \bar{W}
 <p>ب) انرژی ذخیره‌شده در هسته و در فاصله هوایی را محاسبه کنید.</p>
 </div>
 
-<div class="diagram-wrap">
-<svg class="diagram" viewBox="0 0 520 250" xmlns="http://www.w3.org/2000/svg">
-  <path d="M 140 45 L 140 215 L 360 215 L 360 195 L 160 195 L 160 65 L 360 65 L 360 45 Z" fill="#f4f4f4" stroke="#333" stroke-width="2"/>
-  <rect x="150" y="65" width="10" height="130" fill="#fff" stroke="#999" stroke-dasharray="3,3"/>
-  <rect x="355" y="65" width="10" height="130" fill="#fff" stroke="#999" stroke-dasharray="3,3"/>
-  <text x="155" y="240" text-anchor="middle" font-family="Vazirmatn" font-size="10" fill="#666">5mm</text>
-  <text x="360" y="240" text-anchor="middle" font-family="Vazirmatn" font-size="10" fill="#666">5mm</text>
-  <g stroke="#8b0000" stroke-width="2" fill="none"><circle cx="100" cy="115" r="9"/><circle cx="100" cy="140" r="9"/><circle cx="100" cy="165" r="9"/></g>
-  <line x1="30" y1="115" x2="90" y2="115" stroke="#1a3a5c" stroke-width="1.5" marker-end="url(#aB)"/>
-  <line x1="30" y1="185" x2="100" y2="185" stroke="#1a3a5c" stroke-width="1.5"/>
-  <text x="15" y="120" font-family="Vazirmatn" font-size="12" fill="#1a3a5c">V_dc</text>
-  <text x="250" y="235" text-anchor="middle" font-family="Vazirmatn" font-size="10.5" fill="#666">l_c = 0.6 m</text>
-</svg>
-</div>
-
 <div class="sol-box">
 <p><strong>الف)</strong> از قانون آمپر در مدار مغناطیسی:</p>
 $$N\,i = H_c\,l_c + H_g\,l_g \quad \Rightarrow \quad 250\,i = \frac{B_c}{\mu_c}\,l_c + \frac{B_g}{\mu_g}\,l_g$$
@@ -552,8 +524,6 @@ $$V_g = 2 \times 5\times 10^{-3} \times 0.05 \times 0.1 = 5\times 10^{-5}\,\text
 
 <p>انرژی کل:</p>
 $$W_f = w_{f_c}\,V_c + w_{f_g}\,V_g = 1 + 19.9 = \boxed{20.9\;\text{J}}$$
-
-<div class="sidenote">قسمت اعظم انرژی در فاصله هوایی ذخیره می‌شود، چون $\mu_0 \ll \mu_c$.</div>
 </div>
 
 <h1>۲.۴ انرژی و هم‌انرژی (Co-energy)</h1>
@@ -736,7 +706,7 @@ $$f_m = -\frac{\partial W_f}{\partial g}\bigg|_\lambda = -\frac{\lambda^3 \cdot 
 
 <div class="sol-box">
 <h3>حالت اول: حرکت آرام (شبه‌استاتیک)</h3>
-<p>در این حالت جریان ثابت می‌ماند ($dW_e = i\,d\lambda$) و همه انرژی ورودی به کار مکانیکی تبدیل می‌شود:</p>
+<p>در این حالت جریان ثابت می‌ماند و همه انرژی ورودی به کار مکانیکی تبدیل می‌شود:</p>
 $$\Delta W_e = \int_{\lambda_1}^{\lambda_2} i\,d\lambda = i_1(\lambda_2 - \lambda_1)$$
 $$\Delta W_m = S_{oabo} = \frac{1}{2}i_1(\lambda_2 - \lambda_1)$$
 $$\Delta W_f = W_{f_2} - W_{f_1} = \frac{1}{2}i_1\lambda_2 - \frac{1}{2}i_1\lambda_1 = \frac{1}{2}i_1(\lambda_2 - \lambda_1)$$
@@ -809,39 +779,13 @@ $$W_m = \frac{1}{2}(1.2-0.8)\times 2 + \frac{(1.8-1.6)+(1.2-0.8)}{2}\times 20 = 
 $$f_{ave} = \frac{W_m}{x} = \frac{10}{0.02} = \boxed{500\;\text{N}}$$
 
 <p><strong>محاسبات تکمیلی:</strong></p>
-$$w_m' = \frac{w_m}{\Delta x} = 9.333$$
-$$\varphi = \frac{w_m}{\Delta x} = 4.667\;\text{N}$$
-
-<div class="sidenote">جواب نهایی: <strong>۵۰۰ نیوتون</strong></div>
+$$w_m' = \frac{w_m}{\Delta x} = 9.333, \quad \varphi = \frac{w_m}{\Delta x} = 4.667\;\text{N}$$
 </div>
 
 <h1>مثال ۵: سیستم U-شکل با پیستون متحرک</h1>
 
 <div class="ex-box">
-<p><strong>صورت مسئله:</strong> در سیستم مغناطیسی نشان داده شده، هسته U-شکل ثابت و پیستون (آرماچر) متحرک است. رلوکتانس هسته ($R_c = 0$) ناچیز فرض می‌شود. اگر عرض پیستون $w = 6\,\text{mm}$، چگالی شار $B_0 = 0.8\,\text{T}$ و فاصله هوایی ثابت نگه داشته شود، نیروی وارد بر پیستون را بیابید.</p>
-</div>
-
-<div class="diagram-wrap">
-<svg class="diagram" viewBox="0 0 540 220" xmlns="http://www.w3.org/2000/svg">
-  <defs><marker id="a7" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#8b0000"/></marker></defs>
-  <path d="M 80 45 L 80 160 L 260 160 L 260 130 L 110 130 L 110 75 L 260 75 L 260 45 Z" fill="#f4f4f4" stroke="#333" stroke-width="2"/>
-  <g stroke="#8b0000" stroke-width="1.8" fill="none">
-    <rect x="85" y="85" width="20" height="9" rx="3"/>
-    <rect x="85" y="100" width="20" height="9" rx="3"/>
-    <rect x="85" y="115" width="20" height="9" rx="3"/>
-  </g>
-  <rect x="290" y="65" width="130" height="80" fill="#e8e8e8" stroke="#333" stroke-width="2"/>
-  <text x="355" y="110" text-anchor="middle" font-family="Vazirmatn" font-size="12" fill="#333" font-weight="700">پیستون متحرک</text>
-  <line x1="265" y1="100" x2="295" y2="100" stroke="#8b0000" stroke-width="1.6" marker-end="url(#a7)"/>
-  <line x1="295" y1="100" x2="265" y2="100" stroke="#8b0000" stroke-width="1.6" marker-end="url(#a7)"/>
-  <text x="280" y="180" text-anchor="middle" font-family="Vazirmatn" font-size="11.5" fill="#8b0000">g = 3mm</text>
-  <line x1="430" y1="105" x2="470" y2="105" stroke="#8b0000" stroke-width="2.2" marker-end="url(#a7)"/>
-  <text x="480" y="110" font-family="Vazirmatn" font-size="14" font-weight="800" fill="#8b0000">F</text>
-  <line x1="80" y1="195" x2="260" y2="195" stroke="#1a3a5c" stroke-width="1" stroke-dasharray="3,3"/>
-  <text x="170" y="212" text-anchor="middle" font-family="Vazirmatn" font-size="11" fill="#1a3a5c">جابجایی محور x</text>
-  <line x1="260" y1="195" x2="290" y2="195" stroke="#1a3a5c" stroke-width="1"/>
-  <text x="290" y="195" font-family="Vazirmatn" font-size="11" fill="#1a3a5c">x</text>
-</svg>
+<p><strong>صورت مسئله:</strong> در سیستم مغناطیسی نشان داده شده، هسته U-شکل ثابت و پیستون (آرمیچر) متحرک است. رلوکتانس هسته ($R_c = 0$) ناچیز فرض می‌شود. اگر عرض پیستون $w = 6\,\text{mm}$، چگالی شار $B_0 = 0.8\,\text{T}$ و فاصله هوایی ثابت نگه داشته شود، نیروی وارد بر پیستون را بیابید.</p>
 </div>
 
 <div class="sol-box">
@@ -862,9 +806,9 @@ $$F_e = \frac{1}{2}\cdot\frac{0.8^2 \times 6\times 10^{-3} \times 3\times 10^{-3
 <p><strong>روش دوم — با هم‌انرژی:</strong></p>
 $$f_e = \frac{\partial \bar{W}_f}{\partial x}\bigg|_i = \frac{1}{2}i^2\frac{dL}{dx} = \frac{1}{2}F^2 \frac{d\Lambda}{dx} = \frac{1}{2}\Lambda^2 \frac{d\mathcal{R}}{dx}$$
 
-<p>که نتیجه یکسانی می‌دهد.</p>
-  </div>
-  <h1>مثال ۶: هسته U-شکل با محور x (روش دوم)</h1>
+<p>نتیجه یکسان است.</p>
+                                                                                                                                                                                                                                                                                                           </div>
+                                                                                                                                                                                                                                                                                                           <h1>مثال ۶: هسته U-شکل با محور x (روش دوم)</h1>
 
 <div class="ex-box">
 <p><strong>صورت مسئله:</strong> در سیستم مغناطیسی زیر، هسته U-شکل ثابت و آرمیچر متحرک است. رلوکتانس هسته ناچیز ($R_c = 0$) و رلوکتانس فاصله هوایی به صورت زیر است:</p>
@@ -890,8 +834,6 @@ $$F_e = \frac{1}{2}\varphi^2 \frac{dR_g}{dx} = \frac{1}{2}\varphi^2 \cdot \frac{
 $$F_e = -\frac{1}{2}\frac{B_0^2 A^2}{\mu_0 A} = -\frac{1}{2}\frac{B_0^2 A}{\mu_0}$$
 
 <p>همان نتیجه قبلی (با علامت منفی، یعنی نیرو در جهت کاهش فاصله هوایی).</p>
-
-<div class="sidenote">مقدار قدرمطلق: <strong>۹۱۷ نیوتون</strong></div>
 </div>
 
 <h1>مثال ۷: هسته ۶×۶ با تغذیه DC</h1>
@@ -914,8 +856,6 @@ $$F_e = -\frac{1}{2}\frac{B_0^2 A^2}{\mu_0 A} = -\frac{1}{2}\frac{B_0^2 A}{\mu_0
   </g>
   <text x="240" y="28" text-anchor="middle" font-family="Vazirmatn" font-size="11" fill="#8b0000">N = 300</text>
   <text x="240" y="185" text-anchor="middle" font-family="Vazirmatn" font-size="11" fill="#666">g = 5 mm</text>
-  <line x1="90" y1="175" x2="120" y2="175" stroke="#1a3a5c" stroke-width="1"/>
-  <text x="105" y="190" font-family="Vazirmatn" font-size="10" fill="#1a3a5c">A_c</text>
 </svg>
 </div>
 
@@ -936,12 +876,12 @@ $$W_f = \frac{1}{2}\,\frac{B_g^2}{\mu_0}\,A\,l_g = \frac{1}{2}\cdot\frac{0.754^2
 $$\boxed{W_f = 8.143\;\text{J}}$$
 
 <p>نیروی مکانیکی (با فرض $A$ ثابت):</p>
-$$f_m = \frac{1}{2}\,\frac{B_g^2}{\mu_0}\,A = \frac{1}{2}\cdot\frac{0.754^2}{4\pi\times 10^{-7}} \times 36\times 10^{-4} \times 2$$
+$$f_m = \frac{1}{2}\,\frac{B_g^2}{\mu_0}\,A \times 2 = \frac{1}{2}\cdot\frac{0.754^2}{4\pi\times 10^{-7}} \times 36\times 10^{-4} \times 2$$
 
 $$\boxed{f_m = 1628.7\;\text{N}}$$
 
 <p><strong>ب)</strong> اندوکتانس:</p>
-$$L = \frac{N^2}{R_g} = \frac{N^2}{\dfrac{l_g}{\mu_0\,A}} = \frac{N^2 \mu_0 A}{l_g}$$
+$$L = \frac{N^2}{R_g} = \frac{N^2}{\dfrac{l_g}{\mu_0\,A}} = \frac{N^2 \mu_0 A}{l_g \times 2}$$
 
 $$L = \frac{300^2 \times 4\pi\times 10^{-7} \times 36\times 10^{-4}}{5\times 10^{-3} \times 2}$$
 
@@ -951,7 +891,7 @@ $$\boxed{L = 40.71\;\text{mH}}$$
 <h1>مثال ۸: تغذیه AC با امپدانس سیم‌پیچ</h1>
 
 <div class="ex-box">
-<p><strong>صورت مسئله:</strong> همان سیستم مثال ۷، اما این بار سیم‌پیچ با منبع AC با ولتاژ مؤثر $V = 120\,\text{V}$ و فرکانس $f = 60\,\text{Hz}$ تغذیه می‌شود. اگر $R = 6\,\Omega$ و $X_L = j\omega L$ (با $L$ از مثال قبل) باشد، جریان مؤثر و نیروی مکانیکی را محاسبه کنید.</p>
+<p><strong>صورت مسئله:</strong> همان سیستم مثال ۷، اما این بار سیم‌پیچ با منبع AC با ولتاژ مؤثر $V = 120\,\text{V}$ و فرکانس $f = 60\,\text{Hz}$ تغذیه می‌شود. اگر $R = 6\,\Omega$ و $X_L = j\omega L$ باشد، جریان مؤثر و نیروی مکانیکی را محاسبه کنید.</p>
 </div>
 
 <div class="sol-box">
@@ -1012,7 +952,6 @@ $$f_m = \frac{0.2744^2}{2 \times 4\pi\times 10^{-7}} \times 36\times 10^{-4} \ti
   <text x="360" y="80" text-anchor="middle" font-family="Vazirmatn" font-size="12" fill="#8b0000" font-weight="700">ω_m</text>
   <path d="M 290 130 Q 320 145 335 155" fill="none" stroke="#1a3a5c" stroke-width="1.5"/>
   <text x="315" y="130" font-family="Vazirmatn" font-size="12" fill="#1a3a5c" font-weight="700">θ</text>
-  <line x1="300" y1="150" x2="450" y2="150" stroke="#333" stroke-width="0.8" stroke-dasharray="3,3"/>
   <text x="490" y="155" font-family="Vazirmatn" font-size="13" font-style="italic" fill="#1a3a5c">i_r</text>
 </svg>
 </div>
@@ -1026,8 +965,7 @@ $$W_f = \int i_s\,d\lambda_s + \int i_r\,d\lambda_r$$
 <h3>اثبات $W_f$ برای ماشین دو تحریکه:</h3>
 
 <p>شارهای پیوندی:</p>
-$$\lambda_s = L_{ss} i_s + L_{sr} i_r$$
-$$\lambda_r = L_{rs} i_s + L_{rr} i_r$$
+$$\lambda_s = L_{ss} i_s + L_{sr} i_r, \quad \lambda_r = L_{rs} i_s + L_{rr} i_r$$
 
 <p>با $L_{sr} = L_{rs}$:</p>
 $$dW_f = i_s\,d(L_{ss}i_s + L_{sr}i_r) + i_r\,d(L_{rs}i_s + L_{rr}i_r)$$
@@ -1053,8 +991,6 @@ $$\boxed{\;\tau = \frac{\partial \bar{W}_f}{\partial \theta}\bigg|_{i=\text{cte}
 
 $$L_{ss} = L_0 + L_2 \cos 2\theta$$
 
-<p>شکل زیر تغییرات این اندوکتانس را نشان می‌دهد:</p>
-
 <div class="diagram-wrap">
 <svg class="diagram" viewBox="0 0 520 220" xmlns="http://www.w3.org/2000/svg">
   <defs><marker id="a12" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#333"/></marker></defs>
@@ -1071,7 +1007,6 @@ $$L_{ss} = L_0 + L_2 \cos 2\theta$$
   <text x="150" y="178" font-size="12" fill="#666">π/2</text>
   <text x="358" y="178" font-size="12" fill="#666">3π/2</text>
   <text x="255" y="178" font-size="12" fill="#666">π</text>
-  <line x1="260" y1="160" x2="260" y2="100" stroke="#666" stroke-dasharray="3,3"/>
   <text x="42" y="55" font-size="11" fill="#666">L₀+L₂</text>
   <text x="42" y="105" font-size="11" fill="#666">L₀</text>
   <text x="42" y="145" font-size="11" fill="#666">L₀−L₂</text>
@@ -1084,21 +1019,14 @@ $$\tau = \frac{1}{2}\,i_s^2\,\frac{dL_{ss}}{d\theta} = \frac{1}{2}\,I_{sm}^2 \si
 
 $$\tau = -I_{sm}^2 L_2 \sin^2\omega t \sin 2\theta$$
 
-<p>با استفاده از اتحاد مثلثاتی $\sin^2\omega t = \dfrac{1-\cos 2\omega t}{2}$ و $\theta = \omega_m t + \delta$:</p>
-
-$$\tau = -\frac{1}{2}I_{sm}^2 L_2 \sin 2(\omega_m t + \delta)\left[1 - \cos 2\omega t\right]$$
+<p>با استفاده از $\sin^2\omega t = \dfrac{1-\cos 2\omega t}{2}$ و $\theta = \omega_m t + \delta$:</p>
 
 $$\tau = -\frac{1}{2}I_{sm}^2 L_2 \Big[\sin 2(\omega_m t + \delta) - \frac{1}{2}\sin 2\big((\omega_m+\omega)t+\delta\big) - \frac{1}{2}\sin 2\big((\omega_m-\omega)t+\delta\big)\Big]$$
 
 <h3>حالت اول: $\omega_m = 0$ (روتور ساکن)</h3>
-<p>در این حالت $\delta$ ثابت است و:</p>
-$$\tau_{ave} = -\frac{1}{2}I_{sm}^2 L_2 \sin 2\delta$$
-
-<p>با $L_2 = \dfrac{L_d - L_q}{2}$:</p>
-$$\boxed{\;\tau_{ave} = -\frac{1}{4}I_{sm}^2 (L_d - L_q) \sin 2\delta\;}$$
+$$\boxed{\;\tau_{ave} = -\frac{1}{2}I_{sm}^2 L_2 \sin 2\delta = -\frac{1}{4}I_{sm}^2 (L_d - L_q) \sin 2\delta\;}$$
 
 <h3>حالت دوم: $\omega_m = \pm\omega$ (روتور سنکرون)</h3>
-<p>در این حالت روتور با فرکانس منبع می‌چرخد:</p>
 $$\boxed{\;\tau_{ave} = \frac{1}{4}I_{sm}^2 L_2 \sin 2\delta = \frac{1}{8}I_{sm}^2 (L_d - L_q) \sin 2\delta\;}$$
 
 <div class="note-box">
@@ -1108,31 +1036,24 @@ $$\boxed{\;\tau_{ave} = \frac{1}{4}I_{sm}^2 L_2 \sin 2\delta = \frac{1}{8}I_{sm}
 <h1>مثال ۹: ماشین آسنکرون دوار با روتور استوانه‌ای</h1>
 
 <div class="ex-box">
-<p><strong>صورت مسئله:</strong> در یک ماشین آسنکرون دوار با روتور استوانه‌ای، اندوکتانس متقابل به صورت زیر است:</p>
-$$L_{sr} = M\cos\theta$$
-<p>جریان‌ها به صورت زیر داده شده‌اند:</p>
+<p><strong>صورت مسئله:</strong> در یک ماشین آسنکرون دوار با روتور استوانه‌ای، اندوکتانس متقابل $L_{sr} = M\cos\theta$ است. جریان‌ها:</p>
 $$i_s = I_{sm}\cos\omega_s t, \quad i_r = I_{rm}\cos(\omega_r t + \alpha), \quad \theta = \omega_m t + \delta$$
-<p>گشتاور لحظه‌ای را بیابید.</p>
+<p>گشتاور لحظه‌ای و متوسط را بیابید.</p>
 </div>
 
 <div class="sol-box">
-<p>از آنجا که روتور استوانه‌ای است ($L_{ss}$ و $L_{rr}$ ثابت)، تنها جمله سوم در رابطه گشتاور باقی می‌ماند:</p>
+<p>از آنجا که روتور استوانه‌ای است، تنها جمله سوم باقی می‌ماند:</p>
 $$\tau = i_s i_r \frac{dL_{sr}}{d\theta} = -M i_s i_r \sin\theta$$
 
-<p>با جایگذاری:</p>
 $$\tau = -M I_{sm}I_{rm}\cos\omega_s t \cos(\omega_r t+\alpha) \sin(\omega_m t+\delta)$$
 
-<p>پس از اعمال اتحادهای مثلثاتی، گشتاور به صورت مجموع چهار جمله به دست می‌آید:</p>
-
 $$\boxed{\;\tau = -\frac{I_{sm}I_{rm}M}{4}\Big[\sin\big((\omega_m+\omega_s+\omega_r)t+\alpha+\delta\big) + \sin\big((\omega_m-\omega_s+\omega_r)t-\alpha+\delta\big) + \sin\big((\omega_m+\omega_s-\omega_r)t-\alpha+\delta\big) + \sin\big((\omega_m-\omega_s-\omega_r)t+\alpha+\delta\big)\Big]\;}$$
-
-<p>گشتاور متوسط غیرصفر است اگر $\omega_m = \pm(\omega_s \pm \omega_r)$.</p>
 
 <h3>حالت خاص ۱: موتور سنکرون ($\omega_r = 0$, $\omega_m = \omega_s$)</h3>
 $$\tau = -\frac{I_{sm}I_{rm}M}{2}\Big[\sin(2\omega_s t + \delta) + \sin\delta\Big]$$
 $$\boxed{\;\tau_{ave} = -\frac{I_{sm}\,I_{rm}\,M}{2}\,\sin\delta\;}$$
 
-<h3>حالت خاص ۲: موتور آسنکرون ($\omega_m = \omega_s - \omega_r$ با $\alpha = 0$)</h3>
+<h3>حالت خاص ۲: موتور آسنکرون ($\omega_m = \omega_s - \omega_r$, $\alpha = 0$)</h3>
 $$\boxed{\;\tau_{ave} = -\frac{I_{sm}\,I_{rm}\,M}{4}\,\sin(\alpha + \delta)\;}$$
 
 <div class="note-box">
@@ -1143,14 +1064,14 @@ $$\boxed{\;\tau_{ave} = -\frac{I_{sm}\,I_{rm}\,M}{4}\,\sin(\alpha + \delta)\;}$$
 <h1>مثال ۱۰: گشتاور در ماشین قطب برجسته</h1>
 
 <div class="ex-box">
-<p><strong>صورت مسئله:</strong> در یک ماشین دوار قطب برجسته، اندوکتانس‌ها و اندوکتانس متقابل به صورت زیر داده شده‌اند:</p>
+<p><strong>صورت مسئله:</strong> در یک ماشین دوار قطب برجسته:</p>
 $$L_{ss} = 0.6 + 0.2\cos 2\theta_r \quad [\text{H}]$$
 $$L_{rr} = 0.75 + 0.3\cos 2\theta_r \quad [\text{H}]$$
 $$M_{sr} = 0.8\cos\theta_r \quad [\text{H}]$$
 
 <p>اگر موقعیت روتور $\theta_r = 60°$ باشد، گشتاور را در سه حالت زیر محاسبه کنید:</p>
-<p>الف) $i_s = 2\,\text{A}$ و $i_r = 10\,\text{A}$ (هر دو مستقیم)</p>
-<p>ب) $i_s = 20\,\text{A}$ و $i_r = -10\,\text{A}$ (هر دو مستقیم)</p>
+<p>الف) $i_s = 2\,\text{A}$ و $i_r = 10\,\text{A}$</p>
+<p>ب) $i_s = 20\,\text{A}$ و $i_r = -10\,\text{A}$</p>
 <p>ج) $i_s = 20\,\text{A}$ و $i_r = 0$</p>
 </div>
 
@@ -1177,32 +1098,26 @@ $$M_{sr} = 0.8\cos\theta_r \quad [\text{H}]$$
   <text x="490" y="110" font-family="Vazirmatn" font-size="12" fill="#8b0000" font-weight="700">i_r</text>
   <line x1="260" y1="150" x2="365" y2="105" stroke="#1a3a5c" stroke-width="1.5"/>
   <text x="355" y="100" font-family="Vazirmatn" font-size="12" fill="#1a3a5c" font-weight="700">θ_r</text>
-  <text x="200" y="40" text-anchor="middle" font-family="Vazirmatn" font-size="10" fill="#333">N</text>
-  <text x="200" y="270" text-anchor="middle" font-family="Vazirmatn" font-size="10" fill="#333">S</text>
 </svg>
 </div>
 
 <div class="sol-box">
-<p>ابتدا مشتقات را محاسبه می‌کنیم:</p>
+<p>مشتقات:</p>
 $$\frac{dL_{ss}}{d\theta} = -0.4\sin 2\theta_r, \quad \frac{dL_{rr}}{d\theta} = -0.6\sin 2\theta_r, \quad \frac{dM_{sr}}{d\theta} = -0.8\sin\theta_r$$
 
-<p>در $\theta_r = 60°$:</p>
-$$\sin 2\theta_r = \sin 120° = 0.866, \quad \sin\theta_r = \sin 60° = 0.866$$
-
+<p>در $\theta_r = 60°$: $\sin 2\theta_r = 0.866$, $\sin\theta_r = 0.866$</p>
 $$\frac{dL_{ss}}{d\theta} = -0.3464, \quad \frac{dL_{rr}}{d\theta} = -0.52, \quad \frac{dM_{sr}}{d\theta} = -0.693$$
 
 <p>گشتاور کلی:</p>
 $$\tau = \frac{1}{2}i_s^2 \frac{dL_{ss}}{d\theta} + \frac{1}{2}i_r^2 \frac{dL_{rr}}{d\theta} + i_s\,i_r\,\frac{dM_{sr}}{d\theta}$$
 
-<p><strong>الف)</strong> با $i_s = 2$ و $i_r = 10$:</p>
-$$\tau = \frac{1}{2}(2)^2(-0.3464) + \frac{1}{2}(10)^2(-0.52) + (2)(10)(-0.693)$$
-$$\tau = -0.693 - 26 - 13.86 = \boxed{-40.55\;\text{N·m}}$$
+<p><strong>الف)</strong> $i_s = 2$, $i_r = 10$:</p>
+$$\tau = \frac{1}{2}(2)^2(-0.3464) + \frac{1}{2}(10)^2(-0.52) + (2)(10)(-0.693) = \boxed{-40.55\;\text{N·m}}$$
 
-<p><strong>ب)</strong> با $i_s = 20$ و $i_r = -10$:</p>
-$$\tau = \frac{1}{2}(20)^2(-0.3464) + \frac{1}{2}(10)^2(-0.52) + (20)(-10)(-0.693)$$
-$$\tau = -69.28 - 26 + 138.6 = \boxed{+43.32\;\text{N·m}}$$
+<p><strong>ب)</strong> $i_s = 20$, $i_r = -10$:</p>
+$$\tau = \frac{1}{2}(20)^2(-0.3464) + \frac{1}{2}(10)^2(-0.52) + (20)(-10)(-0.693) = \boxed{+43.32\;\text{N·m}}$$
 
-<p><strong>ج)</strong> با $i_s = 20$ و $i_r = 0$ (فقط گشتاور رلوکتانسی):</p>
+<p><strong>ج)</strong> $i_s = 20$, $i_r = 0$:</p>
 $$\tau = \frac{1}{2}(20)^2(-0.3464) = \boxed{-69.28\;\text{N·m}}$$
 </div>
 
@@ -1220,24 +1135,23 @@ $$\tau = \frac{1}{2}(20)^2(-0.3464) = \boxed{-69.28\;\text{N·m}}$$
 <tr><td>نیروی مکانیکی</td><td>$f = -\partial W_f/\partial x|_\lambda = +\partial \bar{W}_f/\partial x|_i$</td><td>دو روش معادل</td></tr>
 <tr><td>گشتاور دو تحریکه</td><td>$\tau = \frac{1}{2}i_s^2\frac{dL_{ss}}{d\theta} + \frac{1}{2}i_r^2\frac{dL_{rr}}{d\theta} + i_s i_r\frac{dM_{sr}}{d\theta}$</td><td>حالت عمومی</td></tr>
 <tr><td>گشتاور سنکرون</td><td>$\tau_{ave} = -\frac{I_{sm}I_{rm}M}{2}\sin\delta$</td><td>روتور استوانه‌ای</td></tr>
-<tr><td>گشتاور رلوکتانسی ($\omega_m=0$)</td><td>$\tau_{ave} = -\frac{1}{4}I_{sm}^2(L_d-L_q)\sin 2\delta$</td><td>روتور برجسته</td></tr>
-<tr><td>گشتاور رلوکتانسی ($\omega_m=\omega$)</td><td>$\tau_{ave} = \frac{1}{8}I_{sm}^2(L_d-L_q)\sin 2\delta$</td><td>سنکرون</td></tr>
+<tr><td>رلوکتانسی ($\omega_m=0$)</td><td>$\tau_{ave} = -\frac{1}{4}I_{sm}^2(L_d-L_q)\sin 2\delta$</td><td>روتور برجسته</td></tr>
+<tr><td>رلوکتانسی ($\omega_m=\omega$)</td><td>$\tau_{ave} = \frac{1}{8}I_{sm}^2(L_d-L_q)\sin 2\delta$</td><td>سنکرون</td></tr>
 </tbody>
 </table>
 
 <div class="note-box">
 <strong>نکات کلیدی برای امتحان:</strong>
 <ul style="margin-top:6px">
-<li>همیشه ابتدا بررسی کنید که سیستم خطی است یا غیرخطی.</li>
-<li>در مسائل، دقت کنید کدام کمیت ($i$ یا $\lambda$) ثابت نگه داشته می‌شود.</li>
+<li>بررسی کنید سیستم خطی است یا غیرخطی.</li>
+<li>دقت کنید کدام کمیت ($i$ یا $\lambda$) ثابت است.</li>
 <li>واحدها را یکدست کنید (متر، آمپر، تسلا، وبر).</li>
-<li>برای مسائل با فاصله هوایی، رلوکتانس هسته را معمولاً ناچیز فرض می‌کنند.</li>
-<li>در مسائل AC، حتماً امپدانس سیم‌پیچ را در نظر بگیرید.</li>
-<li>در ماشین‌های دوار، $\omega = 2\pi f$ و $f = \frac{np}{120}$.</li>
+<li>در مسائل با فاصله هوایی، رلوکتانس هسته را ناچیز فرض کنید.</li>
+<li>در مسائل AC، امپدانس سیم‌پیچ را در نظر بگیرید.</li>
 </ul>
 </div>
 
-<p style="text-align:center; margin-top:1.5cm; font-family:'Amiri',serif; font-size:15pt; color:#888;">
+<p style="text-align:center; margin-top:1.2cm; font-family:'Amiri',serif; font-size:15pt; color:#888;">
 ❈ &nbsp; پایان فصل دوم &nbsp; ❈
 </p>
 
@@ -1260,40 +1174,9 @@ window.addEventListener('load', () => {
   }
 });
 
-async function downloadPDF(){
-  const loader = document.getElementById('loader');
-  const bar = document.querySelector('.float-bar');
-  const screenFrame = document.querySelector('.screen-frame');
-  const corners = document.querySelectorAll('.corner');
-  loader.classList.add('active');
-  bar.style.display = 'none';
-  screenFrame.style.display = 'none';
-  corners.forEach(c => c.style.display = 'none');
-  try {
-    const element = document.querySelector('.document');
-    const opt = {
-      margin: [6, 6, 6, 6],
-      filename: 'جزوه-ماشین-۱-فصل-۲-محمدرسول-یزدیان.pdf',
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: {
-        scale: 2.5, useCORS: true, allowTaint: true,
-        backgroundColor: '#ffffff', letterRendering: true, logging: false,
-        windowWidth: element.scrollWidth,
-        windowHeight: element.scrollHeight
-      },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true },
-      pagebreak: { mode: ['css', 'legacy'], avoid: ['.def-box','.ex-box','.sol-box','.note-box','.diagram-wrap'] }
-    };
-    await html2pdf().set(opt).from(element).save();
-  } catch(err){
-    console.error(err);
-    alert('خطا در ساخت PDF. لطفاً از دکمه «چاپ مستقیم» استفاده کنید.');
-  } finally {
-    loader.classList.remove('active');
-    bar.style.display = 'flex';
-    screenFrame.style.display = '';
-    corners.forEach(c => c.style.display = '');
-  }
+function saveAsPDF(){
+  alert('🖨️ پنجره چاپ باز می‌شود.\n\nتنظیمات لازم:\n• Destination: Save as PDF\n• Paper: A4\n• Margins: None ← مهم!\n• ✅ Background graphics ← خیلی مهم!\n\nسپس Save کن.');
+  setTimeout(() => { window.print(); }, 300);
 }
 
 function closeGuide(){
