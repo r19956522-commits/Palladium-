@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lalezar&display=swap" rel="stylesheet">
 <style>
@@ -14,10 +15,9 @@
   --gold:#b8860b; --gold-light:#d4af37; --gold-dark:#8b6914;
   --primary:#1a3a5c; --primary-dark:#0e2a44;
   --accent:#8b0000;
-  --green:#1b5e20; --green-light:#e8f5e9;
-  --orange:#d4a017; --orange-light:#fdf6e3;
-  --blue-light:#eaf4fb; --blue-border:#1a5276;
-  --red-light:#fdf2f2; --red-border:#8b0000;
+  --green:#1b5e20;
+  --orange:#d4a017;
+  --blue-border:#1a5276;
   --note-bg:#fffbe6; --note-border:#f0b429;
   --text:#1a1a1a;
 }
@@ -129,7 +129,7 @@ html,body{
 .content em{ font-style:italic; color:#333; }
 .content a{ color:var(--primary); }
 
-/* ============ Sidenotes (حاشیه نکات) ============ */
+/* ============ Sidenotes ============ */
 .sidenote{
   float:left; clear:left; width:3.3cm; margin-left:-4cm; margin-bottom:.9em;
   padding:8px 10px; font-size:9pt; line-height:1.65;
@@ -145,7 +145,6 @@ html,body{
   border-right:5px solid var(--blue-border);
   border-radius:6px; padding:12px 16px; margin:1.1em 0;
   box-shadow:0 2px 6px rgba(26,82,118,.08);
-  position:relative;
 }
 .def-box::before{
   content:"تعریف"; display:inline-block; background:var(--blue-border);
@@ -213,6 +212,73 @@ html,body{
 .diagram{ margin:.4em auto; display:block; max-width:100%; }
 .diagram-wrap{ text-align:center; margin:1.2em 0; page-break-inside:avoid; }
 
+/* ============ Floating Toolbar ============ */
+.float-bar{
+  position:fixed; bottom:24px; left:24px; z-index:100;
+  display:flex; flex-direction:column; gap:10px;
+}
+.float-bar button{
+  display:flex; align-items:center; gap:8px;
+  padding:13px 22px; border:none; border-radius:50px;
+  font-family:'Vazirmatn', sans-serif; font-size:13.5px; font-weight:800;
+  cursor:pointer; box-shadow:0 6px 20px rgba(0,0,0,.28);
+  transition:transform .15s, box-shadow .15s;
+  color:#fff; letter-spacing:.3px;
+}
+.float-bar button:hover{ transform:translateY(-2px); box-shadow:0 10px 26px rgba(0,0,0,.35); }
+.float-bar button:active{ transform:translateY(0); }
+.btn-pdf{ background:linear-gradient(135deg,#8b0000,#c0392b); }
+.btn-print{ background:linear-gradient(135deg,#1a3a5c,#2e5a86); }
+.btn-top{ background:linear-gradient(135deg,#b8860b,#d4af37); }
+
+/* Loader */
+.loader-overlay{
+  display:none; position:fixed; inset:0; z-index:2000;
+  background:rgba(26,58,92,.85); backdrop-filter:blur(6px);
+  align-items:center; justify-content:center; flex-direction:column;
+  color:#fff; font-family:'Vazirmatn',sans-serif;
+}
+.loader-overlay.active{ display:flex; }
+.spinner{
+  width:70px; height:70px; border:6px solid rgba(255,255,255,.2);
+  border-top-color:#d4af37; border-radius:50%;
+  animation:spin 1s linear infinite; margin-bottom:20px;
+}
+@keyframes spin{ to{ transform:rotate(360deg); } }
+.loader-text{ font-size:16px; font-weight:700; }
+.loader-sub{ font-size:12px; color:#d4af37; margin-top:8px; }
+
+/* راهنما */
+.guide-modal{
+  display:none; position:fixed; inset:0; z-index:1500;
+  background:rgba(0,0,0,.6); align-items:center; justify-content:center;
+  padding:20px;
+}
+.guide-modal.active{ display:flex; }
+.guide-content{
+  background:#fff; border-radius:14px; padding:26px 30px;
+  max-width:520px; width:100%; direction:rtl;
+  font-family:'Vazirmatn',sans-serif;
+  box-shadow:0 20px 60px rgba(0,0,0,.4);
+  border-top:6px solid var(--gold);
+  max-height:90vh; overflow-y:auto;
+}
+.guide-content h3{
+  margin:0 0 16px; color:var(--primary); font-size:18px;
+  border-bottom:2px solid var(--gold); padding-bottom:10px;
+}
+.guide-content ol{ padding-right:1.4em; line-height:2; font-size:13.5px; }
+.guide-content li{ margin:.5em 0; }
+.guide-content code{
+  background:#f4f4f4; padding:2px 6px; border-radius:3px;
+  font-family:monospace; color:#8b0000; font-size:12.5px;
+}
+.guide-close{
+  margin-top:16px; background:var(--primary); color:#fff; border:none;
+  padding:10px 22px; border-radius:6px; cursor:pointer;
+  font-family:inherit; font-weight:700; font-size:13px;
+}
+
 /* ============ Print Frame ============ */
 .print-frame{ display:none; }
 
@@ -223,9 +289,8 @@ html,body{
     background:#fff !important;
     -webkit-print-color-adjust:exact; print-color-adjust:exact;
   }
-  .screen-frame, .corner{ display:none !important; }
+  .screen-frame, .corner, .float-bar, .loader-overlay, .guide-modal{ display:none !important; }
 
-  /* فریم ثابت روی هر صفحه چاپی */
   .print-frame{
     display:block; position:fixed;
     top:8mm; left:8mm; right:8mm; bottom:8mm;
@@ -268,6 +333,42 @@ html,body{
 
 <div class="print-frame"></div>
 
+<!-- ============ نوار شناور ============ -->
+<div class="float-bar no-print">
+  <button class="btn-pdf" onclick="downloadPDF()">📥 دانلود PDF</button>
+  <button class="btn-print" onclick="window.print()">🖨️ چاپ مستقیم</button>
+  <button class="btn-top" onclick="scrollTo({top:0,behavior:'smooth'})">⬆️ بالا</button>
+</div>
+
+<!-- ============ Loader ============ -->
+<div class="loader-overlay" id="loader">
+  <div class="spinner"></div>
+  <div class="loader-text">در حال ساخت PDF با کیفیت بالا...</div>
+  <div class="loader-sub">لطفاً صبر کنید — حدود ۱۰ تا ۳۰ ثانیه</div>
+</div>
+
+<!-- ============ راهنما ============ -->
+<div class="guide-modal" id="guideModal">
+  <div class="guide-content">
+    <h3>📄 راهنمای دانلود PDF رنگی با کادر طلایی</h3>
+    <p style="font-size:13.5px;line-height:2;margin:0 0 12px">
+      برای بهترین کیفیت (رنگ‌ها، کادر طلایی، فرمول‌ها)، توصیه می‌کنم از روش چاپ استفاده کنی:
+    </p>
+    <ol>
+      <li>دکمه <code>🖨️ چاپ مستقیم</code> را بزن (یا <code>Ctrl + P</code>)</li>
+      <li>در پنجره چاپ، <b>Destination</b> → <code>Save as PDF</code></li>
+      <li><b>Paper</b> → <code>A4</code></li>
+      <li><b>Margins</b> → <code>None</code></li>
+      <li>گزینه <b>Background graphics</b> را ✅ تیک بزن</li>
+      <li>روی <b>Save</b> بزن → فایل PDF رنگی ذخیره می‌شود</li>
+    </ol>
+    <p style="font-size:12.5px;color:#777;margin-top:14px;line-height:1.8">
+      روش «دانلود PDF» مستقیم هم هست، ولی به دلیل پیچیدگی فونت فارسی و فرمول‌های ریاضی، گاهی کیفیت چاپ دستی بهتر است.
+    </p>
+    <button class="guide-close" onclick="closeGuide()">متوجه شدم</button>
+  </div>
+</div>
+
 <div class="document">
 
 <!-- ===================== COVER ===================== -->
@@ -300,36 +401,26 @@ html,body{
 <div class="diagram-wrap">
 <svg class="diagram" viewBox="0 0 780 250" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <marker id="arr1" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
-      <path d="M0,0 L8,3 L0,6 Z" fill="#1a3a5c"/>
-    </marker>
-    <marker id="arr1r" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
-      <path d="M0,0 L8,3 L0,6 Z" fill="#8b0000"/>
-    </marker>
+    <marker id="arr1" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#1a3a5c"/></marker>
+    <marker id="arr1r" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#8b0000"/></marker>
   </defs>
   <rect x="30" y="60" width="160" height="85" rx="10" fill="#eaf4fb" stroke="#1a3a5c" stroke-width="1.8"/>
   <text x="110" y="97" text-anchor="middle" font-family="Vazirmatn" font-size="14" font-weight="700" fill="#1a3a5c">انرژی ورودی</text>
   <text x="110" y="122" text-anchor="middle" font-family="Vazirmatn" font-size="13" fill="#1a3a5c">الکتریکی</text>
-
   <rect x="310" y="60" width="160" height="85" rx="10" fill="#fdf6e3" stroke="#d4a017" stroke-width="1.8"/>
   <text x="390" y="97" text-anchor="middle" font-family="Vazirmatn" font-size="14" font-weight="700" fill="#8b6914">مبدل میانی</text>
   <text x="390" y="122" text-anchor="middle" font-family="Vazirmatn" font-size="13" fill="#8b6914">بی‌واسطه</text>
-
   <rect x="590" y="60" width="160" height="85" rx="10" fill="#e8f5e9" stroke="#1b5e20" stroke-width="1.8"/>
   <text x="670" y="97" text-anchor="middle" font-family="Vazirmatn" font-size="14" font-weight="700" fill="#1b5e20">انرژی خروجی</text>
   <text x="670" y="122" text-anchor="middle" font-family="Vazirmatn" font-size="13" fill="#1b5e20">مکانیکی</text>
-
   <line x1="190" y1="102" x2="305" y2="102" stroke="#1a3a5c" stroke-width="1.8" marker-end="url(#arr1)"/>
   <line x1="470" y1="102" x2="585" y2="102" stroke="#1a3a5c" stroke-width="1.8" marker-end="url(#arr1)"/>
-
   <line x1="250" y1="145" x2="250" y2="185" stroke="#8b0000" stroke-width="1.4" marker-end="url(#arr1r)"/>
   <text x="250" y="207" text-anchor="middle" font-family="Vazirmatn" font-size="11.5" fill="#8b0000" font-weight="600">تلفات الکتریکی</text>
   <text x="250" y="226" text-anchor="middle" font-family="Vazirmatn" font-size="11.5" fill="#8b0000" font-weight="600">(RI² تلفات اهمی)</text>
-
   <line x1="390" y1="145" x2="390" y2="185" stroke="#8b0000" stroke-width="1.4" marker-end="url(#arr1r)"/>
   <text x="390" y="207" text-anchor="middle" font-family="Vazirmatn" font-size="11.5" fill="#8b0000" font-weight="600">تلفات آهنی</text>
   <text x="390" y="226" text-anchor="middle" font-family="Vazirmatn" font-size="11.5" fill="#8b0000" font-weight="600">(تلفات هسته)</text>
-
   <line x1="530" y1="145" x2="530" y2="185" stroke="#8b0000" stroke-width="1.4" marker-end="url(#arr1r)"/>
   <text x="530" y="207" text-anchor="middle" font-family="Vazirmatn" font-size="11.5" fill="#8b0000" font-weight="600">تلفات مکانیکی</text>
   <text x="530" y="226" text-anchor="middle" font-family="Vazirmatn" font-size="11.5" fill="#8b0000" font-weight="600">(اصطکاک و باد)</text>
@@ -371,12 +462,8 @@ $$\boxed{\;dW_f = i\, d\lambda \quad \Rightarrow \quad W_f = \int_0^{\lambda} i\
 <div class="diagram-wrap">
 <svg class="diagram" viewBox="0 0 420 240" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <marker id="arr2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
-      <path d="M0,0 L8,3 L0,6 Z" fill="#333"/>
-    </marker>
-    <pattern id="hatch1" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-      <line x1="0" y1="0" x2="0" y2="8" stroke="#d4af37" stroke-width="1.6"/>
-    </pattern>
+    <marker id="arr2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#333"/></marker>
+    <pattern id="hatch1" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#d4af37" stroke-width="1.6"/></pattern>
   </defs>
   <line x1="60" y1="200" x2="380" y2="200" stroke="#333" stroke-width="1.6" marker-end="url(#arr2)"/>
   <line x1="60" y1="200" x2="60" y2="30" stroke="#333" stroke-width="1.6" marker-end="url(#arr2)"/>
@@ -393,22 +480,14 @@ $$\boxed{\;dW_f = i\, d\lambda \quad \Rightarrow \quad W_f = \int_0^{\lambda} i\
 <div class="diagram-wrap">
 <svg class="diagram" viewBox="0 0 520 280" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <marker id="arrC" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
-      <path d="M0,0 L7,3 L0,6 Z" fill="#d4a017"/>
-    </marker>
-    <marker id="arrB" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
-      <path d="M0,0 L7,3 L0,6 Z" fill="#1a3a5c"/>
-    </marker>
+    <marker id="arrC" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#d4a017"/></marker>
+    <marker id="arrB" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#1a3a5c"/></marker>
   </defs>
-  <path d="M 150 60 L 150 230 L 350 230 L 350 210 L 170 210 L 170 80 L 350 80 L 350 60 Z"
-        fill="#f4f4f4" stroke="#333" stroke-width="2.2"/>
+  <path d="M 150 60 L 150 230 L 350 230 L 350 210 L 170 210 L 170 80 L 350 80 L 350 60 Z" fill="#f4f4f4" stroke="#333" stroke-width="2.2"/>
   <rect x="330" y="80" width="20" height="130" fill="#fff" stroke="#999" stroke-dasharray="3,3" stroke-width="1"/>
   <text x="340" y="255" text-anchor="middle" font-family="Vazirmatn" font-size="11.5" fill="#666">فاصله هوایی (g)</text>
   <g stroke="#8b0000" stroke-width="2.2" fill="none">
-    <circle cx="110" cy="120" r="9"/>
-    <circle cx="110" cy="142" r="9"/>
-    <circle cx="110" cy="164" r="9"/>
-    <circle cx="110" cy="186" r="9"/>
+    <circle cx="110" cy="120" r="9"/><circle cx="110" cy="142" r="9"/><circle cx="110" cy="164" r="9"/><circle cx="110" cy="186" r="9"/>
   </g>
   <line x1="30" y1="120" x2="100" y2="120" stroke="#1a3a5c" stroke-width="1.6" marker-end="url(#arrB)"/>
   <text x="65" y="112" font-family="Vazirmatn" font-size="13" font-style="italic" fill="#1a3a5c">i</text>
@@ -444,7 +523,6 @@ $$\boxed{\;W_f = w_{f_c} \cdot V_c + w_{f_g} \cdot V_g = \bar{W}_{f_c} + \bar{W}
 چگالی انرژی در فاصله هوایی $w_{f_g} = \dfrac{B_g^2}{2\mu_0}$ و در هسته فرومغناطیس $w_{f_c} = \dfrac{B_c^2}{2\mu_c}$ است. به دلیل کوچک بودن $\mu_0$، چگالی انرژی در فاصله هوایی <strong>بسیار بزرگ‌تر</strong> از هسته است.
 </div>
 
-<!-- ============ EXAMPLE 1 ============ -->
 <h1>مثال ۱: راکتور با هسته فرومغناطیس</h1>
 
 <div class="ex-box">
@@ -455,24 +533,15 @@ $$\boxed{\;W_f = w_{f_c} \cdot V_c + w_{f_g} \cdot V_g = \bar{W}_{f_c} + \bar{W}
 
 <div class="diagram-wrap">
 <svg class="diagram" viewBox="0 0 520 260" xmlns="http://www.w3.org/2000/svg">
-  <!-- Core -->
-  <path d="M 140 50 L 140 220 L 360 220 L 360 200 L 160 200 L 160 70 L 360 70 L 360 50 Z"
-        fill="#f4f4f4" stroke="#333" stroke-width="2"/>
-  <!-- Air gaps (two) -->
+  <path d="M 140 50 L 140 220 L 360 220 L 360 200 L 160 200 L 160 70 L 360 70 L 360 50 Z" fill="#f4f4f4" stroke="#333" stroke-width="2"/>
   <rect x="150" y="70" width="10" height="130" fill="#fff" stroke="#999" stroke-dasharray="3,3"/>
   <rect x="355" y="70" width="10" height="130" fill="#fff" stroke="#999" stroke-dasharray="3,3"/>
   <text x="155" y="245" text-anchor="middle" font-family="Vazirmatn" font-size="10" fill="#666">5mm</text>
   <text x="360" y="245" text-anchor="middle" font-family="Vazirmatn" font-size="10" fill="#666">5mm</text>
-  <!-- Coil -->
-  <g stroke="#8b0000" stroke-width="2" fill="none">
-    <circle cx="100" cy="120" r="9"/>
-    <circle cx="100" cy="145" r="9"/>
-    <circle cx="100" cy="170" r="9"/>
-  </g>
+  <g stroke="#8b0000" stroke-width="2" fill="none"><circle cx="100" cy="120" r="9"/><circle cx="100" cy="145" r="9"/><circle cx="100" cy="170" r="9"/></g>
   <line x1="30" y1="120" x2="90" y2="120" stroke="#1a3a5c" stroke-width="1.5" marker-end="url(#arrB)"/>
   <line x1="30" y1="190" x2="100" y2="190" stroke="#1a3a5c" stroke-width="1.5"/>
   <text x="15" y="125" font-family="Vazirmatn" font-size="12" fill="#1a3a5c">V_dc</text>
-  <!-- Dimensions -->
   <text x="250" y="240" text-anchor="middle" font-family="Vazirmatn" font-size="10.5" fill="#666">l_c = 0.6 m</text>
 </svg>
 </div>
@@ -484,9 +553,7 @@ $$N\,i = H_c\,l_c + H_g\,l_g \quad \Rightarrow \quad 250\,i = \frac{B_c}{\mu_c}\
 <p>با جایگذاری اعداد:</p>
 $$250\,i = \frac{1}{1185 \times 4\pi\times 10^{-7}}\times 0.6 + \frac{1}{4\pi\times 10^{-7}} \times (2\times 5\times 10^{-3})$$
 
-$$250\,i = 402 + 7958 = 8360$$
-
-$$\boxed{i = 33.44\,\text{A}}$$
+$$250\,i = 402 + 7958 = 8360 \quad \Rightarrow \quad \boxed{i = 33.44\,\text{A}}$$
 
 <p>ولتاژ DC لازم:</p>
 $$V_{dc} = R\,i = 33.44 \times 5 \quad \Rightarrow \quad \boxed{V_{dc} = 167.2\,\text{V}}$$
@@ -506,7 +573,6 @@ $$W_f = w_{f_c}\,V_c + w_{f_g}\,V_g = 1 + 19.9 = \boxed{20.9\;\text{J}}$$
 <div class="sidenote">قسمت اعظم انرژی در فاصله هوایی ذخیره می‌شود، چرا که $\mu_0 \ll \mu_c$.</div>
 </div>
 
-<!-- ============ 2.4 ============ -->
 <h1>۲.۴ انرژی و هم‌انرژی (Co-energy)</h1>
 
 <p>در یک سیستم مغناطیسی، علاوه بر انرژی ذخیره‌شده $W_f$، کمیت دیگری به نام <strong>هم‌انرژی</strong> (یا شب‌انرژی) $\bar{W}_f$ تعریف می‌شود:</p>
@@ -523,15 +589,9 @@ $$\boxed{\;W_f + \bar{W}_f = \lambda\,i\;}$$
 <div class="diagram-wrap">
 <svg class="diagram" viewBox="0 0 720 230" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <marker id="arr4" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
-      <path d="M0,0 L8,3 L0,6 Z" fill="#333"/>
-    </marker>
-    <pattern id="hatchWf" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-      <line x1="0" y1="0" x2="0" y2="8" stroke="#1a3a5c" stroke-width="1.6"/>
-    </pattern>
-    <pattern id="hatchWfb" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)">
-      <line x1="0" y1="0" x2="0" y2="8" stroke="#8b0000" stroke-width="1.6"/>
-    </pattern>
+    <marker id="arr4" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#333"/></marker>
+    <pattern id="hatchWf" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#1a3a5c" stroke-width="1.6"/></pattern>
+    <pattern id="hatchWfb" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#8b0000" stroke-width="1.6"/></pattern>
   </defs>
   <g transform="translate(30,10)">
     <line x1="50" y1="190" x2="300" y2="190" stroke="#333" stroke-width="1.5" marker-end="url(#arr4)"/>
@@ -568,7 +628,6 @@ $$W_f = \bar{W}_f = \frac{1}{2}\,\lambda\,i = \frac{1}{2}\,\mathcal{F}\,\varphi 
 
 <p>که در آن $\Lambda = 1/\mathcal{R}$ رسانایی مغناطیسی و $\mathcal{F} = N\,i$ نیروی محرکه مغناطیسی است.</p>
 
-<!-- ============ 2.5 ============ -->
 <h1>۲.۵ محاسبه نیرو و گشتاور از انرژی</h1>
 
 <p>نیروی مکانیکی وارد بر قسمت متحرک سیستم، از مشتق انرژی یا هم‌انرژی نسبت به جابجایی به دست می‌آید:</p>
@@ -576,7 +635,6 @@ $$W_f = \bar{W}_f = \frac{1}{2}\,\lambda\,i = \frac{1}{2}\,\mathcal{F}\,\varphi 
 <div class="def-box">
 <p><strong>روش اول — از روی انرژی (با $\lambda$ ثابت):</strong></p>
 $$f_m = -\left.\frac{\partial W_f(\lambda, x)}{\partial x}\right|_{\lambda = \text{cte}}$$
-
 <p style="margin-top:10px"><strong>روش دوم — از روی هم‌انرژی (با $i$ ثابت):</strong></p>
 $$f_m = +\left.\frac{\partial \bar{W}_f(i, x)}{\partial x}\right|_{i = \text{cte}}$$
 </div>
@@ -585,7 +643,6 @@ $$f_m = +\left.\frac{\partial \bar{W}_f(i, x)}{\partial x}\right|_{i = \text{cte
 این دو رابطه از نظر فیزیکی معادل‌اند اما برای حل مسائل، معمولاً یکی ساده‌تر از دیگری است. اگر مشخصه $\lambda - i$ داده شده باشد، از هم‌انرژی استفاده کنید (چون $i$ متغیر مستقل است).
 </div>
 
-<!-- ============ EXAMPLE 2 ============ -->
 <h1>مثال ۲: سیستم غیرخطی با فاصله هوایی متغیر</h1>
 
 <div class="ex-box">
@@ -610,7 +667,6 @@ $$f_m = -\frac{0.06 \times 3^{3/2}}{0.05^2} = -\frac{0.06 \times 5.196}{0.0025} 
 <p>علامت منفی نشان می‌دهد نیرو در جهت کاهش فاصله هوایی (جذب) عمل می‌کند.</p>
 </div>
 
-<!-- ============ EXAMPLE 3 ============ -->
 <h1>مثال ۳: حرکت آرام در برابر حرکت سریع</h1>
 
 <div class="ex-box">
@@ -623,11 +679,7 @@ $$f_m = -\frac{0.06 \times 3^{3/2}}{0.05^2} = -\frac{0.06 \times 5.196}{0.0025} 
 
 <div class="diagram-wrap">
 <svg class="diagram" viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <marker id="arr5" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
-      <path d="M0,0 L8,3 L0,6 Z" fill="#333"/>
-    </marker>
-  </defs>
+  <defs><marker id="arr5" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#333"/></marker></defs>
   <line x1="60" y1="230" x2="420" y2="230" stroke="#333" stroke-width="1.5" marker-end="url(#arr5)"/>
   <line x1="60" y1="230" x2="60" y2="30" stroke="#333" stroke-width="1.5" marker-end="url(#arr5)"/>
   <text x="432" y="235" font-size="14" font-style="italic" fill="#333">i</text>
@@ -653,11 +705,8 @@ $$f_m = -\frac{0.06 \times 3^{3/2}}{0.05^2} = -\frac{0.06 \times 5.196}{0.0025} 
 <h3>حالت اول: حرکت آرام (شبه‌استاتیک)</h3>
 <p>در این حالت جریان ثابت می‌ماند و همه انرژی ورودی به کار مکانیکی تبدیل می‌شود:</p>
 $$dW_m = dW_e - dW_f = i_1\,d\lambda$$
-
 $$\Delta W_e = i_1\,(\lambda_2 - \lambda_1)$$
-
 $$\Delta W_m = \frac{1}{2}\,i_1\,(\lambda_2 - \lambda_1) \quad \text{(سطح مثلث بین دو خط)}$$
-
 $$\Delta W_f = W_{f_2} - W_{f_1} = \frac{1}{2}i_1\lambda_2 - \frac{1}{2}i_1\lambda_1 = \frac{1}{2}i_1(\lambda_2 - \lambda_1)$$
 
 <p>یعنی در حرکت آرام: $\Delta W_e = 2\,\Delta W_m$ و $\Delta W_m = \Delta W_f$.</p>
@@ -669,7 +718,6 @@ $$dW_m = -\,dW_f \quad \Rightarrow \quad \Delta W_m = \Delta W_{f_1} - \Delta W_
 <p>کار مکانیکی برابر تغییر (کاهش) انرژی ذخیره‌شده است.</p>
 </div>
 
-<!-- ============ EXAMPLE 4 ============ -->
 <h1>مثال ۴: محاسبه نیروی متوسط با منحنی دوتکه</h1>
 
 <div class="ex-box">
@@ -679,12 +727,8 @@ $$dW_m = -\,dW_f \quad \Rightarrow \quad \Delta W_m = \Delta W_{f_1} - \Delta W_
 <div class="diagram-wrap">
 <svg class="diagram" viewBox="0 0 560 280" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <marker id="arr6" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
-      <path d="M0,0 L8,3 L0,6 Z" fill="#333"/>
-    </marker>
-    <pattern id="hatchEx4" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-      <line x1="0" y1="0" x2="0" y2="6" stroke="#d4a017" stroke-width="1.4"/>
-    </pattern>
+    <marker id="arr6" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#333"/></marker>
+    <pattern id="hatchEx4" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#d4a017" stroke-width="1.4"/></pattern>
   </defs>
   <line x1="60" y1="240" x2="500" y2="240" stroke="#333" stroke-width="1.5" marker-end="url(#arr6)"/>
   <line x1="60" y1="240" x2="60" y2="30" stroke="#333" stroke-width="1.5" marker-end="url(#arr6)"/>
@@ -720,7 +764,6 @@ $$W_m = 0.4 + 0.6 = 1.0\;\text{J}$$
 $$f_{ave} = \frac{W_m}{x} = \frac{10}{0.02} = \boxed{500\;\text{N}}$$
 </div>
 
-<!-- ============ EXAMPLE 5 ============ -->
 <h1>مثال ۵: سیستم U-شکل با پیستون متحرک</h1>
 
 <div class="ex-box">
@@ -729,13 +772,8 @@ $$f_{ave} = \frac{W_m}{x} = \frac{10}{0.02} = \boxed{500\;\text{N}}$$
 
 <div class="diagram-wrap">
 <svg class="diagram" viewBox="0 0 520 240" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <marker id="arr7" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
-      <path d="M0,0 L8,3 L0,6 Z" fill="#8b0000"/>
-    </marker>
-  </defs>
-  <path d="M 80 50 L 80 170 L 260 170 L 260 140 L 110 140 L 110 80 L 260 80 L 260 50 Z"
-        fill="#f4f4f4" stroke="#333" stroke-width="2"/>
+  <defs><marker id="arr7" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#8b0000"/></marker></defs>
+  <path d="M 80 50 L 80 170 L 260 170 L 260 140 L 110 140 L 110 80 L 260 80 L 260 50 Z" fill="#f4f4f4" stroke="#333" stroke-width="2"/>
   <g stroke="#8b0000" stroke-width="1.8" fill="none">
     <rect x="85" y="90" width="20" height="9" rx="3"/>
     <rect x="85" y="105" width="20" height="9" rx="3"/>
@@ -767,7 +805,6 @@ $$F_e = -\frac{\partial W_f}{\partial x}\bigg|_{\lambda} = -\frac{1}{2}\,\frac{B
 $$F_e = \frac{1}{2}\cdot\frac{0.8^2 \times 6\times 10^{-3} \times 3\times 10^{-3}}{4\pi\times 10^{-7}} = \boxed{4.584\;\text{N}}$$
 </div>
 
-<!-- ============ EXAMPLE 6 ============ -->
 <h1>مثال ۶: مشخصه غیرخطی با اشباع</h1>
 
 <div class="ex-box">
@@ -778,12 +815,8 @@ $$F_e = \frac{1}{2}\cdot\frac{0.8^2 \times 6\times 10^{-3} \times 3\times 10^{-3
 <div class="diagram-wrap">
 <svg class="diagram" viewBox="0 0 500 270" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <marker id="arrEx6" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
-      <path d="M0,0 L8,3 L0,6 Z" fill="#333"/>
-    </marker>
-    <pattern id="hatchEx6" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-      <line x1="0" y1="0" x2="0" y2="6" stroke="#d4a017" stroke-width="1.4"/>
-    </pattern>
+    <marker id="arrEx6" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#333"/></marker>
+    <pattern id="hatchEx6" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#d4a017" stroke-width="1.4"/></pattern>
   </defs>
   <line x1="60" y1="230" x2="460" y2="230" stroke="#333" stroke-width="1.5" marker-end="url(#arrEx6)"/>
   <line x1="60" y1="230" x2="60" y2="30" stroke="#333" stroke-width="1.5" marker-end="url(#arrEx6)"/>
@@ -815,7 +848,6 @@ $$\Delta W_m = 0.4 + 0.6 = 1.0\;\text{J}$$
 $$f_{ave} = \frac{\Delta W_m}{\Delta x} = \frac{1.0}{0.02} = \boxed{50\;\text{N}}$$
 </div>
 
-<!-- ============ EXAMPLE 7 ============ -->
 <h1>مثال ۷: هسته ۶×۶ با تغذیه DC</h1>
 
 <div class="ex-box">
@@ -864,7 +896,6 @@ $$L = \frac{N^2}{R_g} = \frac{N^2}{\dfrac{l_g}{\mu_0\,A}} = \frac{N^2 \mu_0 A}{l
 $$L = \frac{300^2 \times 4\pi\times 10^{-7} \times 36\times 10^{-4}}{5\times 10^{-3}} \quad \Rightarrow \quad \boxed{L = 40.71\;\text{mH}}$$
 </div>
 
-<!-- ============ EXAMPLE 8 ============ -->
 <h1>مثال ۸: تغذیه AC با امپدانس سیم‌پیچ</h1>
 
 <div class="ex-box">
@@ -901,7 +932,6 @@ $$f_m = \frac{0.2744^2}{2 \times 4\pi\times 10^{-7}} \times 36\times 10^{-4} \ti
 <strong>مقایسه:</strong> در حالت DC (مثال ۷) نیرو $1628.7\,\text{N}$ بود، اما در AC با همین ولتاژ مؤثر، نیرو به $215.78\,\text{N}$ کاهش یافت. دلیل: امپدانس سیم‌پیچ باعث کاهش جریان می‌شود.
 </div>
 
-<!-- ============ 2.6 ============ -->
 <h1>۲.۶ ماشین‌های الکتریکی دوار</h1>
 
 <div class="def-box">
@@ -912,11 +942,7 @@ $$f_m = \frac{0.2744^2}{2 \times 4\pi\times 10^{-7}} \times 36\times 10^{-4} \ti
 
 <div class="diagram-wrap">
 <svg class="diagram" viewBox="0 0 520 320" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <marker id="arrT" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
-      <path d="M0,0 L8,3 L0,6 Z" fill="#8b0000"/>
-    </marker>
-  </defs>
+  <defs><marker id="arrT" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#8b0000"/></marker></defs>
   <rect x="80" y="50" width="360" height="220" fill="#f4f4f4" stroke="#333" stroke-width="2.2" rx="6"/>
   <rect x="140" y="105" width="240" height="110" fill="#fff" stroke="#333" stroke-width="1.5" rx="5"/>
   <g stroke="#8b0000" stroke-width="1.8" fill="none">
@@ -936,20 +962,17 @@ $$f_m = \frac{0.2744^2}{2 \times 4\pi\times 10^{-7}} \times 36\times 10^{-4} \ti
 </div>
 
 <p>معادله تعادل انرژی در ماشین دوار:</p>
-
 $$dW_e = dW_m + dW_f$$
 
 <p>که $dW_e = e_s\,i_s\,dt + e_r\,i_r\,dt = i_s\,d\lambda_s + i_r\,d\lambda_r$ است.</p>
 
 <p>انرژی ذخیره‌شده در میدان:</p>
-
 $$W_f = \int i_s\,d\lambda_s + \int i_r\,d\lambda_r$$
 
 <p>گشتاور الکترومغناطیسی از مشتق انرژی نسبت به زاویه $\theta$ به دست می‌آید:</p>
 
 $$\boxed{\;\tau = \frac{\partial W_f}{\partial \theta}\bigg|_{\lambda = \text{cte}} = -\frac{\partial \bar{W}_f}{\partial \theta}\bigg|_{i = \text{cte}}\;}$$
 
-<!-- ============ 2.7 ============ -->
 <h1>۲.۷ گشتاور در ماشین تک‌فاز با روتور برجسته</h1>
 
 <p>در یک ماشین با روتور برجسته (salient pole)، اندوکتانس سیم‌پیچی با موقعیت روتور تغییر می‌کند:</p>
@@ -974,7 +997,6 @@ $$\tau_{ave} = -\frac{1}{4}\,I_{sm}^2\,(L_d - L_q)\,\sin 2\theta$$
 این گشتاور را <strong>گشتاور رلوکتانسی</strong> می‌نامند و در ماشین‌های سنکرون با روتور برجسته (بدون تحریک) نقش اساسی دارد.
 </div>
 
-<!-- ============ 2.8 ============ -->
 <h1>۲.۸ ماشین دو تحریکه (Doubly-Fed)</h1>
 
 <p>در یک ماشین دوار با دو سیم‌پیچ (استاتور و روتور)، گشتاور کلی از رابطه زیر به دست می‌آید:</p>
@@ -1013,7 +1035,6 @@ $$\tau_{ave} = -\frac{I_{sm}\,I_{rm}\,M}{4}\,\sin(\alpha + \delta)$$
 در موتورهای القایی، جریان روتور توسط لغزش (slip) تعیین می‌شود و گشتاور متوسط به ولتاژ و لغزش بستگی دارد.
 </div>
 
-<!-- ============ EXAMPLE 9 ============ -->
 <h1>مثال ۹: گشتاور در ماشین قطب برجسته</h1>
 
 <div class="ex-box">
@@ -1078,7 +1099,6 @@ $$\tau = -69.28 - 26 + 138.6 = \boxed{+43.32\;\text{N·m}}$$
 $$\tau = \frac{1}{2}(20)^2(-0.3464) = \boxed{-69.28\;\text{N·m}}$$
 </div>
 
-<!-- ============ SUMMARY ============ -->
 <h1>خلاصه فصل دوم</h1>
 
 <table>
@@ -1116,6 +1136,7 @@ $$\tau = \frac{1}{2}(20)^2(-0.3464) = \boxed{-69.28\;\text{N·m}}$$
 </div>
 
 <script>
+/* ==================== رندر فرمول‌ها ==================== */
 window.addEventListener('load', () => {
   if (window.renderMathInElement) {
     renderMathInElement(document.querySelector('.content'), {
@@ -1130,6 +1151,73 @@ window.addEventListener('load', () => {
     });
   }
 });
+
+/* ==================== دانلود PDF ==================== */
+async function downloadPDF(){
+  const loader = document.getElementById('loader');
+  const bar = document.querySelector('.float-bar');
+  const screenFrame = document.querySelector('.screen-frame');
+  const corners = document.querySelectorAll('.corner');
+
+  loader.classList.add('active');
+  bar.style.display = 'none';
+  screenFrame.style.display = 'none';
+  corners.forEach(c => c.style.display = 'none');
+
+  try {
+    const element = document.querySelector('.document');
+
+    const opt = {
+      margin:       [6, 6, 6, 6],
+      filename:     'جزوه-ماشین-۱-فصل-۲-محمدرسول-یزدیان.pdf',
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  {
+        scale: 2.5,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: '#ffffff',
+        letterRendering: true,
+        logging: false,
+        windowWidth: element.scrollWidth,
+        windowHeight: element.scrollHeight
+      },
+      jsPDF: {
+        unit: 'mm',
+        format: 'a4',
+        orientation: 'portrait',
+        compress: true
+      },
+      pagebreak: { mode: ['css', 'legacy'], avoid: ['.def-box','.ex-box','.sol-box','.note-box','.diagram-wrap'] }
+    };
+
+    await html2pdf().set(opt).from(element).save();
+
+  } catch(err){
+    console.error(err);
+    alert('خطا در ساخت PDF. لطفاً از دکمه «چاپ مستقیم» استفاده کنید.');
+  } finally {
+    loader.classList.remove('active');
+    bar.style.display = 'flex';
+    screenFrame.style.display = '';
+    corners.forEach(c => c.style.display = '');
+  }
+}
+
+/* ==================== راهنما ==================== */
+function closeGuide(){
+  document.getElementById('guideModal').classList.remove('active');
+}
+document.getElementById('guideModal')?.addEventListener('click', (e)=>{
+  if(e.target.id === 'guideModal') closeGuide();
+});
+
+/* نمایش راهنما در اولین بازدید */
+if(!localStorage.getItem('guide-seen')){
+  setTimeout(()=>{
+    document.getElementById('guideModal').classList.add('active');
+    localStorage.setItem('guide-seen','1');
+  }, 1500);
+}
 </script>
 </body>
-  </html>
+                                                                                                                                                                                                                                                           </html>
