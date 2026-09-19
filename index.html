@@ -14,9 +14,7 @@
 :root{
   --gold:#b8860b; --gold-light:#d4af37; --gold-dark:#8b6914;
   --primary:#1a3a5c; --primary-dark:#0e2a44;
-  --accent:#8b0000;
-  --green:#1b5e20;
-  --orange:#d4a017;
+  --accent:#8b0000; --green:#1b5e20; --orange:#d4a017;
   --blue-border:#1a5276;
   --note-bg:#fffbe6; --note-border:#f0b429;
   --text:#1a1a1a;
@@ -26,10 +24,8 @@ html,body{
   margin:0; padding:0; background:#c8c8c8;
   font-family:'Vazirmatn', Tahoma, sans-serif;
   font-weight:600; font-size:12.5pt; color:var(--text);
-  direction:rtl; line-height:2.05;
+  direction:rtl; line-height:2;
 }
-
-/* ============ Ornate Screen Frame ============ */
 .screen-frame{
   position:fixed; inset:8px; pointer-events:none; z-index:50;
   border:2.5pt double var(--gold); border-radius:5px;
@@ -48,23 +44,19 @@ html,body{
 .corner.tr{ top:12px; left:12px; transform:scaleX(-1); }
 .corner.bl{ bottom:12px; right:12px; transform:scaleY(-1); }
 .corner.br{ bottom:12px; left:12px; transform:scale(-1,-1); }
-
-/* ============ Document ============ */
 .document{
   max-width:21cm; margin:44px auto; background:#fff;
-  padding:2.1cm 1.9cm 2.1cm 4.3cm; border-radius:2px;
+  padding:2.1cm 1.6cm 2.1cm 2cm; border-radius:2px;
   box-shadow:0 14px 55px rgba(0,0,0,.4);
   position:relative;
 }
 .document::before{
   content:'جزوه ماشین‌های الکتریکی ۱  ❖  محمدرسول یزدیان  ❖  فصل دوم';
-  position:absolute; top:.55cm; right:1.9cm; left:1.9cm;
+  position:absolute; top:.55cm; right:1.6cm; left:2cm;
   font-size:9pt; color:#aaa; text-align:center;
   border-bottom:.6pt solid #eee; padding-bottom:4px;
   font-family:'Amiri', serif;
 }
-
-/* ============ Cover ============ */
 .cover{
   min-height:26cm; display:flex; flex-direction:column;
   align-items:center; justify-content:center; text-align:center;
@@ -96,123 +88,114 @@ html,body{
 }
 .cover-poem{
   margin-top:1.5cm; font-family:'Amiri','Vazirmatn',serif;
-  font-size:15pt; color:#555; line-height:2.1;
+  font-size:15pt; color:#555; line-height:2.3;
+  display:flex; flex-direction:column; gap:.15cm;
 }
-
-/* ============ Headings ============ */
+.cover-poem span{ display:block; }
 .content h1{
-  font-size:23pt; color:var(--primary); text-align:center;
-  margin:1.6em 0 1em; padding:.3em 0 .45em;
+  font-size:22pt; color:var(--primary); text-align:center;
+  margin:1.2em 0 .8em; padding:.25em 0 .35em;
   border-bottom:3.5pt double var(--gold);
   border-top:1pt solid var(--gold-light);
   font-family:'Lalezar', 'Vazirmatn', sans-serif;
   page-break-before:always;
+  page-break-after:avoid;
   letter-spacing:.5px;
 }
 .content h1:first-of-type{ page-break-before:auto; margin-top:0; }
 .content h2{
-  font-size:17pt; color:#fff; margin:1.7em 0 .7em;
-  padding:8px 14px; background:linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
-  border-radius:6px; font-weight:700; position:relative;
+  font-size:16.5pt; color:#fff; margin:1.2em 0 .6em;
+  padding:7px 14px; background:linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
+  border-radius:6px; font-weight:700;
   box-shadow:3px 3px 0 var(--gold-light);
   page-break-after:avoid;
 }
 .content h3{
-  font-size:14pt; color:var(--accent); margin:1.3em 0 .5em;
+  font-size:14pt; color:var(--accent); margin:1em 0 .4em;
   padding-right:12px; border-right:6px solid var(--gold);
   font-weight:800; page-break-after:avoid;
 }
-.content p{ margin:.75em 0; text-align:justify; line-height:2.1; }
-.content ul,.content ol{ padding-right:1.7em; margin:.6em 0; }
-.content li{ margin:.35em 0; }
+.content h4{
+  font-size:12.5pt; color:var(--gold-dark); margin:.9em 0 .4em;
+  font-weight:800; page-break-after:avoid;
+}
+.content p{ margin:.55em 0; text-align:justify; line-height:2; }
+.content ul,.content ol{ padding-right:1.6em; margin:.5em 0; }
+.content li{ margin:.25em 0; }
 .content strong{ font-weight:800; color:#111; }
 .content em{ font-style:italic; color:#333; }
 .content a{ color:var(--primary); }
-
-/* ============ Sidenotes ============ */
 .sidenote{
-  float:left; clear:left; width:3.3cm; margin-left:-4cm; margin-bottom:.9em;
-  padding:8px 10px; font-size:9pt; line-height:1.65;
+  float:right; clear:right; width:2.9cm; margin-right:-3.4cm; margin-bottom:.7em;
+  padding:7px 9px; font-size:8.5pt; line-height:1.6;
   background:var(--note-bg); border-right:3.5px solid var(--note-border);
   border-radius:5px; color:#5a4a10; box-shadow:0 2px 4px rgba(0,0,0,.08);
   font-weight:600;
 }
 .sidenote::before{ content:"📝 "; }
-
-/* ============ Content Boxes ============ */
 .def-box{
   background:linear-gradient(180deg, #eaf4fb 0%, #d9ecf7 100%);
   border-right:5px solid var(--blue-border);
-  border-radius:6px; padding:12px 16px; margin:1.1em 0;
+  border-radius:6px; padding:10px 14px; margin:.85em 0;
   box-shadow:0 2px 6px rgba(26,82,118,.08);
 }
 .def-box::before{
   content:"تعریف"; display:inline-block; background:var(--blue-border);
-  color:#fff; font-size:9.5pt; padding:3px 10px; border-radius:4px;
-  margin-bottom:8px; font-weight:800; letter-spacing:.5px;
+  color:#fff; font-size:9pt; padding:3px 10px; border-radius:4px;
+  margin-bottom:6px; font-weight:800; letter-spacing:.5px;
 }
 .ex-box{
   background:linear-gradient(180deg, #fdf6e3 0%, #faecd0 100%);
   border-right:5px solid var(--orange);
-  border-radius:6px; padding:12px 16px; margin:1.1em 0;
+  border-radius:6px; padding:10px 14px; margin:.85em 0;
   box-shadow:0 2px 6px rgba(212,160,23,.12);
 }
 .ex-box::before{
   content:"📌 مثال"; display:inline-block; background:var(--orange); color:#fff;
-  font-size:9.5pt; padding:3px 10px; border-radius:4px;
-  margin-bottom:8px; font-weight:800; letter-spacing:.5px;
+  font-size:9pt; padding:3px 10px; border-radius:4px;
+  margin-bottom:6px; font-weight:800; letter-spacing:.5px;
 }
 .sol-box{
   background:linear-gradient(180deg, #e8f5e9 0%, #d5ebd7 100%);
   border-right:5px solid var(--green);
-  border-radius:6px; padding:12px 16px; margin:1.1em 0;
+  border-radius:6px; padding:10px 14px; margin:.85em 0;
   box-shadow:0 2px 6px rgba(27,94,32,.1);
 }
 .sol-box::before{
   content:"✅ حل"; display:inline-block; background:var(--green); color:#fff;
-  font-size:9.5pt; padding:3px 10px; border-radius:4px;
-  margin-bottom:8px; font-weight:800; letter-spacing:.5px;
+  font-size:9pt; padding:3px 10px; border-radius:4px;
+  margin-bottom:6px; font-weight:800; letter-spacing:.5px;
 }
 .note-box{
   background:linear-gradient(180deg, #fdf2f2 0%, #fbe0e0 100%);
   border-right:5px solid var(--accent);
-  border-radius:6px; padding:12px 16px; margin:1.1em 0;
+  border-radius:6px; padding:10px 14px; margin:.85em 0;
   box-shadow:0 2px 6px rgba(139,0,0,.1);
 }
 .note-box::before{
   content:"⚠️ نکته مهم"; display:inline-block; background:var(--accent);
-  color:#fff; font-size:9.5pt; padding:3px 10px; border-radius:4px;
-  margin-bottom:8px; font-weight:800; letter-spacing:.5px;
+  color:#fff; font-size:9pt; padding:3px 10px; border-radius:4px;
+  margin-bottom:6px; font-weight:800; letter-spacing:.5px;
 }
-
-/* ============ Highlight ============ */
 .hl-y{ background:#fff59d; padding:1px 5px; border-radius:3px; }
 .hl-g{ background:#c8f7c5; padding:1px 5px; border-radius:3px; }
 .hl-b{ background:#c9e5ff; padding:1px 5px; border-radius:3px; }
 .hl-r{ background:#ffc9c9; padding:1px 5px; border-radius:3px; }
-
-/* ============ Math ============ */
-.katex{ font-size:1.08em; }
-.katex-display{ margin:1em 0; overflow-x:auto; overflow-y:hidden; padding:6px 0; }
-
-/* ============ Table ============ */
+.katex{ font-size:1.05em; }
+.katex-display{ margin:.7em 0; overflow-x:auto; overflow-y:hidden; padding:4px 0; }
 .content table{
-  width:100%; border-collapse:collapse; margin:1.2em 0; font-size:11pt;
+  width:100%; border-collapse:collapse; margin:1em 0; font-size:10.5pt;
   box-shadow:0 3px 10px rgba(0,0,0,.08);
 }
 .content table th{
   background:linear-gradient(180deg, var(--primary), var(--primary-dark));
-  color:#fff; padding:10px 12px; border:1px solid #ccc;
-  font-weight:800; font-size:11.5pt;
+  color:#fff; padding:8px 10px; border:1px solid #ccc;
+  font-weight:800; font-size:11pt;
 }
-.content table td{ padding:9px 12px; border:1px solid #ccc; }
+.content table td{ padding:7px 10px; border:1px solid #ccc; }
 .content table tr:nth-child(even){ background:#f9f9f9; }
-
-/* ============ Diagrams ============ */
-.diagram{ margin:.4em auto; display:block; max-width:100%; }
-.diagram-wrap{ text-align:center; margin:1.2em 0; page-break-inside:avoid; }
-
-/* ============ Floating Toolbar ============ */
+.diagram{ margin:.3em auto; display:block; max-width:100%; }
+.diagram-wrap{ text-align:center; margin:.85em 0; page-break-inside:avoid; }
 .float-bar{
   position:fixed; bottom:24px; left:24px; z-index:100;
   display:flex; flex-direction:column; gap:10px;
@@ -226,12 +209,9 @@ html,body{
   color:#fff; letter-spacing:.3px;
 }
 .float-bar button:hover{ transform:translateY(-2px); box-shadow:0 10px 26px rgba(0,0,0,.35); }
-.float-bar button:active{ transform:translateY(0); }
 .btn-pdf{ background:linear-gradient(135deg,#8b0000,#c0392b); }
 .btn-print{ background:linear-gradient(135deg,#1a3a5c,#2e5a86); }
 .btn-top{ background:linear-gradient(135deg,#b8860b,#d4af37); }
-
-/* Loader */
 .loader-overlay{
   display:none; position:fixed; inset:0; z-index:2000;
   background:rgba(26,58,92,.85); backdrop-filter:blur(6px);
@@ -247,8 +227,6 @@ html,body{
 @keyframes spin{ to{ transform:rotate(360deg); } }
 .loader-text{ font-size:16px; font-weight:700; }
 .loader-sub{ font-size:12px; color:#d4af37; margin-top:8px; }
-
-/* راهنما */
 .guide-modal{
   display:none; position:fixed; inset:0; z-index:1500;
   background:rgba(0,0,0,.6); align-items:center; justify-content:center;
@@ -278,11 +256,8 @@ html,body{
   padding:10px 22px; border-radius:6px; cursor:pointer;
   font-family:inherit; font-weight:700; font-size:13px;
 }
-
-/* ============ Print Frame ============ */
 .print-frame{ display:none; }
-
-/* ============ Print ============ */
+.print-footer{ display:none; }
 @page{ size:A4; margin:0; }
 @media print{
   html,body{
@@ -290,10 +265,9 @@ html,body{
     -webkit-print-color-adjust:exact; print-color-adjust:exact;
   }
   .screen-frame, .corner, .float-bar, .loader-overlay, .guide-modal{ display:none !important; }
-
   .print-frame{
     display:block; position:fixed;
-    top:8mm; left:8mm; right:8mm; bottom:8mm;
+    top:8mm; left:8mm; right:8mm; bottom:22mm;
     border:2.5pt double var(--gold); border-radius:5px;
     pointer-events:none; z-index:9999;
   }
@@ -305,73 +279,83 @@ html,body{
     content:''; position:absolute; inset:9px;
     border:.4pt solid var(--gold-light); border-radius:2px;
   }
-
+  .print-footer{
+    display:block; position:fixed;
+    left:8mm; right:8mm; bottom:8mm; height:12mm;
+    border:1.5pt solid var(--gold); border-radius:4px;
+    background:linear-gradient(180deg, #fffdf5 0%, #fdf6e3 100%);
+    z-index:9998; pointer-events:none;
+    padding:1.5mm 6mm;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  .print-footer::before{
+    content:'📌 یادداشت: ......................................................  ......................................................  ......................................................';
+    position:absolute; top:1mm; left:6mm; right:40mm;
+    font-family:'Vazirmatn', sans-serif; font-size:8pt; color:#8b6914;
+    font-weight:600;
+  }
+  .print-footer::after{
+    content:'صفحه ' counter(page) ' از ' counter(pages);
+    position:absolute; bottom:1mm; right:6mm;
+    font-family:'Vazirmatn', sans-serif; font-size:8.5pt; color:#8b0000;
+    font-weight:800;
+  }
   .document{
-    max-width:none; margin:0; padding:1.8cm 1.7cm 1.8cm 4.3cm;
+    max-width:none; margin:0; padding:1.8cm 1.6cm 2.6cm 2cm;
     box-shadow:none; border-radius:0;
   }
   .document::before{ display:none; }
   .cover{ min-height:0; height:29.7cm; padding:2cm 1.5cm; page-break-after:always; }
-  .content h1, .content h2, .content h3{ page-break-after:avoid; }
+  .content h1, .content h2, .content h3, .content h4{ page-break-after:avoid; }
   .def-box,.ex-box,.sol-box,.note-box,.diagram-wrap,.content table{
     page-break-inside:avoid;
   }
-  .sidenote{
-    -webkit-print-color-adjust:exact; print-color-adjust:exact;
-  }
+  .content p, .content li{ orphans:3; widows:3; }
+  .sidenote{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
 }
 </style>
 </head>
 <body>
 
-<!-- ===== Ornate Screen Frame ===== -->
 <div class="screen-frame"></div>
-<svg class="corner tl" viewBox="0 0 100 100"><path d="M10 90 Q10 10 90 10" fill="none" stroke="#b8860b" stroke-width="1.6"/><path d="M16 84 Q16 16 84 16" fill="none" stroke="#d4af37" stroke-width="0.7"/><circle cx="18" cy="18" r="3" fill="#b8860b"/><circle cx="18" cy="18" r="1.3" fill="#fffef5"/><path d="M18 18 Q26 24 22 34 Q18 40 24 46" fill="none" stroke="#b8860b" stroke-width="1.1" stroke-linecap="round"/><path d="M18 18 Q24 26 34 22 Q40 18 46 24" fill="none" stroke="#b8860b" stroke-width="1.1" stroke-linecap="round"/><path d="M10 32 Q16 30 20 24" fill="none" stroke="#b8860b" stroke-width="0.8"/><path d="M32 10 Q30 16 24 20" fill="none" stroke="#b8860b" stroke-width="0.8"/></svg>
+<svg class="corner tl" viewBox="0 0 100 100"><path d="M10 90 Q10 10 90 10" fill="none" stroke="#b8860b" stroke-width="1.6"/><path d="M16 84 Q16 16 84 16" fill="none" stroke="#d4af37" stroke-width="0.7"/><circle cx="18" cy="18" r="3" fill="#b8860b"/><circle cx="18" cy="18" r="1.3" fill="#fffef5"/><path d="M18 18 Q26 24 22 34 Q18 40 24 46" fill="none" stroke="#b8860b" stroke-width="1.1" stroke-linecap="round"/><path d="M18 18 Q24 26 34 22 Q40 18 46 24" fill="none" stroke="#b8860b" stroke-width="1.1" stroke-linecap="round"/></svg>
 <svg class="corner tr" viewBox="0 0 100 100"><path d="M10 90 Q10 10 90 10" fill="none" stroke="#b8860b" stroke-width="1.6"/><path d="M16 84 Q16 16 84 16" fill="none" stroke="#d4af37" stroke-width="0.7"/><circle cx="18" cy="18" r="3" fill="#b8860b"/><circle cx="18" cy="18" r="1.3" fill="#fffef5"/><path d="M18 18 Q26 24 22 34 Q18 40 24 46" fill="none" stroke="#b8860b" stroke-width="1.1" stroke-linecap="round"/><path d="M18 18 Q24 26 34 22 Q40 18 46 24" fill="none" stroke="#b8860b" stroke-width="1.1" stroke-linecap="round"/></svg>
 <svg class="corner bl" viewBox="0 0 100 100"><path d="M10 90 Q10 10 90 10" fill="none" stroke="#b8860b" stroke-width="1.6"/><path d="M16 84 Q16 16 84 16" fill="none" stroke="#d4af37" stroke-width="0.7"/><circle cx="18" cy="18" r="3" fill="#b8860b"/><circle cx="18" cy="18" r="1.3" fill="#fffef5"/><path d="M18 18 Q26 24 22 34 Q18 40 24 46" fill="none" stroke="#b8860b" stroke-width="1.1" stroke-linecap="round"/><path d="M18 18 Q24 26 34 22 Q40 18 46 24" fill="none" stroke="#b8860b" stroke-width="1.1" stroke-linecap="round"/></svg>
 <svg class="corner br" viewBox="0 0 100 100"><path d="M10 90 Q10 10 90 10" fill="none" stroke="#b8860b" stroke-width="1.6"/><path d="M16 84 Q16 16 84 16" fill="none" stroke="#d4af37" stroke-width="0.7"/><circle cx="18" cy="18" r="3" fill="#b8860b"/><circle cx="18" cy="18" r="1.3" fill="#fffef5"/><path d="M18 18 Q26 24 22 34 Q18 40 24 46" fill="none" stroke="#b8860b" stroke-width="1.1" stroke-linecap="round"/><path d="M18 18 Q24 26 34 22 Q40 18 46 24" fill="none" stroke="#b8860b" stroke-width="1.1" stroke-linecap="round"/></svg>
 
 <div class="print-frame"></div>
+<div class="print-footer"></div>
 
-<!-- ============ نوار شناور ============ -->
 <div class="float-bar no-print">
   <button class="btn-pdf" onclick="downloadPDF()">📥 دانلود PDF</button>
   <button class="btn-print" onclick="window.print()">🖨️ چاپ مستقیم</button>
   <button class="btn-top" onclick="scrollTo({top:0,behavior:'smooth'})">⬆️ بالا</button>
 </div>
 
-<!-- ============ Loader ============ -->
 <div class="loader-overlay" id="loader">
   <div class="spinner"></div>
   <div class="loader-text">در حال ساخت PDF با کیفیت بالا...</div>
   <div class="loader-sub">لطفاً صبر کنید — حدود ۱۰ تا ۳۰ ثانیه</div>
 </div>
 
-<!-- ============ راهنما ============ -->
 <div class="guide-modal" id="guideModal">
   <div class="guide-content">
     <h3>📄 راهنمای دانلود PDF رنگی با کادر طلایی</h3>
-    <p style="font-size:13.5px;line-height:2;margin:0 0 12px">
-      برای بهترین کیفیت (رنگ‌ها، کادر طلایی، فرمول‌ها)، توصیه می‌کنم از روش چاپ استفاده کنی:
-    </p>
+    <p style="font-size:13.5px;line-height:2;margin:0 0 12px">برای بهترین کیفیت:</p>
     <ol>
       <li>دکمه <code>🖨️ چاپ مستقیم</code> را بزن (یا <code>Ctrl + P</code>)</li>
-      <li>در پنجره چاپ، <b>Destination</b> → <code>Save as PDF</code></li>
+      <li><b>Destination</b> → <code>Save as PDF</code></li>
       <li><b>Paper</b> → <code>A4</code></li>
       <li><b>Margins</b> → <code>None</code></li>
       <li>گزینه <b>Background graphics</b> را ✅ تیک بزن</li>
-      <li>روی <b>Save</b> بزن → فایل PDF رنگی ذخیره می‌شود</li>
+      <li>روی <b>Save</b> بزن</li>
     </ol>
-    <p style="font-size:12.5px;color:#777;margin-top:14px;line-height:1.8">
-      روش «دانلود PDF» مستقیم هم هست، ولی به دلیل پیچیدگی فونت فارسی و فرمول‌های ریاضی، گاهی کیفیت چاپ دستی بهتر است.
-    </p>
     <button class="guide-close" onclick="closeGuide()">متوجه شدم</button>
   </div>
 </div>
 
 <div class="document">
 
-<!-- ===================== COVER ===================== -->
 <section class="cover">
   <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
   <div class="ornament">❈ ❈ ❈</div>
@@ -385,45 +369,45 @@ html,body{
     <p class="small">دانشجوی مهندسی برق</p>
   </div>
   <div class="cover-poem">
-    « به نام خداوند جان و خرد &nbsp;•&nbsp; کزین برتر اندیشه برنگذرد »
+    <span>« به نام خداوند جان و خرد »</span>
+    <span>« کزین برتر اندیشه برنگذرد »</span>
   </div>
 </section>
 
-<!-- ===================== CONTENT ===================== -->
 <main class="content">
 
-<h1>فصل دوم: تبدیل انرژی الکترومکانیکی</h1>
+<h1>فصل دوم: اصول تبدیل انرژی الکترومکانیکی</h1>
 
 <h2>۲.۱ مسیر تبدیل انرژی در ماشین‌های الکتریکی</h2>
 
-<p>در یک ماشین الکتریکی، انرژی از یک فرم به فرم دیگر تبدیل می‌شود. مسیر کلی تبدیل انرژی در ماشین‌های الکتریکی به صورت زیر است: انرژی الکتریکی ورودی از طریق یک مبدل میانی (بی‌واسطه) به انرژی مکانیکی خروجی تبدیل می‌شود و در طول این مسیر، تلفات به شکل‌های مختلف ظاهر می‌شوند.</p>
+<p>در یک ماشین الکتریکی، انرژی از یک فرم به فرم دیگر تبدیل می‌شود. انرژی الکتریکی ورودی از طریق یک مبدل میانی (بی‌واسطه) به انرژی مکانیکی خروجی تبدیل می‌شود و در طول این مسیر، تلفات به شکل‌های مختلف ظاهر می‌شوند.</p>
 
 <div class="diagram-wrap">
-<svg class="diagram" viewBox="0 0 780 250" xmlns="http://www.w3.org/2000/svg">
+<svg class="diagram" viewBox="0 0 780 240" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <marker id="arr1" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#1a3a5c"/></marker>
-    <marker id="arr1r" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#8b0000"/></marker>
+    <marker id="a1" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#1a3a5c"/></marker>
+    <marker id="a1r" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#8b0000"/></marker>
   </defs>
-  <rect x="30" y="60" width="160" height="85" rx="10" fill="#eaf4fb" stroke="#1a3a5c" stroke-width="1.8"/>
-  <text x="110" y="97" text-anchor="middle" font-family="Vazirmatn" font-size="14" font-weight="700" fill="#1a3a5c">انرژی ورودی</text>
-  <text x="110" y="122" text-anchor="middle" font-family="Vazirmatn" font-size="13" fill="#1a3a5c">الکتریکی</text>
-  <rect x="310" y="60" width="160" height="85" rx="10" fill="#fdf6e3" stroke="#d4a017" stroke-width="1.8"/>
-  <text x="390" y="97" text-anchor="middle" font-family="Vazirmatn" font-size="14" font-weight="700" fill="#8b6914">مبدل میانی</text>
-  <text x="390" y="122" text-anchor="middle" font-family="Vazirmatn" font-size="13" fill="#8b6914">بی‌واسطه</text>
-  <rect x="590" y="60" width="160" height="85" rx="10" fill="#e8f5e9" stroke="#1b5e20" stroke-width="1.8"/>
-  <text x="670" y="97" text-anchor="middle" font-family="Vazirmatn" font-size="14" font-weight="700" fill="#1b5e20">انرژی خروجی</text>
-  <text x="670" y="122" text-anchor="middle" font-family="Vazirmatn" font-size="13" fill="#1b5e20">مکانیکی</text>
-  <line x1="190" y1="102" x2="305" y2="102" stroke="#1a3a5c" stroke-width="1.8" marker-end="url(#arr1)"/>
-  <line x1="470" y1="102" x2="585" y2="102" stroke="#1a3a5c" stroke-width="1.8" marker-end="url(#arr1)"/>
-  <line x1="250" y1="145" x2="250" y2="185" stroke="#8b0000" stroke-width="1.4" marker-end="url(#arr1r)"/>
-  <text x="250" y="207" text-anchor="middle" font-family="Vazirmatn" font-size="11.5" fill="#8b0000" font-weight="600">تلفات الکتریکی</text>
-  <text x="250" y="226" text-anchor="middle" font-family="Vazirmatn" font-size="11.5" fill="#8b0000" font-weight="600">(RI² تلفات اهمی)</text>
-  <line x1="390" y1="145" x2="390" y2="185" stroke="#8b0000" stroke-width="1.4" marker-end="url(#arr1r)"/>
-  <text x="390" y="207" text-anchor="middle" font-family="Vazirmatn" font-size="11.5" fill="#8b0000" font-weight="600">تلفات آهنی</text>
-  <text x="390" y="226" text-anchor="middle" font-family="Vazirmatn" font-size="11.5" fill="#8b0000" font-weight="600">(تلفات هسته)</text>
-  <line x1="530" y1="145" x2="530" y2="185" stroke="#8b0000" stroke-width="1.4" marker-end="url(#arr1r)"/>
-  <text x="530" y="207" text-anchor="middle" font-family="Vazirmatn" font-size="11.5" fill="#8b0000" font-weight="600">تلفات مکانیکی</text>
-  <text x="530" y="226" text-anchor="middle" font-family="Vazirmatn" font-size="11.5" fill="#8b0000" font-weight="600">(اصطکاک و باد)</text>
+  <rect x="30" y="55" width="160" height="80" rx="10" fill="#eaf4fb" stroke="#1a3a5c" stroke-width="1.8"/>
+  <text x="110" y="90" text-anchor="middle" font-family="Vazirmatn" font-size="14" font-weight="700" fill="#1a3a5c">انرژی الکتریکی</text>
+  <text x="110" y="112" text-anchor="middle" font-family="Vazirmatn" font-size="13" fill="#1a3a5c">(ورودی)</text>
+  <rect x="310" y="55" width="160" height="80" rx="10" fill="#fdf6e3" stroke="#d4a017" stroke-width="1.8"/>
+  <text x="390" y="90" text-anchor="middle" font-family="Vazirmatn" font-size="14" font-weight="700" fill="#8b6914">مبدل میانی</text>
+  <text x="390" y="112" text-anchor="middle" font-family="Vazirmatn" font-size="13" fill="#8b6914">بی‌واسطه</text>
+  <rect x="590" y="55" width="160" height="80" rx="10" fill="#e8f5e9" stroke="#1b5e20" stroke-width="1.8"/>
+  <text x="670" y="90" text-anchor="middle" font-family="Vazirmatn" font-size="14" font-weight="700" fill="#1b5e20">انرژی مکانیکی</text>
+  <text x="670" y="112" text-anchor="middle" font-family="Vazirmatn" font-size="13" fill="#1b5e20">(خروجی)</text>
+  <line x1="190" y1="95" x2="305" y2="95" stroke="#1a3a5c" stroke-width="1.8" marker-end="url(#a1)"/>
+  <line x1="470" y1="95" x2="585" y2="95" stroke="#1a3a5c" stroke-width="1.8" marker-end="url(#a1)"/>
+  <line x1="250" y1="135" x2="250" y2="170" stroke="#8b0000" stroke-width="1.4" marker-end="url(#a1r)"/>
+  <text x="250" y="188" text-anchor="middle" font-family="Vazirmatn" font-size="11.5" fill="#8b0000" font-weight="600">تلفات الکتریکی</text>
+  <text x="250" y="205" text-anchor="middle" font-family="Vazirmatn" font-size="11.5" fill="#8b0000" font-weight="600">(RI² تلفات اهمی)</text>
+  <line x1="390" y1="135" x2="390" y2="170" stroke="#8b0000" stroke-width="1.4" marker-end="url(#a1r)"/>
+  <text x="390" y="188" text-anchor="middle" font-family="Vazirmatn" font-size="11.5" fill="#8b0000" font-weight="600">تلفات آهنی</text>
+  <text x="390" y="205" text-anchor="middle" font-family="Vazirmatn" font-size="11.5" fill="#8b0000" font-weight="600">(تلفات هسته)</text>
+  <line x1="530" y1="135" x2="530" y2="170" stroke="#8b0000" stroke-width="1.4" marker-end="url(#a1r)"/>
+  <text x="530" y="188" text-anchor="middle" font-family="Vazirmatn" font-size="11.5" fill="#8b0000" font-weight="600">تلفات مکانیکی</text>
+  <text x="530" y="205" text-anchor="middle" font-family="Vazirmatn" font-size="11.5" fill="#8b0000" font-weight="600">(اصطکاک و باد)</text>
 </svg>
 </div>
 
@@ -431,75 +415,74 @@ html,body{
 
 <div class="def-box">
 $$\boxed{\;dW_e = dW_m + dW_f\;}$$
-<p style="margin-top:8px">که در آن:</p>
-<ul>
-  <li>$dW_e$ : انرژی الکتریکی ورودی</li>
-  <li>$dW_m$ : انرژی مکانیکی خروجی</li>
-  <li>$dW_f$ : تغییر انرژی ذخیره‌شده در میدان مغناطیسی</li>
-</ul>
+<p style="margin-top:6px">که در آن $dW_e$ انرژی الکتریکی ورودی، $dW_m$ انرژی مکانیکی خروجی، و $dW_f$ تغییر انرژی ذخیره‌شده در میدان مغناطیسی است.</p>
 </div>
 
-<h2>۲.۲ محاسبه انرژی ذخیره‌شده در میدان با فرض $dW_m = 0$</h2>
+<h3>شکل ۲.۱: مدار مغناطیسی ساده با هسته U-شکل، سیم‌پیچ، مقاومت R و منبع V</h3>
 
-<p>اگر سیستم در حالت سکون باشد (هیچ خروجی مکانیکی نداشته باشیم، $dW_m = 0$)، آنگاه تمام انرژی الکتریکی ورودی در میدان مغناطیسی ذخیره می‌شود:</p>
+<div class="diagram-wrap">
+<svg class="diagram" viewBox="0 0 560 280" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="aC" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#d4a017"/></marker>
+    <marker id="aB" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#1a3a5c"/></marker>
+  </defs>
+  <path d="M 180 55 L 180 230 L 380 230 L 380 210 L 200 210 L 200 75 L 380 75 L 380 55 Z" fill="#f4f4f4" stroke="#333" stroke-width="2.2"/>
+  <rect x="360" y="75" width="20" height="135" fill="#fff" stroke="#999" stroke-dasharray="3,3" stroke-width="1"/>
+  <text x="370" y="258" text-anchor="middle" font-family="Vazirmatn" font-size="11.5" fill="#666">فاصله هوایی (g)</text>
+  <g stroke="#8b0000" stroke-width="2.2" fill="none">
+    <circle cx="140" cy="115" r="9"/><circle cx="140" cy="137" r="9"/><circle cx="140" cy="159" r="9"/><circle cx="140" cy="181" r="9"/>
+  </g>
+  <line x1="30" y1="115" x2="130" y2="115" stroke="#1a3a5c" stroke-width="1.6" marker-end="url(#aB)"/>
+  <text x="65" y="107" font-family="Vazirmatn" font-size="13" font-style="italic" fill="#1a3a5c">i</text>
+  <rect x="60" y="90" width="14" height="30" fill="#f8f8f8" stroke="#333" stroke-width="1.5"/>
+  <text x="67" y="108" font-family="Vazirmatn" font-size="11" fill="#333">R</text>
+  <line x1="30" y1="200" x2="170" y2="200" stroke="#1a3a5c" stroke-width="1.6"/>
+  <text x="15" y="205" font-family="Vazirmatn" font-size="13" fill="#1a3a5c">V</text>
+  <path d="M 230 65 L 350 65" marker-end="url(#aC)" stroke="#d4a017" stroke-width="2.2"/>
+  <text x="280" y="57" font-family="Vazirmatn" font-size="14" font-style="italic" fill="#8b6914">φ</text>
+  <path d="M 350 220 L 230 220" marker-end="url(#aC)" stroke="#d4a017" stroke-width="2.2"/>
+  <text x="440" y="135" font-family="Vazirmatn" font-size="15" font-style="italic" fill="#8b0000">e</text>
+  <line x1="390" y1="130" x2="435" y2="130" stroke="#8b0000" stroke-width="1"/>
+</svg>
+</div>
+
+<h2>۲.۲ محاسبه انرژی ذخیره‌شده در میدان (با فرض $dW_m = 0$)</h2>
+
+<p>اگر سیستم در حالت سکون باشد (خروجی مکانیکی نداشته باشیم، $dW_m = 0$)، آنگاه تمام انرژی الکتریکی ورودی در میدان مغناطیسی ذخیره می‌شود:</p>
 
 <div class="def-box">
-$$dW_e = dW_f \quad \text{(با صرف‌نظر از تلفات)}$$
+$$dW_e = dW_f \quad \text{(با صرف‌نظر از تلفات)} \tag{1}$$
 </div>
 
 <p>از طرفی نیروی محرکه القایی برابر است با $e = \dfrac{d\lambda}{dt}$، بنابراین:</p>
 
-$$dW_e = i \cdot e \cdot dt = i \cdot \frac{d\lambda}{dt} \cdot dt = i\, d\lambda \quad \text{(2)}$$
+$$dW_e = i \cdot e \cdot dt = i \cdot \frac{d\lambda}{dt} \cdot dt = i\, d\lambda \tag{2}$$
 
 <p>از معادلات (1) و (2) نتیجه می‌شود:</p>
 
 $$\boxed{\;dW_f = i\, d\lambda \quad \Rightarrow \quad W_f = \int_0^{\lambda} i\, d\lambda\;}$$
 
 <div class="note-box">
-انرژی ذخیره‌شده در میدان مغناطیسی، <strong>سطح زیر منحنی $\lambda - i$</strong> (با محور افقی $i$) است.
+انرژی ذخیره‌شده در میدان مغناطیسی، <strong>سطح زیر منحنی $\lambda - i$</strong> (با محور افقی $i$) است. این سطح در شکل زیر با هاشور نشان داده شده است.
 </div>
 
 <div class="diagram-wrap">
-<svg class="diagram" viewBox="0 0 420 240" xmlns="http://www.w3.org/2000/svg">
+<svg class="diagram" viewBox="0 0 420 220" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <marker id="arr2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#333"/></marker>
-    <pattern id="hatch1" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#d4af37" stroke-width="1.6"/></pattern>
+    <marker id="a2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#333"/></marker>
+    <pattern id="h1" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#d4af37" stroke-width="1.6"/></pattern>
   </defs>
-  <line x1="60" y1="200" x2="380" y2="200" stroke="#333" stroke-width="1.6" marker-end="url(#arr2)"/>
-  <line x1="60" y1="200" x2="60" y2="30" stroke="#333" stroke-width="1.6" marker-end="url(#arr2)"/>
-  <text x="388" y="205" font-family="Vazirmatn" font-size="15" font-style="italic" fill="#333">i</text>
+  <line x1="60" y1="185" x2="380" y2="185" stroke="#333" stroke-width="1.6" marker-end="url(#a2)"/>
+  <line x1="60" y1="185" x2="60" y2="30" stroke="#333" stroke-width="1.6" marker-end="url(#a2)"/>
+  <text x="388" y="190" font-family="Vazirmatn" font-size="15" font-style="italic" fill="#333">i</text>
   <text x="50" y="25" font-family="Vazirmatn" font-size="15" font-style="italic" fill="#333">λ</text>
-  <path d="M60 200 Q160 70 360 55" fill="none" stroke="#1a3a5c" stroke-width="2.2"/>
-  <path d="M60 200 Q160 70 360 55 L360 200 Z" fill="url(#hatch1)" opacity="0.85"/>
-  <text x="200" y="175" font-family="Vazirmatn" font-size="16" font-weight="800" fill="#8b0000">W_f</text>
+  <path d="M60 185 Q160 65 360 50" fill="none" stroke="#1a3a5c" stroke-width="2.2"/>
+  <path d="M60 185 Q160 65 360 50 L360 185 Z" fill="url(#h1)" opacity="0.85"/>
+  <text x="200" y="160" font-family="Vazirmatn" font-size="16" font-weight="800" fill="#8b0000">W_f</text>
 </svg>
 </div>
 
 <h2>۲.۳ محاسبه $W_f$ در مدار مغناطیسی با هسته فرومغناطیس و فاصله هوایی</h2>
-
-<div class="diagram-wrap">
-<svg class="diagram" viewBox="0 0 520 280" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <marker id="arrC" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#d4a017"/></marker>
-    <marker id="arrB" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#1a3a5c"/></marker>
-  </defs>
-  <path d="M 150 60 L 150 230 L 350 230 L 350 210 L 170 210 L 170 80 L 350 80 L 350 60 Z" fill="#f4f4f4" stroke="#333" stroke-width="2.2"/>
-  <rect x="330" y="80" width="20" height="130" fill="#fff" stroke="#999" stroke-dasharray="3,3" stroke-width="1"/>
-  <text x="340" y="255" text-anchor="middle" font-family="Vazirmatn" font-size="11.5" fill="#666">فاصله هوایی (g)</text>
-  <g stroke="#8b0000" stroke-width="2.2" fill="none">
-    <circle cx="110" cy="120" r="9"/><circle cx="110" cy="142" r="9"/><circle cx="110" cy="164" r="9"/><circle cx="110" cy="186" r="9"/>
-  </g>
-  <line x1="30" y1="120" x2="100" y2="120" stroke="#1a3a5c" stroke-width="1.6" marker-end="url(#arrB)"/>
-  <text x="65" y="112" font-family="Vazirmatn" font-size="13" font-style="italic" fill="#1a3a5c">i</text>
-  <line x1="30" y1="210" x2="140" y2="210" stroke="#1a3a5c" stroke-width="1.6"/>
-  <text x="15" y="215" font-family="Vazirmatn" font-size="13" fill="#1a3a5c">V</text>
-  <path d="M 200 70 L 320 70" marker-end="url(#arrC)" stroke="#d4a017" stroke-width="2.2"/>
-  <text x="250" y="62" font-family="Vazirmatn" font-size="14" font-style="italic" fill="#8b6914">φ</text>
-  <path d="M 320 220 L 200 220" marker-end="url(#arrC)" stroke="#d4a017" stroke-width="2.2"/>
-  <text x="410" y="140" font-family="Vazirmatn" font-size="15" font-style="italic" fill="#8b0000">e</text>
-  <line x1="360" y1="135" x2="405" y2="135" stroke="#8b0000" stroke-width="1"/>
-</svg>
-</div>
 
 <p>روابط حاکم بر مدار مغناطیسی:</p>
 
@@ -511,7 +494,7 @@ $$\lambda = N\,\varphi = N\,A\,B \quad \Rightarrow \quad d\lambda = N\,A\,dB$$
 
 $$W_f = \int i\,d\lambda = \int \frac{H_c\,l_c + H_g\,l_g}{N} \cdot N\,A\,dB = \int \left(H_c\,l_c + \frac{B_g}{\mu_0}\,l_g\right) A\,dB$$
 
-<p>پس از ساده‌سازی:</p>
+<p>پس از تفکیک انتگرال:</p>
 
 $$\boxed{\;W_f = \underbrace{\int H_c\,dB \cdot A_c\,l_c}_{\text{چگالی انرژی در هسته}} \;+\; \underbrace{\frac{B_g^2}{2\mu_0}\cdot A_g\,l_g}_{\text{چگالی انرژی در فاصله هوایی}}\;}$$
 
@@ -526,23 +509,23 @@ $$\boxed{\;W_f = w_{f_c} \cdot V_c + w_{f_g} \cdot V_g = \bar{W}_{f_c} + \bar{W}
 <h1>مثال ۱: راکتور با هسته فرومغناطیس</h1>
 
 <div class="ex-box">
-<p><strong>صورت مسئله:</strong> یک هسته فرومغناطیس مطابق شکل با ابعاد زیر مفروض است. نفوذپذیری نسبی هسته $\mu_r = 1185$ است. سیم‌پیچی با $N = 250$ دور و طول متوسط مسیر مغناطیسی $l_c = 0.6\,\text{m}$، سطح مقطع هسته $A_c = 0.1 \times 0.05\,\text{m}^2$، و <strong>دو فاصله هوایی</strong> هر یک به طول $5\,\text{mm}$ با سطح مقطع $A_g = 0.05 \times 0.1\,\text{m}^2$ وجود دارد. اگر چگالی شار $B_c = B_g = 1\,\text{T}$ باشد:</p>
+<p><strong>صورت مسئله:</strong> یک هسته فرومغناطیس با ابعاد زیر مفروض است. نفوذپذیری نسبی هسته $\mu_r = 1185$ است. سیم‌پیچی با $N = 250$ دور و طول متوسط مسیر مغناطیسی $l_c = 0.6\,\text{m}$، سطح مقطع هسته $A_c = 0.1 \times 0.05\,\text{m}^2$، و <strong>دو فاصله هوایی</strong> هر یک به طول $5\,\text{mm}$ با سطح مقطع $A_g = 0.05 \times 0.1\,\text{m}^2$ وجود دارد. اگر چگالی شار $B_c = B_g = 1\,\text{T}$ باشد:</p>
 <p>الف) جریان DC و ولتاژ DC لازم برای تغذیه سیم‌پیچ (مقاومت $R = 5\,\Omega$) را بیابید.</p>
 <p>ب) انرژی ذخیره‌شده در هسته و در فاصله هوایی را محاسبه کنید.</p>
 </div>
 
 <div class="diagram-wrap">
-<svg class="diagram" viewBox="0 0 520 260" xmlns="http://www.w3.org/2000/svg">
-  <path d="M 140 50 L 140 220 L 360 220 L 360 200 L 160 200 L 160 70 L 360 70 L 360 50 Z" fill="#f4f4f4" stroke="#333" stroke-width="2"/>
-  <rect x="150" y="70" width="10" height="130" fill="#fff" stroke="#999" stroke-dasharray="3,3"/>
-  <rect x="355" y="70" width="10" height="130" fill="#fff" stroke="#999" stroke-dasharray="3,3"/>
-  <text x="155" y="245" text-anchor="middle" font-family="Vazirmatn" font-size="10" fill="#666">5mm</text>
-  <text x="360" y="245" text-anchor="middle" font-family="Vazirmatn" font-size="10" fill="#666">5mm</text>
-  <g stroke="#8b0000" stroke-width="2" fill="none"><circle cx="100" cy="120" r="9"/><circle cx="100" cy="145" r="9"/><circle cx="100" cy="170" r="9"/></g>
-  <line x1="30" y1="120" x2="90" y2="120" stroke="#1a3a5c" stroke-width="1.5" marker-end="url(#arrB)"/>
-  <line x1="30" y1="190" x2="100" y2="190" stroke="#1a3a5c" stroke-width="1.5"/>
-  <text x="15" y="125" font-family="Vazirmatn" font-size="12" fill="#1a3a5c">V_dc</text>
-  <text x="250" y="240" text-anchor="middle" font-family="Vazirmatn" font-size="10.5" fill="#666">l_c = 0.6 m</text>
+<svg class="diagram" viewBox="0 0 520 250" xmlns="http://www.w3.org/2000/svg">
+  <path d="M 140 45 L 140 215 L 360 215 L 360 195 L 160 195 L 160 65 L 360 65 L 360 45 Z" fill="#f4f4f4" stroke="#333" stroke-width="2"/>
+  <rect x="150" y="65" width="10" height="130" fill="#fff" stroke="#999" stroke-dasharray="3,3"/>
+  <rect x="355" y="65" width="10" height="130" fill="#fff" stroke="#999" stroke-dasharray="3,3"/>
+  <text x="155" y="240" text-anchor="middle" font-family="Vazirmatn" font-size="10" fill="#666">5mm</text>
+  <text x="360" y="240" text-anchor="middle" font-family="Vazirmatn" font-size="10" fill="#666">5mm</text>
+  <g stroke="#8b0000" stroke-width="2" fill="none"><circle cx="100" cy="115" r="9"/><circle cx="100" cy="140" r="9"/><circle cx="100" cy="165" r="9"/></g>
+  <line x1="30" y1="115" x2="90" y2="115" stroke="#1a3a5c" stroke-width="1.5" marker-end="url(#aB)"/>
+  <line x1="30" y1="185" x2="100" y2="185" stroke="#1a3a5c" stroke-width="1.5"/>
+  <text x="15" y="120" font-family="Vazirmatn" font-size="12" fill="#1a3a5c">V_dc</text>
+  <text x="250" y="235" text-anchor="middle" font-family="Vazirmatn" font-size="10.5" fill="#666">l_c = 0.6 m</text>
 </svg>
 </div>
 
@@ -570,7 +553,7 @@ $$V_g = 2 \times 5\times 10^{-3} \times 0.05 \times 0.1 = 5\times 10^{-5}\,\text
 <p>انرژی کل:</p>
 $$W_f = w_{f_c}\,V_c + w_{f_g}\,V_g = 1 + 19.9 = \boxed{20.9\;\text{J}}$$
 
-<div class="sidenote">قسمت اعظم انرژی در فاصله هوایی ذخیره می‌شود، چرا که $\mu_0 \ll \mu_c$.</div>
+<div class="sidenote">قسمت اعظم انرژی در فاصله هوایی ذخیره می‌شود، چون $\mu_0 \ll \mu_c$.</div>
 </div>
 
 <h1>۲.۴ انرژی و هم‌انرژی (Co-energy)</h1>
@@ -587,31 +570,31 @@ $$\bar{W}_f = \int_0^{i} \lambda\,di \qquad \text{(هم‌انرژی)}$$
 $$\boxed{\;W_f + \bar{W}_f = \lambda\,i\;}$$
 
 <div class="diagram-wrap">
-<svg class="diagram" viewBox="0 0 720 230" xmlns="http://www.w3.org/2000/svg">
+<svg class="diagram" viewBox="0 0 720 210" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <marker id="arr4" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#333"/></marker>
-    <pattern id="hatchWf" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#1a3a5c" stroke-width="1.6"/></pattern>
-    <pattern id="hatchWfb" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#8b0000" stroke-width="1.6"/></pattern>
+    <marker id="a4" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#333"/></marker>
+    <pattern id="hWf" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#1a3a5c" stroke-width="1.6"/></pattern>
+    <pattern id="hWfb" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#8b0000" stroke-width="1.6"/></pattern>
   </defs>
   <g transform="translate(30,10)">
-    <line x1="50" y1="190" x2="300" y2="190" stroke="#333" stroke-width="1.5" marker-end="url(#arr4)"/>
-    <line x1="50" y1="190" x2="50" y2="30" stroke="#333" stroke-width="1.5" marker-end="url(#arr4)"/>
-    <text x="310" y="195" font-size="14" font-style="italic" fill="#333">i</text>
+    <line x1="50" y1="175" x2="300" y2="175" stroke="#333" stroke-width="1.5" marker-end="url(#a4)"/>
+    <line x1="50" y1="175" x2="50" y2="30" stroke="#333" stroke-width="1.5" marker-end="url(#a4)"/>
+    <text x="310" y="180" font-size="14" font-style="italic" fill="#333">i</text>
     <text x="42" y="25" font-size="14" font-style="italic" fill="#333">λ</text>
-    <path d="M50 190 Q130 100 240 60 L240 190 Z" fill="url(#hatchWf)" stroke="#1a3a5c" stroke-width="1.2"/>
-    <path d="M50 190 Q130 100 240 60" fill="none" stroke="#333" stroke-width="2.2"/>
-    <text x="140" y="160" font-size="15" font-weight="800" fill="#1a3a5c">W_f</text>
-    <text x="120" y="215" font-size="12" fill="#1a3a5c" font-family="Vazirmatn">انرژی</text>
+    <path d="M50 175 Q130 90 240 55 L240 175 Z" fill="url(#hWf)" stroke="#1a3a5c" stroke-width="1.2"/>
+    <path d="M50 175 Q130 90 240 55" fill="none" stroke="#333" stroke-width="2.2"/>
+    <text x="140" y="145" font-size="15" font-weight="800" fill="#1a3a5c">W_f</text>
+    <text x="120" y="197" font-size="12" fill="#1a3a5c" font-family="Vazirmatn">انرژی</text>
   </g>
   <g transform="translate(390,10)">
-    <line x1="50" y1="190" x2="300" y2="190" stroke="#333" stroke-width="1.5" marker-end="url(#arr4)"/>
-    <line x1="50" y1="190" x2="50" y2="30" stroke="#333" stroke-width="1.5" marker-end="url(#arr4)"/>
-    <text x="310" y="195" font-size="14" font-style="italic" fill="#333">i</text>
+    <line x1="50" y1="175" x2="300" y2="175" stroke="#333" stroke-width="1.5" marker-end="url(#a4)"/>
+    <line x1="50" y1="175" x2="50" y2="30" stroke="#333" stroke-width="1.5" marker-end="url(#a4)"/>
+    <text x="310" y="180" font-size="14" font-style="italic" fill="#333">i</text>
     <text x="42" y="25" font-size="14" font-style="italic" fill="#333">λ</text>
-    <path d="M50 190 Q130 100 240 60 L240 190 Z" fill="url(#hatchWfb)" stroke="#8b0000" stroke-width="1.2"/>
-    <path d="M50 190 Q130 100 240 60" fill="none" stroke="#333" stroke-width="2.2"/>
-    <text x="140" y="160" font-size="15" font-weight="800" fill="#8b0000">W̄_f</text>
-    <text x="110" y="215" font-size="12" fill="#8b0000" font-family="Vazirmatn">هم‌انرژی</text>
+    <path d="M50 175 Q130 90 240 55 L240 175 Z" fill="url(#hWfb)" stroke="#8b0000" stroke-width="1.2"/>
+    <path d="M50 175 Q130 90 240 55" fill="none" stroke="#333" stroke-width="2.2"/>
+    <text x="140" y="145" font-size="15" font-weight="800" fill="#8b0000">W̄_f</text>
+    <text x="110" y="197" font-size="12" fill="#8b0000" font-family="Vazirmatn">هم‌انرژی</text>
   </g>
 </svg>
 </div>
@@ -628,6 +611,22 @@ $$W_f = \bar{W}_f = \frac{1}{2}\,\lambda\,i = \frac{1}{2}\,\mathcal{F}\,\varphi 
 
 <p>که در آن $\Lambda = 1/\mathcal{R}$ رسانایی مغناطیسی و $\mathcal{F} = N\,i$ نیروی محرکه مغناطیسی است.</p>
 
+<div class="diagram-wrap">
+<svg class="diagram" viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="aBsat" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#333"/></marker></defs>
+  <line x1="50" y1="170" x2="450" y2="170" stroke="#333" stroke-width="1.5" marker-end="url(#aBsat)"/>
+  <line x1="50" y1="170" x2="50" y2="20" stroke="#333" stroke-width="1.5" marker-end="url(#aBsat)"/>
+  <text x="460" y="175" font-size="14" font-style="italic" fill="#333">i</text>
+  <text x="42" y="15" font-size="14" font-style="italic" fill="#333">λ</text>
+  <path d="M50 170 Q200 30 430 25" fill="none" stroke="#1a3a5c" stroke-width="2.2"/>
+  <path d="M50 170 Q180 60 430 60" fill="none" stroke="#8b0000" stroke-width="1.8" stroke-dasharray="6,3"/>
+  <path d="M50 170 Q160 90 430 95" fill="none" stroke="#d4a017" stroke-width="1.8" stroke-dasharray="3,3"/>
+  <text x="300" y="30" font-size="11" fill="#1a3a5c" font-family="Vazirmatn">اشباع کم</text>
+  <text x="320" y="55" font-size="11" fill="#8b0000" font-family="Vazirmatn">اشباع متوسط</text>
+  <text x="340" y="95" font-size="11" fill="#d4a017" font-family="Vazirmatn">اشباع زیاد</text>
+</svg>
+</div>
+
 <h1>۲.۵ محاسبه نیرو و گشتاور از انرژی</h1>
 
 <p>نیروی مکانیکی وارد بر قسمت متحرک سیستم، از مشتق انرژی یا هم‌انرژی نسبت به جابجایی به دست می‌آید:</p>
@@ -635,12 +634,37 @@ $$W_f = \bar{W}_f = \frac{1}{2}\,\lambda\,i = \frac{1}{2}\,\mathcal{F}\,\varphi 
 <div class="def-box">
 <p><strong>روش اول — از روی انرژی (با $\lambda$ ثابت):</strong></p>
 $$f_m = -\left.\frac{\partial W_f(\lambda, x)}{\partial x}\right|_{\lambda = \text{cte}}$$
-<p style="margin-top:10px"><strong>روش دوم — از روی هم‌انرژی (با $i$ ثابت):</strong></p>
+<p style="margin-top:8px"><strong>روش دوم — از روی هم‌انرژی (با $i$ ثابت):</strong></p>
 $$f_m = +\left.\frac{\partial \bar{W}_f(i, x)}{\partial x}\right|_{i = \text{cte}}$$
 </div>
 
 <div class="note-box">
 این دو رابطه از نظر فیزیکی معادل‌اند اما برای حل مسائل، معمولاً یکی ساده‌تر از دیگری است. اگر مشخصه $\lambda - i$ داده شده باشد، از هم‌انرژی استفاده کنید (چون $i$ متغیر مستقل است).
+</div>
+
+<h3>شکل ۲.۲: مدار با هسته E-شکل و پیستون متحرک</h3>
+
+<div class="diagram-wrap">
+<svg class="diagram" viewBox="0 0 500 220" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="aM" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#8b0000"/></marker></defs>
+  <path d="M 70 40 L 70 180 L 230 180 L 230 140 L 100 140 L 100 80 L 230 80 L 230 40 Z" fill="#f4f4f4" stroke="#333" stroke-width="2"/>
+  <g stroke="#8b0000" stroke-width="1.8" fill="none">
+    <rect x="75" y="90" width="18" height="8" rx="3"/>
+    <rect x="75" y="105" width="18" height="8" rx="3"/>
+    <rect x="75" y="120" width="18" height="8" rx="3"/>
+  </g>
+  <rect x="260" y="60" width="60" height="100" fill="#d4a017" stroke="#333" stroke-width="2"/>
+  <text x="290" y="115" text-anchor="middle" font-family="Vazirmatn" font-size="11" fill="#fff" font-weight="700" transform="rotate(-90 290 115)">پیستون</text>
+  <line x1="235" y1="110" x2="255" y2="110" stroke="#8b0000" stroke-width="1.6"/>
+  <line x1="270" y1="200" x2="290" y2="200" stroke="#8b0000" stroke-width="1.6" marker-end="url(#aM)"/>
+  <text x="280" y="195" text-anchor="middle" font-family="Vazirmatn" font-size="11" fill="#8b0000" font-weight="700">v</text>
+  <line x1="330" y1="110" x2="380" y2="110" stroke="#8b0000" stroke-width="1.6"/>
+  <line x1="380" y1="60" x2="380" y2="160" stroke="#8b0000" stroke-width="1.6"/>
+  <line x1="380" y1="75" x2="395" y2="75" stroke="#333" stroke-width="1"/>
+  <line x1="380" y1="145" x2="395" y2="145" stroke="#333" stroke-width="1"/>
+  <text x="410" y="115" font-family="Vazirmatn" font-size="12" fill="#333" font-weight="700">g</text>
+  <text x="240" y="30" text-anchor="middle" font-family="Vazirmatn" font-size="11" fill="#333">هسته ثابت</text>
+</svg>
 </div>
 
 <h1>مثال ۲: سیستم غیرخطی با فاصله هوایی متغیر</h1>
@@ -665,6 +689,15 @@ $$f_m = \frac{\partial \bar{W}_f}{\partial g}\bigg|_{i} = -\frac{0.06\,i^{3/2}}{
 $$f_m = -\frac{0.06 \times 3^{3/2}}{0.05^2} = -\frac{0.06 \times 5.196}{0.0025} = \boxed{-124.7\;\text{N}}$$
 
 <p>علامت منفی نشان می‌دهد نیرو در جهت کاهش فاصله هوایی (جذب) عمل می‌کند.</p>
+
+<p><strong>روش دوم — حل از روی انرژی:</strong></p>
+$$\lambda = \frac{0.09\,i^{1/2}}{g} = 3.12\;\text{Wb}$$
+
+$$W_f = \int_0^\lambda i\,d\lambda = \int_0^\lambda \left(\frac{\lambda g}{0.09}\right)^2 d\lambda = \frac{g^2}{0.09^2}\cdot \frac{\lambda^3}{3}$$
+
+$$f_m = -\frac{\partial W_f}{\partial g}\bigg|_\lambda = -\frac{\lambda^3 \cdot 2g}{3 \times 0.09^2} = -\frac{(3.12)^3 \times 2 \times 0.05}{3 \times 0.0081} = \boxed{-124.7\;\text{N}}$$
+
+<p>✅ هر دو روش به یک جواب می‌رسند.</p>
 </div>
 
 <h1>مثال ۳: حرکت آرام در برابر حرکت سریع</h1>
@@ -678,114 +711,136 @@ $$f_m = -\frac{0.06 \times 3^{3/2}}{0.05^2} = -\frac{0.06 \times 5.196}{0.0025} 
 </div>
 
 <div class="diagram-wrap">
-<svg class="diagram" viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
-  <defs><marker id="arr5" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#333"/></marker></defs>
-  <line x1="60" y1="230" x2="420" y2="230" stroke="#333" stroke-width="1.5" marker-end="url(#arr5)"/>
-  <line x1="60" y1="230" x2="60" y2="30" stroke="#333" stroke-width="1.5" marker-end="url(#arr5)"/>
-  <text x="432" y="235" font-size="14" font-style="italic" fill="#333">i</text>
+<svg class="diagram" viewBox="0 0 480 250" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="a5" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#333"/></marker></defs>
+  <line x1="60" y1="215" x2="420" y2="215" stroke="#333" stroke-width="1.5" marker-end="url(#a5)"/>
+  <line x1="60" y1="215" x2="60" y2="30" stroke="#333" stroke-width="1.5" marker-end="url(#a5)"/>
+  <text x="432" y="220" font-size="14" font-style="italic" fill="#333">i</text>
   <text x="52" y="25" font-size="14" font-style="italic" fill="#333">λ</text>
-  <line x1="60" y1="230" x2="340" y2="60" stroke="#1a3a5c" stroke-width="2.2"/>
-  <text x="345" y="60" font-size="12.5" font-family="Vazirmatn" fill="#1a3a5c" font-weight="700">حالت بسته</text>
-  <line x1="60" y1="230" x2="380" y2="140" stroke="#8b0000" stroke-width="2.2"/>
-  <text x="385" y="145" font-size="12.5" font-family="Vazirmatn" fill="#8b0000" font-weight="700">حالت باز</text>
-  <line x1="60" y1="140" x2="290" y2="140" stroke="#666" stroke-dasharray="3,3"/>
-  <line x1="60" y1="90" x2="290" y2="90" stroke="#666" stroke-dasharray="3,3"/>
-  <line x1="290" y1="230" x2="290" y2="60" stroke="#666" stroke-dasharray="3,3"/>
-  <text x="48" y="145" font-size="12.5" fill="#666">λ₁</text>
-  <text x="48" y="95" font-size="12.5" fill="#666">λ₂</text>
-  <text x="288" y="248" font-size="12.5" fill="#666">i₁</text>
-  <circle cx="290" cy="140" r="4" fill="#333"/>
-  <circle cx="290" cy="90" r="4" fill="#333"/>
-  <text x="300" y="145" font-size="13" fill="#333" font-weight="700">a</text>
-  <text x="300" y="88" font-size="13" fill="#333" font-weight="700">b</text>
+  <line x1="60" y1="215" x2="340" y2="55" stroke="#1a3a5c" stroke-width="2.2"/>
+  <text x="345" y="55" font-size="12.5" font-family="Vazirmatn" fill="#1a3a5c" font-weight="700">حالت بسته</text>
+  <line x1="60" y1="215" x2="380" y2="130" stroke="#8b0000" stroke-width="2.2"/>
+  <text x="385" y="135" font-size="12.5" font-family="Vazirmatn" fill="#8b0000" font-weight="700">حالت باز</text>
+  <line x1="60" y1="130" x2="290" y2="130" stroke="#666" stroke-dasharray="3,3"/>
+  <line x1="60" y1="80" x2="290" y2="80" stroke="#666" stroke-dasharray="3,3"/>
+  <line x1="290" y1="215" x2="290" y2="55" stroke="#666" stroke-dasharray="3,3"/>
+  <text x="48" y="135" font-size="12.5" fill="#666">λ₁</text>
+  <text x="48" y="85" font-size="12.5" fill="#666">λ₂</text>
+  <text x="288" y="232" font-size="12.5" fill="#666">i₁</text>
+  <circle cx="290" cy="130" r="4" fill="#333"/>
+  <circle cx="290" cy="80" r="4" fill="#333"/>
+  <text x="300" y="135" font-size="13" fill="#333" font-weight="700">a</text>
+  <text x="300" y="78" font-size="13" fill="#333" font-weight="700">b</text>
 </svg>
 </div>
 
 <div class="sol-box">
 <h3>حالت اول: حرکت آرام (شبه‌استاتیک)</h3>
-<p>در این حالت جریان ثابت می‌ماند و همه انرژی ورودی به کار مکانیکی تبدیل می‌شود:</p>
-$$dW_m = dW_e - dW_f = i_1\,d\lambda$$
-$$\Delta W_e = i_1\,(\lambda_2 - \lambda_1)$$
-$$\Delta W_m = \frac{1}{2}\,i_1\,(\lambda_2 - \lambda_1) \quad \text{(سطح مثلث بین دو خط)}$$
+<p>در این حالت جریان ثابت می‌ماند ($dW_e = i\,d\lambda$) و همه انرژی ورودی به کار مکانیکی تبدیل می‌شود:</p>
+$$\Delta W_e = \int_{\lambda_1}^{\lambda_2} i\,d\lambda = i_1(\lambda_2 - \lambda_1)$$
+$$\Delta W_m = S_{oabo} = \frac{1}{2}i_1(\lambda_2 - \lambda_1)$$
 $$\Delta W_f = W_{f_2} - W_{f_1} = \frac{1}{2}i_1\lambda_2 - \frac{1}{2}i_1\lambda_1 = \frac{1}{2}i_1(\lambda_2 - \lambda_1)$$
 
 <p>یعنی در حرکت آرام: $\Delta W_e = 2\,\Delta W_m$ و $\Delta W_m = \Delta W_f$.</p>
 
 <h3>حالت دوم: حرکت سریع</h3>
-<p>در این حالت شار ثابت است و $dW_e = 0$:</p>
+<p>در این حالت شار ثابت است و $dW_e = 0$ (چون شار ثابت است):</p>
 $$dW_m = -\,dW_f \quad \Rightarrow \quad \Delta W_m = \Delta W_{f_1} - \Delta W_{f_2}$$
+$$dW_m = -(S_{apdo} - S_{aqdo})$$
+$$dW_m = S_{oapo}$$
 
 <p>کار مکانیکی برابر تغییر (کاهش) انرژی ذخیره‌شده است.</p>
+
+<div class="note-box">
+<strong>مقایسه دو حالت:</strong>
+<ul style="margin-top:6px">
+<li><strong>حرکت آرام:</strong> $\Delta W_m = \Delta W_f = \frac{1}{2}\Delta W_e$</li>
+<li><strong>حرکت سریع:</strong> $\Delta W_e = 0$ و کار مکانیکی برابر کاهش انرژی میدان است</li>
+</ul>
+</div>
 </div>
 
 <h1>مثال ۴: محاسبه نیروی متوسط با منحنی دوتکه</h1>
 
 <div class="ex-box">
-<p><strong>صورت مسئله:</strong> منحنی $\lambda - i$ یک سیستم مغناطیسی از دو پاره‌خط تشکیل شده است: از مبدأ تا نقطه $(2.0, 1.2)$ و از آنجا تا نقطه $(4.0, 1.8)$. حالت باز (منحنی پایین‌تر) از نقاط $(2.0, 0.8)$ و $(4.0, 1.6)$ می‌گذرد. اگر طول شکاف هوایی $0.02\,\text{m}$ تغییر کند، نیروی متوسط را بیابید.</p>
+<p><strong>صورت مسئله:</strong> منحنی $\lambda - i$ یک سیستم مغناطیسی از دو پاره‌خط تشکیل شده است:</p>
+<p><strong>حالت بسته:</strong></p>
+$$\lambda = \begin{cases} 0.06\,i & i < 2.0\,\text{A} \\ 1.2 + 0.03(i-2.0) & i \geq 2.0\,\text{A} \end{cases}$$
+<p><strong>حالت باز:</strong> $\lambda = 0.04\,i$</p>
+<p>اگر طول شکاف هوایی $0.02\,\text{m}$ تغییر کند و $i = 4\,\text{A}$ باشد، نیروی متوسط را بیابید.</p>
 </div>
 
 <div class="diagram-wrap">
-<svg class="diagram" viewBox="0 0 560 280" xmlns="http://www.w3.org/2000/svg">
+<svg class="diagram" viewBox="0 0 560 250" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <marker id="arr6" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#333"/></marker>
-    <pattern id="hatchEx4" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#d4a017" stroke-width="1.4"/></pattern>
+    <marker id="a6" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#333"/></marker>
+    <pattern id="hE4" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#d4a017" stroke-width="1.4"/></pattern>
   </defs>
-  <line x1="60" y1="240" x2="500" y2="240" stroke="#333" stroke-width="1.5" marker-end="url(#arr6)"/>
-  <line x1="60" y1="240" x2="60" y2="30" stroke="#333" stroke-width="1.5" marker-end="url(#arr6)"/>
-  <text x="512" y="245" font-size="14" font-style="italic" fill="#333">i</text>
-  <text x="52" y="25" font-size="14" font-style="italic" fill="#333">λ</text>
-  <line x1="60" y1="240" x2="240" y2="140" stroke="#1a3a5c" stroke-width="2.2"/>
-  <line x1="240" y1="140" x2="420" y2="60" stroke="#1a3a5c" stroke-width="2.2"/>
-  <line x1="60" y1="240" x2="240" y2="185" stroke="#8b0000" stroke-width="2.2"/>
-  <line x1="240" y1="185" x2="420" y2="115" stroke="#8b0000" stroke-width="2.2"/>
-  <polygon points="60,240 240,140 240,185" fill="url(#hatchEx4)"/>
-  <polygon points="240,140 420,60 420,115 240,185" fill="url(#hatchEx4)"/>
-  <line x1="240" y1="240" x2="240" y2="60" stroke="#999" stroke-dasharray="3,3"/>
-  <line x1="420" y1="240" x2="420" y2="60" stroke="#999" stroke-dasharray="3,3"/>
-  <line x1="60" y1="140" x2="240" y2="140" stroke="#999" stroke-dasharray="3,3"/>
-  <line x1="60" y1="185" x2="240" y2="185" stroke="#999" stroke-dasharray="3,3"/>
-  <line x1="60" y1="60" x2="420" y2="60" stroke="#999" stroke-dasharray="3,3"/>
-  <line x1="60" y1="115" x2="420" y2="115" stroke="#999" stroke-dasharray="3,3"/>
-  <text x="235" y="262" font-size="12" fill="#333">2.0</text>
-  <text x="415" y="262" font-size="12" fill="#333">4.0</text>
-  <text x="42" y="145" font-size="12" fill="#333">1.2</text>
-  <text x="42" y="190" font-size="12" fill="#333">0.8</text>
-  <text x="42" y="65" font-size="12" fill="#333">1.8</text>
-  <text x="42" y="120" font-size="12" fill="#333">1.6</text>
+  <line x1="60" y1="215" x2="500" y2="215" stroke="#333" stroke-width="1.5" marker-end="url(#a6)"/>
+  <line x1="60" y1="215" x2="60" y2="25" stroke="#333" stroke-width="1.5" marker-end="url(#a6)"/>
+  <text x="512" y="220" font-size="14" font-style="italic" fill="#333">i</text>
+  <text x="52" y="20" font-size="14" font-style="italic" fill="#333">λ</text>
+  <line x1="60" y1="215" x2="240" y2="120" stroke="#1a3a5c" stroke-width="2.2"/>
+  <line x1="240" y1="120" x2="420" y2="50" stroke="#1a3a5c" stroke-width="2.2"/>
+  <line x1="60" y1="215" x2="240" y2="165" stroke="#8b0000" stroke-width="2.2"/>
+  <line x1="240" y1="165" x2="420" y2="100" stroke="#8b0000" stroke-width="2.2"/>
+  <polygon points="60,215 240,120 240,165" fill="url(#hE4)"/>
+  <polygon points="240,120 420,50 420,100 240,165" fill="url(#hE4)"/>
+  <line x1="240" y1="215" x2="240" y2="50" stroke="#999" stroke-dasharray="3,3"/>
+  <line x1="420" y1="215" x2="420" y2="50" stroke="#999" stroke-dasharray="3,3"/>
+  <line x1="60" y1="120" x2="240" y2="120" stroke="#999" stroke-dasharray="3,3"/>
+  <line x1="60" y1="165" x2="240" y2="165" stroke="#999" stroke-dasharray="3,3"/>
+  <line x1="60" y1="50" x2="420" y2="50" stroke="#999" stroke-dasharray="3,3"/>
+  <line x1="60" y1="100" x2="420" y2="100" stroke="#999" stroke-dasharray="3,3"/>
+  <text x="235" y="237" font-size="12" fill="#333">2.0</text>
+  <text x="415" y="237" font-size="12" fill="#333">4.0</text>
+  <text x="42" y="125" font-size="12" fill="#333">1.2</text>
+  <text x="42" y="170" font-size="12" fill="#333">0.8</text>
+  <text x="42" y="55" font-size="12" fill="#333">1.8</text>
+  <text x="42" y="105" font-size="12" fill="#333">1.6</text>
 </svg>
 </div>
 
 <div class="sol-box">
 <p>مساحت هاشورخورده (بین دو منحنی) برابر کار مکانیکی است:</p>
-$$W_m = \frac{1}{2}(1.2-0.8)\times 2 + \frac{(1.8-1.6)+(1.2-0.8)}{2}\times 2$$
-$$W_m = 0.4 + 0.6 = 1.0\;\text{J}$$
+$$W_m = \frac{1}{2}(1.2-0.8)\times 2 + \frac{(1.8-1.6)+(1.2-0.8)}{2}\times 20 = 10\;\text{J}$$
 
 <p>نیروی متوسط:</p>
 $$f_{ave} = \frac{W_m}{x} = \frac{10}{0.02} = \boxed{500\;\text{N}}$$
+
+<p><strong>محاسبات تکمیلی:</strong></p>
+$$w_m' = \frac{w_m}{\Delta x} = 9.333$$
+$$\varphi = \frac{w_m}{\Delta x} = 4.667\;\text{N}$$
+
+<div class="sidenote">جواب نهایی: <strong>۵۰۰ نیوتون</strong></div>
 </div>
 
 <h1>مثال ۵: سیستم U-شکل با پیستون متحرک</h1>
 
 <div class="ex-box">
-<p><strong>صورت مسئله:</strong> در سیستم مغناطیسی نشان داده شده، هسته U-شکل ثابت و پیستون (آرمیچر) متحرک است. رلوکتانس هسته ($R_c = 0$) ناچیز فرض می‌شود. اگر عرض پیستون $w = 6\,\text{mm}$، چگالی شار $B_0 = 0.8\,\text{T}$ و فاصله هوایی ثابت نگه داشته شود، نیروی وارد بر پیستون را بیابید.</p>
+<p><strong>صورت مسئله:</strong> در سیستم مغناطیسی نشان داده شده، هسته U-شکل ثابت و پیستون (آرماچر) متحرک است. رلوکتانس هسته ($R_c = 0$) ناچیز فرض می‌شود. اگر عرض پیستون $w = 6\,\text{mm}$، چگالی شار $B_0 = 0.8\,\text{T}$ و فاصله هوایی ثابت نگه داشته شود، نیروی وارد بر پیستون را بیابید.</p>
 </div>
 
 <div class="diagram-wrap">
-<svg class="diagram" viewBox="0 0 520 240" xmlns="http://www.w3.org/2000/svg">
-  <defs><marker id="arr7" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#8b0000"/></marker></defs>
-  <path d="M 80 50 L 80 170 L 260 170 L 260 140 L 110 140 L 110 80 L 260 80 L 260 50 Z" fill="#f4f4f4" stroke="#333" stroke-width="2"/>
+<svg class="diagram" viewBox="0 0 540 220" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="a7" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#8b0000"/></marker></defs>
+  <path d="M 80 45 L 80 160 L 260 160 L 260 130 L 110 130 L 110 75 L 260 75 L 260 45 Z" fill="#f4f4f4" stroke="#333" stroke-width="2"/>
   <g stroke="#8b0000" stroke-width="1.8" fill="none">
-    <rect x="85" y="90" width="20" height="9" rx="3"/>
-    <rect x="85" y="105" width="20" height="9" rx="3"/>
-    <rect x="85" y="120" width="20" height="9" rx="3"/>
+    <rect x="85" y="85" width="20" height="9" rx="3"/>
+    <rect x="85" y="100" width="20" height="9" rx="3"/>
+    <rect x="85" y="115" width="20" height="9" rx="3"/>
   </g>
-  <rect x="280" y="70" width="130" height="80" fill="#e8e8e8" stroke="#333" stroke-width="2"/>
-  <text x="345" y="115" text-anchor="middle" font-family="Vazirmatn" font-size="12" fill="#333" font-weight="700">پیستون متحرک</text>
-  <line x1="255" y1="105" x2="285" y2="105" stroke="#8b0000" stroke-width="1.6" marker-end="url(#arr7)"/>
-  <line x1="285" y1="105" x2="255" y2="105" stroke="#8b0000" stroke-width="1.6" marker-end="url(#arr7)"/>
-  <text x="270" y="190" text-anchor="middle" font-family="Vazirmatn" font-size="11.5" fill="#8b0000">g = 3mm</text>
-  <line x1="420" y1="110" x2="460" y2="110" stroke="#8b0000" stroke-width="2.2" marker-end="url(#arr7)"/>
-  <text x="470" y="115" font-family="Vazirmatn" font-size="14" font-weight="800" fill="#8b0000">F</text>
+  <rect x="290" y="65" width="130" height="80" fill="#e8e8e8" stroke="#333" stroke-width="2"/>
+  <text x="355" y="110" text-anchor="middle" font-family="Vazirmatn" font-size="12" fill="#333" font-weight="700">پیستون متحرک</text>
+  <line x1="265" y1="100" x2="295" y2="100" stroke="#8b0000" stroke-width="1.6" marker-end="url(#a7)"/>
+  <line x1="295" y1="100" x2="265" y2="100" stroke="#8b0000" stroke-width="1.6" marker-end="url(#a7)"/>
+  <text x="280" y="180" text-anchor="middle" font-family="Vazirmatn" font-size="11.5" fill="#8b0000">g = 3mm</text>
+  <line x1="430" y1="105" x2="470" y2="105" stroke="#8b0000" stroke-width="2.2" marker-end="url(#a7)"/>
+  <text x="480" y="110" font-family="Vazirmatn" font-size="14" font-weight="800" fill="#8b0000">F</text>
+  <line x1="80" y1="195" x2="260" y2="195" stroke="#1a3a5c" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="170" y="212" text-anchor="middle" font-family="Vazirmatn" font-size="11" fill="#1a3a5c">جابجایی محور x</text>
+  <line x1="260" y1="195" x2="290" y2="195" stroke="#1a3a5c" stroke-width="1"/>
+  <text x="290" y="195" font-family="Vazirmatn" font-size="11" fill="#1a3a5c">x</text>
 </svg>
 </div>
 
@@ -803,49 +858,40 @@ $$F_e = -\frac{\partial W_f}{\partial x}\bigg|_{\lambda} = -\frac{1}{2}\,\frac{B
 
 <p>جایگذاری اعداد ($B_0 = 0.8\,\text{T}$، $w = 6\times 10^{-3}\,\text{m}$، $g = 3\times 10^{-3}\,\text{m}$):</p>
 $$F_e = \frac{1}{2}\cdot\frac{0.8^2 \times 6\times 10^{-3} \times 3\times 10^{-3}}{4\pi\times 10^{-7}} = \boxed{4.584\;\text{N}}$$
-</div>
 
-<h1>مثال ۶: مشخصه غیرخطی با اشباع</h1>
+<p><strong>روش دوم — با هم‌انرژی:</strong></p>
+$$f_e = \frac{\partial \bar{W}_f}{\partial x}\bigg|_i = \frac{1}{2}i^2\frac{dL}{dx} = \frac{1}{2}F^2 \frac{d\Lambda}{dx} = \frac{1}{2}\Lambda^2 \frac{d\mathcal{R}}{dx}$$
+
+<p>که نتیجه یکسانی می‌دهد.</p>
+  </div>
+  <h1>مثال ۶: هسته U-شکل با محور x (روش دوم)</h1>
 
 <div class="ex-box">
-<p><strong>صورت مسئله:</strong> در یک سیستم مغناطیسی غیرخطی، مشخصه شار-جریان ترکیبی از یک بخش خطی و یک بخش اشباع است. اگر سیستم از حالت باز به حالت بسته برود و طول شکاف هوایی تغییر کند، مقدار متوسط نیروی مغناطیسی را در دو حالت زیر محاسبه کنید:</p>
-<p>الف) حرکت آرام &nbsp;&nbsp; ب) حرکت سریع</p>
-</div>
-
-<div class="diagram-wrap">
-<svg class="diagram" viewBox="0 0 500 270" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <marker id="arrEx6" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#333"/></marker>
-    <pattern id="hatchEx6" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#d4a017" stroke-width="1.4"/></pattern>
-  </defs>
-  <line x1="60" y1="230" x2="460" y2="230" stroke="#333" stroke-width="1.5" marker-end="url(#arrEx6)"/>
-  <line x1="60" y1="230" x2="60" y2="30" stroke="#333" stroke-width="1.5" marker-end="url(#arrEx6)"/>
-  <text x="472" y="235" font-size="14" font-style="italic" fill="#333">i</text>
-  <text x="52" y="25" font-size="14" font-style="italic" fill="#333">λ</text>
-  <line x1="60" y1="230" x2="230" y2="130" stroke="#1a3a5c" stroke-width="2.2"/>
-  <line x1="230" y1="130" x2="420" y2="60" stroke="#1a3a5c" stroke-width="2.2"/>
-  <line x1="60" y1="230" x2="230" y2="170" stroke="#8b0000" stroke-width="2.2"/>
-  <line x1="230" y1="170" x2="420" y2="105" stroke="#8b0000" stroke-width="2.2"/>
-  <polygon points="60,230 230,130 230,170" fill="url(#hatchEx6)"/>
-  <polygon points="230,130 420,60 420,105 230,170" fill="url(#hatchEx6)"/>
-  <line x1="230" y1="230" x2="230" y2="60" stroke="#999" stroke-dasharray="3,3"/>
-  <line x1="420" y1="230" x2="420" y2="60" stroke="#999" stroke-dasharray="3,3"/>
-  <text x="225" y="252" font-size="12" fill="#333">2.0</text>
-  <text x="415" y="252" font-size="12" fill="#333">4.0</text>
-  <text x="42" y="135" font-size="12" fill="#333">1.2</text>
-  <text x="42" y="175" font-size="12" fill="#333">0.8</text>
-  <text x="42" y="65" font-size="12" fill="#333">1.8</text>
-  <text x="42" y="110" font-size="12" fill="#333">1.6</text>
-</svg>
+<p><strong>صورت مسئله:</strong> در سیستم مغناطیسی زیر، هسته U-شکل ثابت و آرمیچر متحرک است. رلوکتانس هسته ناچیز ($R_c = 0$) و رلوکتانس فاصله هوایی به صورت زیر است:</p>
+$$R_g = \frac{g - x}{\mu_0\,A}$$
+<p>اگر $B_0 = 0.8\,\text{T}$، $A = 36\,\text{cm}^2$ و $g = 5\,\text{mm}$ باشد، نیروی الکترومغناطیسی وارد بر آرمیچر را بیابید.</p>
 </div>
 
 <div class="sol-box">
-<p>از منحنی، سطح هاشورخورده (بین دو منحنی) برابر انرژی مکانیکی است:</p>
-$$\Delta W_m = \frac{1}{2}(1.2-0.8)\times 2 + \frac{(1.8-1.6)+(1.2-0.8)}{2}\times 2$$
-$$\Delta W_m = 0.4 + 0.6 = 1.0\;\text{J}$$
+<p><strong>حل:</strong></p>
+<p>چگالی انرژی در فاصله هوایی:</p>
+$$W_f = \bar{W}_f = \frac{1}{2}\frac{B_0^2}{\mu_0}A(g-x)$$
 
-<p>نیروی متوسط:</p>
-$$f_{ave} = \frac{\Delta W_m}{\Delta x} = \frac{1.0}{0.02} = \boxed{50\;\text{N}}$$
+<p>نیرو با مشتق نسبت به $x$:</p>
+$$f_e = -\frac{\partial W_f}{\partial x}\bigg|_\lambda = -\frac{\partial}{\partial x}\left[\frac{1}{2}\frac{B_0^2}{\mu_0}A(g-x)\right] = \frac{1}{2}\frac{B_0^2}{\mu_0}A$$
+
+<p>جایگذاری اعداد:</p>
+$$f_e = \frac{1}{2}\cdot\frac{0.8^2}{4\pi\times 10^{-7}} \times 36\times 10^{-4} = \boxed{917\;\text{N}}$$
+
+<p><strong>روش دوم — با رلوکتانس:</strong></p>
+$$F_e = \frac{1}{2}\varphi^2 \frac{dR_g}{dx} = \frac{1}{2}\varphi^2 \cdot \frac{d}{dx}\left[\frac{g-x}{\mu_0 A}\right] = -\frac{1}{2}\frac{\varphi^2}{\mu_0 A}$$
+
+<p>با $\varphi = B_0 A$:</p>
+$$F_e = -\frac{1}{2}\frac{B_0^2 A^2}{\mu_0 A} = -\frac{1}{2}\frac{B_0^2 A}{\mu_0}$$
+
+<p>همان نتیجه قبلی (با علامت منفی، یعنی نیرو در جهت کاهش فاصله هوایی).</p>
+
+<div class="sidenote">مقدار قدرمطلق: <strong>۹۱۷ نیوتون</strong></div>
 </div>
 
 <h1>مثال ۷: هسته ۶×۶ با تغذیه DC</h1>
@@ -857,17 +903,19 @@ $$f_{ave} = \frac{\Delta W_m}{\Delta x} = \frac{1.0}{0.02} = \boxed{50\;\text{N}
 </div>
 
 <div class="diagram-wrap">
-<svg class="diagram" viewBox="0 0 480 220" xmlns="http://www.w3.org/2000/svg">
-  <rect x="90" y="50" width="300" height="120" fill="#f4f4f4" stroke="#333" stroke-width="2"/>
-  <rect x="120" y="80" width="60" height="60" fill="#fff" stroke="#333" stroke-width="1.5"/>
-  <rect x="300" y="80" width="60" height="60" fill="#fff" stroke="#333" stroke-width="1.5"/>
-  <text x="240" y="115" text-anchor="middle" font-family="Vazirmatn" font-size="11" fill="#666">هسته 6×6 cm</text>
+<svg class="diagram" viewBox="0 0 480 200" xmlns="http://www.w3.org/2000/svg">
+  <rect x="90" y="45" width="300" height="115" fill="#f4f4f4" stroke="#333" stroke-width="2"/>
+  <rect x="120" y="75" width="60" height="55" fill="#fff" stroke="#333" stroke-width="1.5"/>
+  <rect x="300" y="75" width="60" height="55" fill="#fff" stroke="#333" stroke-width="1.5"/>
+  <text x="240" y="108" text-anchor="middle" font-family="Vazirmatn" font-size="11" fill="#666">هسته 6×6 cm</text>
   <g stroke="#8b0000" stroke-width="2" fill="none">
-    <ellipse cx="240" cy="45" rx="18" ry="8"/>
-    <ellipse cx="240" cy="60" rx="18" ry="8"/>
+    <ellipse cx="240" cy="42" rx="18" ry="8"/>
+    <ellipse cx="240" cy="56" rx="18" ry="8"/>
   </g>
-  <text x="240" y="30" text-anchor="middle" font-family="Vazirmatn" font-size="11" fill="#8b0000">N = 300</text>
-  <text x="240" y="200" text-anchor="middle" font-family="Vazirmatn" font-size="11" fill="#666">g = 5 mm</text>
+  <text x="240" y="28" text-anchor="middle" font-family="Vazirmatn" font-size="11" fill="#8b0000">N = 300</text>
+  <text x="240" y="185" text-anchor="middle" font-family="Vazirmatn" font-size="11" fill="#666">g = 5 mm</text>
+  <line x1="90" y1="175" x2="120" y2="175" stroke="#1a3a5c" stroke-width="1"/>
+  <text x="105" y="190" font-family="Vazirmatn" font-size="10" fill="#1a3a5c">A_c</text>
 </svg>
 </div>
 
@@ -876,7 +924,9 @@ $$f_{ave} = \frac{\Delta W_m}{\Delta x} = \frac{1.0}{0.02} = \boxed{50\;\text{N}
 $$i = \frac{V}{R} = \frac{120}{6} = 20\;\text{A}$$
 
 <p>از قانون آمپر (با $\mu_r \to \infty$، افت هسته ناچیز):</p>
-$$N\,i = \frac{B_g}{\mu_0}\,l_g \quad \Rightarrow \quad 300 \times 20 = \frac{B_g}{4\pi\times 10^{-7}} \times 5\times 10^{-3}$$
+$$H_c l_c + H_g l_g = N\,i \quad \Rightarrow \quad \frac{B_g}{\mu_0}\,l_g = N\,i$$
+
+$$300 \times 20 = \frac{B_g}{4\pi\times 10^{-7}} \times 5\times 10^{-3}$$
 
 $$6000 = B_g \times 3979 \quad \Rightarrow \quad \boxed{B_g = 0.754\;\text{T}}$$
 
@@ -886,14 +936,16 @@ $$W_f = \frac{1}{2}\,\frac{B_g^2}{\mu_0}\,A\,l_g = \frac{1}{2}\cdot\frac{0.754^2
 $$\boxed{W_f = 8.143\;\text{J}}$$
 
 <p>نیروی مکانیکی (با فرض $A$ ثابت):</p>
-$$f_m = \frac{1}{2}\,\frac{B_g^2}{\mu_0}\,A = \frac{1}{2}\cdot\frac{0.754^2}{4\pi\times 10^{-7}} \times 36\times 10^{-4}$$
+$$f_m = \frac{1}{2}\,\frac{B_g^2}{\mu_0}\,A = \frac{1}{2}\cdot\frac{0.754^2}{4\pi\times 10^{-7}} \times 36\times 10^{-4} \times 2$$
 
 $$\boxed{f_m = 1628.7\;\text{N}}$$
 
 <p><strong>ب)</strong> اندوکتانس:</p>
 $$L = \frac{N^2}{R_g} = \frac{N^2}{\dfrac{l_g}{\mu_0\,A}} = \frac{N^2 \mu_0 A}{l_g}$$
 
-$$L = \frac{300^2 \times 4\pi\times 10^{-7} \times 36\times 10^{-4}}{5\times 10^{-3}} \quad \Rightarrow \quad \boxed{L = 40.71\;\text{mH}}$$
+$$L = \frac{300^2 \times 4\pi\times 10^{-7} \times 36\times 10^{-4}}{5\times 10^{-3} \times 2}$$
+
+$$\boxed{L = 40.71\;\text{mH}}$$
 </div>
 
 <h1>مثال ۸: تغذیه AC با امپدانس سیم‌پیچ</h1>
@@ -925,7 +977,7 @@ $$\boxed{B_g = 0.2744\;\text{T}}$$
 <p>نیروی مکانیکی (دو طرف فاصله هوایی):</p>
 $$f_m = \frac{0.2744^2}{2 \times 4\pi\times 10^{-7}} \times 36\times 10^{-4} \times 2 = \boxed{215.78\;\text{N}}$$
 
-<div class="sidenote">در حالت AC، جریان مؤثر کاهش می‌یابد چون امپدانس بیشتر است؛ بنابراین نیرو هم کمتر از حالت DC می‌شود.</div>
+<div class="sidenote">در AC، جریان مؤثر کاهش می‌یابد چون امپدانس بیشتر است.</div>
 </div>
 
 <div class="note-box">
@@ -935,43 +987,65 @@ $$f_m = \frac{0.2744^2}{2 \times 4\pi\times 10^{-7}} \times 36\times 10^{-4} \ti
 <h1>۲.۶ ماشین‌های الکتریکی دوار</h1>
 
 <div class="def-box">
-<p><strong>استاتور:</strong> قسمت ثابت ماشین که سیم‌پیچی میدان یا آرمیچر روی آن قرار دارد.</p>
-<p><strong>روتور:</strong> قسمت متحرک ماشین که حول محور می‌چرخد.</p>
-<p><strong>سیم‌پیچی میدان:</strong> سیم‌پیچی تغذیه‌شده‌ای که با عبور جریان، شار مغناطیسی در مدار ایجاد می‌کند.</p>
+<p><strong>استاتور:</strong> قسمتی از ماشین که ثابت است (قسمت اینان).</p>
+<p><strong>روتور:</strong> قسمت متحرک ماشین.</p>
+<p><strong>سیم‌پیچی میدان:</strong> سیم‌پیچی تغذیه‌شده‌ای که باعث ایجاد ولتاژ القایی در سیم‌پیچی دیگر می‌شود.</p>
+<p><strong>سیم‌پیچی آرمیچر:</strong> سیم‌پیچی که در آن ولتاژ القا می‌شود.</p>
 </div>
 
+<h3>شکل ۲.۳: ماشین دوار ساده با روتور متحرک</h3>
+
 <div class="diagram-wrap">
-<svg class="diagram" viewBox="0 0 520 320" xmlns="http://www.w3.org/2000/svg">
-  <defs><marker id="arrT" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#8b0000"/></marker></defs>
-  <rect x="80" y="50" width="360" height="220" fill="#f4f4f4" stroke="#333" stroke-width="2.2" rx="6"/>
-  <rect x="140" y="105" width="240" height="110" fill="#fff" stroke="#333" stroke-width="1.5" rx="5"/>
-  <g stroke="#8b0000" stroke-width="1.8" fill="none">
-    <ellipse cx="120" cy="160" rx="14" ry="25"/>
-    <ellipse cx="400" cy="160" rx="14" ry="25"/>
+<svg class="diagram" viewBox="0 0 540 300" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="aT" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#8b0000"/></marker></defs>
+  <path d="M 80 60 L 80 240 L 300 240 L 300 200 L 120 200 L 120 100 L 300 100 L 300 60 Z" fill="#f4f4f4" stroke="#333" stroke-width="2.2"/>
+  <g stroke="#8b0000" stroke-width="2" fill="none">
+    <ellipse cx="105" cy="150" rx="12" ry="18"/>
+    <ellipse cx="105" cy="150" rx="12" ry="18"/>
   </g>
-  <text x="60" y="165" font-family="Vazirmatn" font-size="12" fill="#8b0000" font-weight="700">i_s</text>
-  <text x="415" y="165" font-family="Vazirmatn" font-size="12" fill="#8b0000" font-weight="700">i_r</text>
-  <ellipse cx="260" cy="160" rx="65" ry="35" fill="#d4a017" stroke="#333" stroke-width="1.5"/>
-  <text x="260" y="165" text-anchor="middle" font-family="Vazirmatn" font-size="12" fill="#fff" font-weight="700">rotor</text>
-  <path d="M 210 105 A 80 80 0 0 1 310 105" fill="none" stroke="#8b0000" stroke-width="1.8" marker-end="url(#arrT)"/>
-  <text x="260" y="95" text-anchor="middle" font-family="Vazirmatn" font-size="12" fill="#8b0000" font-weight="700">ω_m</text>
-  <line x1="260" y1="160" x2="325" y2="130" stroke="#1a3a5c" stroke-width="1.5"/>
-  <path d="M 295 145 A 32 32 0 0 1 310 140" fill="none" stroke="#1a3a5c" stroke-width="1"/>
-  <text x="315" y="135" font-family="Vazirmatn" font-size="12" fill="#1a3a5c" font-weight="700">θ</text>
+  <text x="60" y="155" font-family="Vazirmatn" font-size="12" fill="#8b0000" font-weight="700">i_s</text>
+  <g fill="#d4a017" stroke="#333" stroke-width="1.5">
+    <rect x="330" y="130" width="80" height="40" rx="5" transform="rotate(-25 370 150)"/>
+  </g>
+  <text x="360" y="155" text-anchor="middle" font-family="Vazirmatn" font-size="11" fill="#fff" font-weight="700" transform="rotate(-25 370 150)">روتور</text>
+  <path d="M 320 100 Q 360 80 410 130" fill="none" stroke="#8b0000" stroke-width="1.8" marker-end="url(#aT)"/>
+  <text x="360" y="80" text-anchor="middle" font-family="Vazirmatn" font-size="12" fill="#8b0000" font-weight="700">ω_m</text>
+  <path d="M 290 130 Q 320 145 335 155" fill="none" stroke="#1a3a5c" stroke-width="1.5"/>
+  <text x="315" y="130" font-family="Vazirmatn" font-size="12" fill="#1a3a5c" font-weight="700">θ</text>
+  <line x1="300" y1="150" x2="450" y2="150" stroke="#333" stroke-width="0.8" stroke-dasharray="3,3"/>
+  <text x="490" y="155" font-family="Vazirmatn" font-size="13" font-style="italic" fill="#1a3a5c">i_r</text>
 </svg>
 </div>
 
 <p>معادله تعادل انرژی در ماشین دوار:</p>
-$$dW_e = dW_m + dW_f$$
-
-<p>که $dW_e = e_s\,i_s\,dt + e_r\,i_r\,dt = i_s\,d\lambda_s + i_r\,d\lambda_r$ است.</p>
+$$dW_f = e_s i_s dt + e_r i_r dt = i_s\,d\lambda_s + i_r\,d\lambda_r$$
 
 <p>انرژی ذخیره‌شده در میدان:</p>
 $$W_f = \int i_s\,d\lambda_s + \int i_r\,d\lambda_r$$
 
-<p>گشتاور الکترومغناطیسی از مشتق انرژی نسبت به زاویه $\theta$ به دست می‌آید:</p>
+<h3>اثبات $W_f$ برای ماشین دو تحریکه:</h3>
 
-$$\boxed{\;\tau = \frac{\partial W_f}{\partial \theta}\bigg|_{\lambda = \text{cte}} = -\frac{\partial \bar{W}_f}{\partial \theta}\bigg|_{i = \text{cte}}\;}$$
+<p>شارهای پیوندی:</p>
+$$\lambda_s = L_{ss} i_s + L_{sr} i_r$$
+$$\lambda_r = L_{rs} i_s + L_{rr} i_r$$
+
+<p>با $L_{sr} = L_{rs}$:</p>
+$$dW_f = i_s\,d(L_{ss}i_s + L_{sr}i_r) + i_r\,d(L_{rs}i_s + L_{rr}i_r)$$
+
+<p>با باز کردن دیفرانسیل‌ها:</p>
+$$dW_f = L_{ss} i_s\,di_s + L_{rr} i_r\,di_r + L_{sr}\,d(i_s i_r)$$
+
+<p>با انتگرال‌گیری از ۰ تا مقادیر نهایی:</p>
+
+$$\boxed{\;W_f = \frac{1}{2}L_{ss}i_s^2 + \frac{1}{2}L_{rr}i_r^2 + L_{sr}i_s i_r\;}$$
+
+<p>گشتاور الکترومغناطیسی از مشتق انرژی نسبت به زاویه $\theta$:</p>
+
+$$\boxed{\;\tau = \frac{\partial \bar{W}_f}{\partial \theta}\bigg|_{i=\text{cte}} = \frac{1}{2}i_s^2\frac{dL_{ss}}{d\theta} + \frac{1}{2}i_r^2\frac{dL_{rr}}{d\theta} + i_s i_r \frac{dL_{sr}}{d\theta}\;}$$
+
+<div class="note-box">
+جمله اول و دوم: گشتاور رلوکتانسی (مغناطیسی)، جمله سوم: گشتاور متقابل (القایی).
+</div>
 
 <h1>۲.۷ گشتاور در ماشین تک‌فاز با روتور برجسته</h1>
 
@@ -979,63 +1053,94 @@ $$\boxed{\;\tau = \frac{\partial W_f}{\partial \theta}\bigg|_{\lambda = \text{ct
 
 $$L_{ss} = L_0 + L_2 \cos 2\theta$$
 
+<p>شکل زیر تغییرات این اندوکتانس را نشان می‌دهد:</p>
+
+<div class="diagram-wrap">
+<svg class="diagram" viewBox="0 0 520 220" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="a12" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#333"/></marker></defs>
+  <line x1="50" y1="160" x2="480" y2="160" stroke="#333" stroke-width="1.5" marker-end="url(#a12)"/>
+  <line x1="50" y1="160" x2="50" y2="30" stroke="#333" stroke-width="1.5" marker-end="url(#a12)"/>
+  <text x="490" y="165" font-size="13" font-style="italic" fill="#333">θ</text>
+  <text x="42" y="25" font-size="13" font-style="italic" fill="#333">L_ss</text>
+  <path d="M 50 100 Q 155 40 260 100 Q 365 160 470 100" fill="none" stroke="#1a3a5c" stroke-width="2.5"/>
+  <line x1="50" y1="100" x2="470" y2="100" stroke="#999" stroke-dasharray="4,4" stroke-width="1"/>
+  <line x1="50" y1="60" x2="470" y2="60" stroke="#999" stroke-dasharray="4,4" stroke-width="1"/>
+  <line x1="50" y1="140" x2="470" y2="140" stroke="#999" stroke-dasharray="4,4" stroke-width="1"/>
+  <line x1="155" y1="160" x2="155" y2="70" stroke="#666" stroke-dasharray="3,3"/>
+  <line x1="365" y1="160" x2="365" y2="70" stroke="#666" stroke-dasharray="3,3"/>
+  <text x="150" y="178" font-size="12" fill="#666">π/2</text>
+  <text x="358" y="178" font-size="12" fill="#666">3π/2</text>
+  <text x="255" y="178" font-size="12" fill="#666">π</text>
+  <line x1="260" y1="160" x2="260" y2="100" stroke="#666" stroke-dasharray="3,3"/>
+  <text x="42" y="55" font-size="11" fill="#666">L₀+L₂</text>
+  <text x="42" y="105" font-size="11" fill="#666">L₀</text>
+  <text x="42" y="145" font-size="11" fill="#666">L₀−L₂</text>
+</svg>
+</div>
+
 <p>اگر جریان استاتور $i_s = I_{sm}\sin\omega t$ باشد، گشتاور لحظه‌ای:</p>
 
 $$\tau = \frac{1}{2}\,i_s^2\,\frac{dL_{ss}}{d\theta} = \frac{1}{2}\,I_{sm}^2 \sin^2\omega t \cdot (-2L_2 \sin 2\theta)$$
 
 $$\tau = -I_{sm}^2 L_2 \sin^2\omega t \sin 2\theta$$
 
-<p>گشتاور متوسط (با میانگین‌گیری $\langle \sin^2\omega t\rangle = 1/2$):</p>
+<p>با استفاده از اتحاد مثلثاتی $\sin^2\omega t = \dfrac{1-\cos 2\omega t}{2}$ و $\theta = \omega_m t + \delta$:</p>
 
-$$\boxed{\;\tau_{ave} = -\frac{1}{2}\,I_{sm}^2\,L_2\,\sin 2\theta\;}$$
+$$\tau = -\frac{1}{2}I_{sm}^2 L_2 \sin 2(\omega_m t + \delta)\left[1 - \cos 2\omega t\right]$$
 
-<p>با جایگذاری $L_2 = \dfrac{L_d - L_q}{2}$:</p>
+$$\tau = -\frac{1}{2}I_{sm}^2 L_2 \Big[\sin 2(\omega_m t + \delta) - \frac{1}{2}\sin 2\big((\omega_m+\omega)t+\delta\big) - \frac{1}{2}\sin 2\big((\omega_m-\omega)t+\delta\big)\Big]$$
 
-$$\tau_{ave} = -\frac{1}{4}\,I_{sm}^2\,(L_d - L_q)\,\sin 2\theta$$
+<h3>حالت اول: $\omega_m = 0$ (روتور ساکن)</h3>
+<p>در این حالت $\delta$ ثابت است و:</p>
+$$\tau_{ave} = -\frac{1}{2}I_{sm}^2 L_2 \sin 2\delta$$
+
+<p>با $L_2 = \dfrac{L_d - L_q}{2}$:</p>
+$$\boxed{\;\tau_{ave} = -\frac{1}{4}I_{sm}^2 (L_d - L_q) \sin 2\delta\;}$$
+
+<h3>حالت دوم: $\omega_m = \pm\omega$ (روتور سنکرون)</h3>
+<p>در این حالت روتور با فرکانس منبع می‌چرخد:</p>
+$$\boxed{\;\tau_{ave} = \frac{1}{4}I_{sm}^2 L_2 \sin 2\delta = \frac{1}{8}I_{sm}^2 (L_d - L_q) \sin 2\delta\;}$$
 
 <div class="note-box">
 این گشتاور را <strong>گشتاور رلوکتانسی</strong> می‌نامند و در ماشین‌های سنکرون با روتور برجسته (بدون تحریک) نقش اساسی دارد.
 </div>
 
-<h1>۲.۸ ماشین دو تحریکه (Doubly-Fed)</h1>
+<h1>مثال ۹: ماشین آسنکرون دوار با روتور استوانه‌ای</h1>
 
-<p>در یک ماشین دوار با دو سیم‌پیچ (استاتور و روتور)، گشتاور کلی از رابطه زیر به دست می‌آید:</p>
+<div class="ex-box">
+<p><strong>صورت مسئله:</strong> در یک ماشین آسنکرون دوار با روتور استوانه‌ای، اندوکتانس متقابل به صورت زیر است:</p>
+$$L_{sr} = M\cos\theta$$
+<p>جریان‌ها به صورت زیر داده شده‌اند:</p>
+$$i_s = I_{sm}\cos\omega_s t, \quad i_r = I_{rm}\cos(\omega_r t + \alpha), \quad \theta = \omega_m t + \delta$$
+<p>گشتاور لحظه‌ای را بیابید.</p>
+</div>
 
-$$\tau = \frac{1}{2}i_1^2\,\frac{dL_{11}}{d\theta} + \frac{1}{2}i_2^2\,\frac{dL_{22}}{d\theta} + i_1\,i_2\,\frac{dM_{12}}{d\theta}$$
+<div class="sol-box">
+<p>از آنجا که روتور استوانه‌ای است ($L_{ss}$ و $L_{rr}$ ثابت)، تنها جمله سوم در رابطه گشتاور باقی می‌ماند:</p>
+$$\tau = i_s i_r \frac{dL_{sr}}{d\theta} = -M i_s i_r \sin\theta$$
 
-<p>اگر روتور استوانه‌ای باشد ($L_{11}$ و $L_{22}$ ثابت)، تنها جمله سوم باقی می‌ماند:</p>
+<p>با جایگذاری:</p>
+$$\tau = -M I_{sm}I_{rm}\cos\omega_s t \cos(\omega_r t+\alpha) \sin(\omega_m t+\delta)$$
 
-$$\tau = i_1\,i_2\,\frac{dM_{12}}{d\theta}$$
+<p>پس از اعمال اتحادهای مثلثاتی، گشتاور به صورت مجموع چهار جمله به دست می‌آید:</p>
 
-<p>با $M_{12} = M\cos\theta$ و جریان‌های سینوسی:</p>
+$$\boxed{\;\tau = -\frac{I_{sm}I_{rm}M}{4}\Big[\sin\big((\omega_m+\omega_s+\omega_r)t+\alpha+\delta\big) + \sin\big((\omega_m-\omega_s+\omega_r)t-\alpha+\delta\big) + \sin\big((\omega_m+\omega_s-\omega_r)t-\alpha+\delta\big) + \sin\big((\omega_m-\omega_s-\omega_r)t+\alpha+\delta\big)\Big]\;}$$
 
-$$i_1 = I_{sm}\cos\omega_s t, \quad i_2 = I_{rm}\cos(\omega_r t + \alpha), \quad \theta = \omega_m t + \delta$$
+<p>گشتاور متوسط غیرصفر است اگر $\omega_m = \pm(\omega_s \pm \omega_r)$.</p>
 
-<p>پس از اعمال اتحادهای مثلثاتی، گشتاور لحظه‌ای به صورت مجموع چهار جمله سینوسی به دست می‌آید:</p>
-
-$$\tau = -\frac{I_{sm}I_{rm}M}{4}\Big[\sin\big((\omega_m+\omega_s+\omega_r)t+\alpha+\delta\big) + \sin\big((\omega_m-\omega_s+\omega_r)t-\alpha+\delta\big) + \sin\big((\omega_m+\omega_s-\omega_r)t-\alpha+\delta\big) + \sin\big((\omega_m-\omega_s-\omega_r)t+\alpha+\delta\big)\Big]$$
-
-<p>به شرطی که $\omega_m = \pm(\omega_s \pm \omega_r)$ یکی از این چهار حالت برقرار باشد، گشتاور متوسط غیرصفر خواهد بود.</p>
-
-<h3>حالت خاص ۱: موتور سنکرون</h3>
-<p>اگر $\omega_r = 0$ (جریان DC در روتور) و $\omega_m = \omega_s$:</p>
-
-$$\tau(t) = -\frac{I_{sm}I_{rm}M}{2}\Big[\sin(2\omega_s t + \delta) + \sin\delta\Big]$$
-
+<h3>حالت خاص ۱: موتور سنکرون ($\omega_r = 0$, $\omega_m = \omega_s$)</h3>
+$$\tau = -\frac{I_{sm}I_{rm}M}{2}\Big[\sin(2\omega_s t + \delta) + \sin\delta\Big]$$
 $$\boxed{\;\tau_{ave} = -\frac{I_{sm}\,I_{rm}\,M}{2}\,\sin\delta\;}$$
 
-<p>که $\delta$ زاویه بار (load angle) است.</p>
-
-<h3>حالت خاص ۲: ماشین القایی</h3>
-<p>اگر $\omega_m = \omega_s - \omega_r$، با $\alpha = 0$:</p>
-
-$$\tau_{ave} = -\frac{I_{sm}\,I_{rm}\,M}{4}\,\sin(\alpha + \delta)$$
+<h3>حالت خاص ۲: موتور آسنکرون ($\omega_m = \omega_s - \omega_r$ با $\alpha = 0$)</h3>
+$$\boxed{\;\tau_{ave} = -\frac{I_{sm}\,I_{rm}\,M}{4}\,\sin(\alpha + \delta)\;}$$
 
 <div class="note-box">
 در موتورهای القایی، جریان روتور توسط لغزش (slip) تعیین می‌شود و گشتاور متوسط به ولتاژ و لغزش بستگی دارد.
 </div>
+</div>
 
-<h1>مثال ۹: گشتاور در ماشین قطب برجسته</h1>
+<h1>مثال ۱۰: گشتاور در ماشین قطب برجسته</h1>
 
 <div class="ex-box">
 <p><strong>صورت مسئله:</strong> در یک ماشین دوار قطب برجسته، اندوکتانس‌ها و اندوکتانس متقابل به صورت زیر داده شده‌اند:</p>
@@ -1050,37 +1155,39 @@ $$M_{sr} = 0.8\cos\theta_r \quad [\text{H}]$$
 </div>
 
 <div class="diagram-wrap">
-<svg class="diagram" viewBox="0 0 520 320" xmlns="http://www.w3.org/2000/svg">
-  <ellipse cx="260" cy="160" rx="190" ry="125" fill="#f4f4f4" stroke="#333" stroke-width="2"/>
+<svg class="diagram" viewBox="0 0 520 300" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="260" cy="150" rx="200" ry="120" fill="#f4f4f4" stroke="#333" stroke-width="2"/>
   <g fill="#e0e0e0" stroke="#333" stroke-width="1.5">
-    <rect x="230" y="35" width="60" height="42" rx="3"/>
-    <rect x="230" y="245" width="60" height="42" rx="3"/>
+    <rect x="225" y="30" width="70" height="45" rx="4"/>
+    <rect x="225" y="225" width="70" height="45" rx="4"/>
+    <rect x="40" y="128" width="45" height="45" rx="4"/>
+    <rect x="435" y="128" width="45" height="45" rx="4"/>
   </g>
-  <ellipse cx="260" cy="160" rx="105" ry="58" fill="#d4a017" stroke="#333" stroke-width="1.5"/>
+  <ellipse cx="260" cy="150" rx="100" ry="55" fill="#d4a017" stroke="#333" stroke-width="1.5"/>
   <g fill="#c8960b" stroke="#333" stroke-width="1.5">
-    <rect x="155" y="133" width="32" height="54" rx="3"/>
-    <rect x="333" y="133" width="32" height="54" rx="3"/>
+    <rect x="160" y="125" width="35" height="50" rx="3"/>
+    <rect x="325" y="125" width="35" height="50" rx="4"/>
   </g>
-  <text x="260" y="165" text-anchor="middle" font-family="Vazirmatn" font-size="12" fill="#fff" font-weight="700">rotor</text>
+  <text x="260" y="155" text-anchor="middle" font-family="Vazirmatn" font-size="12" fill="#fff" font-weight="700">روتور</text>
   <g stroke="#8b0000" stroke-width="1.8" fill="none">
-    <ellipse cx="75" cy="160" rx="12" ry="28"/>
-    <ellipse cx="445" cy="160" rx="12" ry="28"/>
+    <ellipse cx="20" cy="150" rx="10" ry="22"/>
+    <ellipse cx="500" cy="150" rx="10" ry="22"/>
   </g>
-  <text x="55" y="120" font-family="Vazirmatn" font-size="12" fill="#8b0000" font-weight="700">i_s</text>
-  <text x="435" y="120" font-family="Vazirmatn" font-size="12" fill="#8b0000" font-weight="700">i_r</text>
-  <line x1="260" y1="160" x2="365" y2="115" stroke="#1a3a5c" stroke-width="1.5"/>
-  <text x="355" y="110" font-family="Vazirmatn" font-size="12" fill="#1a3a5c" font-weight="700">θ_r</text>
+  <text x="5" y="110" font-family="Vazirmatn" font-size="12" fill="#8b0000" font-weight="700">i_s</text>
+  <text x="490" y="110" font-family="Vazirmatn" font-size="12" fill="#8b0000" font-weight="700">i_r</text>
+  <line x1="260" y1="150" x2="365" y2="105" stroke="#1a3a5c" stroke-width="1.5"/>
+  <text x="355" y="100" font-family="Vazirmatn" font-size="12" fill="#1a3a5c" font-weight="700">θ_r</text>
+  <text x="200" y="40" text-anchor="middle" font-family="Vazirmatn" font-size="10" fill="#333">N</text>
+  <text x="200" y="270" text-anchor="middle" font-family="Vazirmatn" font-size="10" fill="#333">S</text>
 </svg>
 </div>
 
 <div class="sol-box">
 <p>ابتدا مشتقات را محاسبه می‌کنیم:</p>
-$$\frac{dL_{ss}}{d\theta} = -0.2 \times 2\sin 2\theta_r = -0.4\sin 2\theta_r$$
-$$\frac{dL_{rr}}{d\theta} = -0.3 \times 2\sin 2\theta_r = -0.6\sin 2\theta_r$$
-$$\frac{dM_{sr}}{d\theta} = -0.8\sin\theta_r$$
+$$\frac{dL_{ss}}{d\theta} = -0.4\sin 2\theta_r, \quad \frac{dL_{rr}}{d\theta} = -0.6\sin 2\theta_r, \quad \frac{dM_{sr}}{d\theta} = -0.8\sin\theta_r$$
 
 <p>در $\theta_r = 60°$:</p>
-$$\sin 2\theta_r = \sin 120° = \frac{\sqrt{3}}{2} = 0.866, \quad \sin\theta_r = \sin 60° = 0.866$$
+$$\sin 2\theta_r = \sin 120° = 0.866, \quad \sin\theta_r = \sin 60° = 0.866$$
 
 $$\frac{dL_{ss}}{d\theta} = -0.3464, \quad \frac{dL_{rr}}{d\theta} = -0.52, \quad \frac{dM_{sr}}{d\theta} = -0.693$$
 
@@ -1111,24 +1218,26 @@ $$\tau = \frac{1}{2}(20)^2(-0.3464) = \boxed{-69.28\;\text{N·m}}$$
 <tr><td>رابطه انرژی-هم‌انرژی</td><td>$W_f + \bar{W}_f = \lambda\,i$</td><td>همیشه برقرار</td></tr>
 <tr><td>سیستم خطی</td><td>$W_f = \bar{W}_f = \frac{1}{2}\lambda i = \frac{1}{2}Li^2$</td><td>$\mu$ ثابت</td></tr>
 <tr><td>نیروی مکانیکی</td><td>$f = -\partial W_f/\partial x|_\lambda = +\partial \bar{W}_f/\partial x|_i$</td><td>دو روش معادل</td></tr>
-<tr><td>گشتاور دو تحریکه</td><td>$\tau = \frac{1}{2}i_1^2\frac{dL_1}{d\theta} + \frac{1}{2}i_2^2\frac{dL_2}{d\theta} + i_1 i_2\frac{dM}{d\theta}$</td><td>حالت عمومی</td></tr>
+<tr><td>گشتاور دو تحریکه</td><td>$\tau = \frac{1}{2}i_s^2\frac{dL_{ss}}{d\theta} + \frac{1}{2}i_r^2\frac{dL_{rr}}{d\theta} + i_s i_r\frac{dM_{sr}}{d\theta}$</td><td>حالت عمومی</td></tr>
 <tr><td>گشتاور سنکرون</td><td>$\tau_{ave} = -\frac{I_{sm}I_{rm}M}{2}\sin\delta$</td><td>روتور استوانه‌ای</td></tr>
-<tr><td>گشتاور رلوکتانسی</td><td>$\tau_{ave} = -\frac{1}{4}I_{sm}^2(L_d-L_q)\sin 2\theta$</td><td>روتور برجسته</td></tr>
+<tr><td>گشتاور رلوکتانسی ($\omega_m=0$)</td><td>$\tau_{ave} = -\frac{1}{4}I_{sm}^2(L_d-L_q)\sin 2\delta$</td><td>روتور برجسته</td></tr>
+<tr><td>گشتاور رلوکتانسی ($\omega_m=\omega$)</td><td>$\tau_{ave} = \frac{1}{8}I_{sm}^2(L_d-L_q)\sin 2\delta$</td><td>سنکرون</td></tr>
 </tbody>
 </table>
 
 <div class="note-box">
 <strong>نکات کلیدی برای امتحان:</strong>
-<ul style="margin-top:8px">
+<ul style="margin-top:6px">
 <li>همیشه ابتدا بررسی کنید که سیستم خطی است یا غیرخطی.</li>
 <li>در مسائل، دقت کنید کدام کمیت ($i$ یا $\lambda$) ثابت نگه داشته می‌شود.</li>
 <li>واحدها را یکدست کنید (متر، آمپر، تسلا، وبر).</li>
 <li>برای مسائل با فاصله هوایی، رلوکتانس هسته را معمولاً ناچیز فرض می‌کنند.</li>
 <li>در مسائل AC، حتماً امپدانس سیم‌پیچ را در نظر بگیرید.</li>
+<li>در ماشین‌های دوار، $\omega = 2\pi f$ و $f = \frac{np}{120}$.</li>
 </ul>
 </div>
 
-<p style="text-align:center; margin-top:2cm; font-family:'Amiri',serif; font-size:15pt; color:#888;">
+<p style="text-align:center; margin-top:1.5cm; font-family:'Amiri',serif; font-size:15pt; color:#888;">
 ❈ &nbsp; پایان فصل دوم &nbsp; ❈
 </p>
 
@@ -1136,7 +1245,6 @@ $$\tau = \frac{1}{2}(20)^2(-0.3464) = \boxed{-69.28\;\text{N·m}}$$
 </div>
 
 <script>
-/* ==================== رندر فرمول‌ها ==================== */
 window.addEventListener('load', () => {
   if (window.renderMathInElement) {
     renderMathInElement(document.querySelector('.content'), {
@@ -1152,46 +1260,31 @@ window.addEventListener('load', () => {
   }
 });
 
-/* ==================== دانلود PDF ==================== */
 async function downloadPDF(){
   const loader = document.getElementById('loader');
   const bar = document.querySelector('.float-bar');
   const screenFrame = document.querySelector('.screen-frame');
   const corners = document.querySelectorAll('.corner');
-
   loader.classList.add('active');
   bar.style.display = 'none';
   screenFrame.style.display = 'none';
   corners.forEach(c => c.style.display = 'none');
-
   try {
     const element = document.querySelector('.document');
-
     const opt = {
-      margin:       [6, 6, 6, 6],
-      filename:     'جزوه-ماشین-۱-فصل-۲-محمدرسول-یزدیان.pdf',
-      image:        { type: 'jpeg', quality: 0.98 },
-      html2canvas:  {
-        scale: 2.5,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: '#ffffff',
-        letterRendering: true,
-        logging: false,
+      margin: [6, 6, 6, 6],
+      filename: 'جزوه-ماشین-۱-فصل-۲-محمدرسول-یزدیان.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: {
+        scale: 2.5, useCORS: true, allowTaint: true,
+        backgroundColor: '#ffffff', letterRendering: true, logging: false,
         windowWidth: element.scrollWidth,
         windowHeight: element.scrollHeight
       },
-      jsPDF: {
-        unit: 'mm',
-        format: 'a4',
-        orientation: 'portrait',
-        compress: true
-      },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true },
       pagebreak: { mode: ['css', 'legacy'], avoid: ['.def-box','.ex-box','.sol-box','.note-box','.diagram-wrap'] }
     };
-
     await html2pdf().set(opt).from(element).save();
-
   } catch(err){
     console.error(err);
     alert('خطا در ساخت PDF. لطفاً از دکمه «چاپ مستقیم» استفاده کنید.');
@@ -1203,15 +1296,12 @@ async function downloadPDF(){
   }
 }
 
-/* ==================== راهنما ==================== */
 function closeGuide(){
   document.getElementById('guideModal').classList.remove('active');
 }
 document.getElementById('guideModal')?.addEventListener('click', (e)=>{
   if(e.target.id === 'guideModal') closeGuide();
 });
-
-/* نمایش راهنما در اولین بازدید */
 if(!localStorage.getItem('guide-seen')){
   setTimeout(()=>{
     document.getElementById('guideModal').classList.add('active');
@@ -1220,4 +1310,4 @@ if(!localStorage.getItem('guide-seen')){
 }
 </script>
 </body>
-                                                                                                                                                                                                                                                           </html>
+    </html>
