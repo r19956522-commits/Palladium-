@@ -329,6 +329,116 @@ window.MathJax = {
     line-height: 1.9;
   }
 
+  /* ===== فهرست مطالب اختصاصی ===== */
+  .toc-page {
+    background: #fffdf3;
+    border: 2px solid #c9a227;
+    border-radius: 10px;
+    padding: 26px 30px 30px;
+    margin: 10px 0;
+    box-shadow: 0 0 0 4px #fffdf7, 0 0 0 5.5px #e6c85c;
+    position: relative;
+  }
+
+  .toc-page::before {
+    content: "";
+    position: absolute;
+    top: -3px;
+    right: 0;
+    left: 0;
+    height: 5px;
+    background: linear-gradient(90deg, #c9a227, #f4d76b, #c9a227);
+    border-radius: 10px 10px 0 0;
+  }
+
+  .toc-title {
+    text-align: center;
+    color: #6b4d00;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 0 6px;
+    padding-bottom: 8px;
+    border-bottom: 2px double #c9a227;
+    line-height: 1.5;
+  }
+
+  .toc-subtitle {
+    text-align: center;
+    color: #8a6b1e;
+    font-size: 13px;
+    font-style: italic;
+    margin-bottom: 20px;
+  }
+
+  .toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    counter-reset: toc-counter;
+  }
+
+  .toc-list > li {
+    counter-increment: toc-counter;
+    padding: 6px 0;
+    border-bottom: 1px dotted #d4b85f;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .toc-list > li:last-child {
+    border-bottom: none;
+  }
+
+  .toc-list > li::before {
+    content: counter(toc-counter) ".";
+    color: #8a6b1e;
+    font-weight: bold;
+    font-size: 14px;
+    flex-shrink: 0;
+    min-width: 26px;
+    text-align: left;
+    direction: ltr;
+  }
+
+  .toc-item {
+    flex: 1;
+    color: #0b3d91;
+    font-weight: 500;
+    font-size: 14.5px;
+    text-decoration: none;
+  }
+
+  .toc-item:hover {
+    color: #c9a227;
+  }
+
+  .toc-subitem {
+    list-style: none;
+    padding-right: 30px;
+    margin: 3px 0;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 13px;
+    color: #555;
+  }
+
+  .toc-subitem::before {
+    content: "◆";
+    color: #c9a227;
+    font-size: 9px;
+    flex-shrink: 0;
+    min-width: 20px;
+    text-align: left;
+  }
+
+  .toc-subitem span:first-of-type {
+    flex: 1;
+  }
+
   .eq {
     direction: ltr;
     text-align: center;
@@ -533,6 +643,9 @@ window.MathJax = {
     .eq-row .eq-tag { text-align: center; }
     .fig svg { max-width: 100%; }
     .red-notice { font-size: 13px; padding: 12px 14px; }
+    .toc-page { padding: 18px 16px 22px; }
+    .toc-item { font-size: 13px; }
+    .toc-subitem { font-size: 12px; }
   }
 
   @media print {
@@ -581,7 +694,7 @@ window.MathJax = {
     .fig svg { max-width: 78%; }
     .fig-caption { font-size: 9pt; }
     .end { font-size: 11pt; margin-top: 12px; padding: 6px; }
-    .problem, .solution, .note, .toc, .fig, .red-notice {
+    .problem, .solution, .note, .toc, .fig, .red-notice, .toc-page {
       page-break-inside: avoid;
       break-inside: avoid;
     }
@@ -589,6 +702,10 @@ window.MathJax = {
     tr { page-break-inside: avoid; }
     .eq { overflow: visible !important; }
     .red-notice { font-size: 9.5pt; padding: 10px 14px; border: 1.5px solid #d32f2f; border-right: 4px solid #c62828; }
+    .toc-page { padding: 14px 18px 18px; }
+    .toc-title { font-size: 14pt; }
+    .toc-item { font-size: 11pt; }
+    .toc-subitem { font-size: 10pt; }
     .page-notes {
       display: block !important;
       position: fixed;
@@ -652,11 +769,147 @@ window.MathJax = {
   </div>
 </div>
 
-<!-- ==================== صفحه ۲: ۲.۱ + ۲.۲ ==================== -->
+<!-- ==================== صفحه ۲: فهرست مطالب ==================== -->
+<div class="page">
+  <h1 style="margin-bottom:22px;">فهرست مطالب</h1>
+
+  <div class="toc-page">
+    <div class="toc-title">فصل دوم: تبدیل انرژی الکترومکانیکی</div>
+    <div class="toc-subtitle">ماشین‌های الکتریکی ۱ — زیر نظر استاد صدر</div>
+
+    <ol class="toc-list">
+      <li>
+        <a href="#s2-1" class="toc-item">مسیر تبدیل انرژی در ماشین‌های الکتریکی</a>
+      </li>
+      <li>
+        <a href="#s2-2" class="toc-item">محاسبه انرژی ذخیره‌شده در میدان مغناطیسی</a>
+      </li>
+      <li>
+        <a href="#s2-3" class="toc-item">محاسبه $W_f$ در مدار مغناطیسی با هسته و فاصله هوایی</a>
+      </li>
+      <li>
+        <a href="#s2-4" class="toc-item">انرژی و شبه‌انرژی (هم‌انرژی / Co-energy)</a>
+        <ul style="width:100%;padding:0;margin:4px 0;">
+          <li class="toc-subitem"><span>اثبات رابطه $W_f + \bar{W}_f = \lambda i$</span></li>
+          <li class="toc-subitem"><span>حالت خطی و ۹ شکل هم‌ارز $W_f$</span></li>
+          <li class="toc-subitem"><span>تأثیر افزایش فاصله هوایی بر منحنی $\lambda - i$</span></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#s2-5" class="toc-item">محاسبه نیرو و گشتاور از انرژی</a>
+      </li>
+      <li>
+        <a href="#s2-6" class="toc-item">ماشین‌های الکتریکی دوار</a>
+        <ul style="width:100%;padding:0;margin:4px 0;">
+          <li class="toc-subitem"><span>اثبات کامل $W_f$ برای ماشین دو تحریکه</span></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#s2-7" class="toc-item">گشتاور در ماشین تک‌فاز با روتور برجسته</a>
+      </li>
+      <li>
+        <a href="#s2-8" class="toc-item">جدول خلاصه روابط</a>
+      </li>
+    </ol>
+
+    <hr style="margin:20px 0;">
+
+    <div class="toc-title" style="font-size:16px;border-bottom:1.5px dashed #c9a227;">مثال‌های تشریحی حل‌شده</div>
+
+    <ol class="toc-list">
+      <li>
+        <a href="#ex1" class="toc-item">مثال ۱ — راکتور با هسته فرومغناطیس</a>
+        <ul style="width:100%;padding:0;margin:4px 0;">
+          <li class="toc-subitem"><span>الف) جریان DC و ولتاژ DC</span></li>
+          <li class="toc-subitem"><span>ب) انرژی ذخیره‌شده در هسته و فاصله هوایی</span></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#ex2" class="toc-item">مثال ۲ — سیستم غیرخطی با فاصله هوایی متغیر</a>
+        <ul style="width:100%;padding:0;margin:4px 0;">
+          <li class="toc-subitem"><span>روش اول: از روی شبه‌انرژی</span></li>
+          <li class="toc-subitem"><span>روش دوم: از روی انرژی</span></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#ex3" class="toc-item">مثال ۳ — حرکت آرام در برابر حرکت سریع</a>
+        <ul style="width:100%;padding:0;margin:4px 0;">
+          <li class="toc-subitem"><span>الف) کل انرژی الکتریکی ورودی</span></li>
+          <li class="toc-subitem"><span>ب) کار مکانیکی انجام‌شده</span></li>
+          <li class="toc-subitem"><span>ج) تغییر انرژی ذخیره‌شده</span></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#ex4" class="toc-item">مثال ۴ — نیروی متوسط با منحنی دو پاره‌خطی</a>
+        <ul style="width:100%;padding:0;margin:4px 0;">
+          <li class="toc-subitem"><span>الف) حرکت آرام (شبه‌استاتیک)</span></li>
+          <li class="toc-subitem"><span>ب) حرکت سریع (شار ثابت)</span></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#ex5" class="toc-item">مثال ۵ — سیستم U-شکل با پیستون متحرک</a>
+      </li>
+      <li>
+        <a href="#ex6" class="toc-item">مثال ۶ — هسته L-شکل با محور x</a>
+      </li>
+      <li>
+        <a href="#ex7" class="toc-item">مثال ۷ — هسته فولادی با تغذیه DC</a>
+        <ul style="width:100%;padding:0;margin:4px 0;">
+          <li class="toc-subitem"><span>الف) محاسبه $B_g$، $W_f$ و $f_m$</span></li>
+          <li class="toc-subitem"><span>ب) محاسبه اندوکتانس</span></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#ex8" class="toc-item">مثال ۸ — تغذیه AC با امپدانس سیم‌پیچ</a>
+      </li>
+      <li>
+        <a href="#ex9" class="toc-item">مثال ۹ — ماشین تک‌فاز با روتور برجسته</a>
+        <ul style="width:100%;padding:0;margin:4px 0;">
+          <li class="toc-subitem"><span>الف) رسم منحنی $L_{ss}$ بر حسب $\theta$</span></li>
+          <li class="toc-subitem"><span>ب) محاسبه گشتاور لحظه‌ای و شرط غیرصفر شدن</span></li>
+          <li class="toc-subitem"><span>ج) گشتاور متوسط در دو حالت ساکن و سنکرون</span></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#ex10" class="toc-item">مثال ۱۰ — گشتاور در ماشین قطب برجسته (دو تحریکه)</a>
+        <ul style="width:100%;padding:0;margin:4px 0;">
+          <li class="toc-subitem"><span>الف) $i_s = 2$ A, $i_r = 10$ A</span></li>
+          <li class="toc-subitem"><span>ب) $i_s = 20$ A, $i_r = 10$ A</span></li>
+          <li class="toc-subitem"><span>ج) $i_s = 20$ A, $i_r = 0$</span></li>
+        </ul>
+      </li>
+    </ol>
+
+    <hr style="margin:20px 0;">
+
+    <div class="toc-title" style="font-size:16px;border-bottom:1.5px dashed #c9a227;">فهرست شکل‌ها</div>
+
+    <ul style="list-style:none;padding:0;margin:8px 0;font-size:13px;">
+      <li style="padding:5px 0;border-bottom:1px dotted #d4b85f;">◆ شکل ۲.۱ — مسیر تبدیل انرژی و تلفات</li>
+      <li style="padding:5px 0;border-bottom:1px dotted #d4b85f;">◆ شکل ۲.۲ — سطح زیر منحنی $\lambda - i$ به‌عنوان $W_f$</li>
+      <li style="padding:5px 0;border-bottom:1px dotted #d4b85f;">◆ شکل ۲.۳ — مدار مغناطیسی ساده</li>
+      <li style="padding:5px 0;border-bottom:1px dotted #d4b85f;">◆ شکل ۲.۴ — راکتور با هسته E-شکل</li>
+      <li style="padding:5px 0;border-bottom:1px dotted #d4b85f;">◆ شکل ۲.۵ — نمایش هندسی انرژی و شبه‌انرژی</li>
+      <li style="padding:5px 0;border-bottom:1px dotted #d4b85f;">◆ شکل ۲.۶ — تأثیر افزایش g بر منحنی $\lambda - i$</li>
+      <li style="padding:5px 0;border-bottom:1px dotted #d4b85f;">◆ شکل ۲.۷ — هسته E-شکل با پیستون متحرک</li>
+      <li style="padding:5px 0;border-bottom:1px dotted #d4b85f;">◆ شکل ۲.۸ — منحنی‌های $\lambda - i$ دو موقعیت باز و بسته</li>
+      <li style="padding:5px 0;border-bottom:1px dotted #d4b85f;">◆ شکل ۲.۹ — منحنی دو پاره‌خطی</li>
+      <li style="padding:5px 0;border-bottom:1px dotted #d4b85f;">◆ شکل ۲.۱۰ — سیستم U-شکل</li>
+      <li style="padding:5px 0;border-bottom:1px dotted #d4b85f;">◆ شکل ۲.۱۱ — هسته L-شکل</li>
+      <li style="padding:5px 0;border-bottom:1px dotted #d4b85f;">◆ شکل ۲.۱۲ — هسته فولادی</li>
+      <li style="padding:5px 0;border-bottom:1px dotted #d4b85f;">◆ شکل ۲.۱۳ — ماشین دوار ساده</li>
+      <li style="padding:5px 0;border-bottom:1px dotted #d4b85f;">◆ شکل ۲.۱۴ — منحنی $L_{ss}$ بر حسب $\theta$</li>
+      <li style="padding:5px 0;border-bottom:1px dotted #d4b85f;">◆ شکل ۲.۱۵ — تغییرات $L_{ss}$ با موقعیت روتور</li>
+      <li style="padding:5px 0;">◆ شکل ۲.۱۶ — ماشین قطب برجسته</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== صفحه ۳: ۲.۱ + ۲.۲ ==================== -->
 <div class="page">
 <h1>فصل ۲: تبدیل انرژی الکترومکانیکی</h1>
 
-<h2>۲.۱ مسیر تبدیل انرژی در ماشین‌های الکتریکی</h2>
+<h2 id="s2-1">۲.۱ مسیر تبدیل انرژی در ماشین‌های الکتریکی</h2>
 <p>در یک ماشین الکتریکی، انرژی از یک فرم به فرم دیگر تبدیل می‌شود. انرژی الکتریکی ورودی از طریق یک <b>میدان پیوند دهنده</b> به انرژی مکانیکی خروجی تبدیل می‌شود و در طول این مسیر، تلفات به شکل‌های مختلف ظاهر می‌شوند.</p>
 
 <div class="fig">
@@ -700,7 +953,7 @@ window.MathJax = {
 <div class="eq">$$ dW_e = dW_m + dW_f $$</div>
 <p>که در آن $dW_e$ انرژی الکتریکی ورودی، $dW_m$ انرژی مکانیکی خروجی و $dW_f$ تغییر انرژی ذخیره‌شده در میدان مغناطیسی است.</p>
 
-<h2>۲.۲ محاسبه انرژی ذخیره‌شده در میدان ($dW_m = 0$)</h2>
+<h2 id="s2-2">۲.۲ محاسبه انرژی ذخیره‌شده در میدان ($dW_m = 0$)</h2>
 <p>اگر سیستم ساکن باشد ($dW_m = 0$)، تمام انرژی الکتریکی ورودی در میدان ذخیره می‌شود:</p>
 <div class="eq">$$ dW_e = dW_f \tag{1} $$</div>
 <p class="eq-label">(با صرف‌نظر از تلفات)</p>
@@ -736,10 +989,10 @@ window.MathJax = {
 </div>
 </div>
 
-<!-- ==================== صفحه ۳: ۲.۳ + مثال ۱ ==================== -->
+<!-- ==================== صفحه ۴: ۲.۳ + مثال ۱ ==================== -->
 <div class="page">
 
-<h2>۲.۳ محاسبه $W_f$ در مدار مغناطیسی با هسته و فاصله هوایی</h2>
+<h2 id="s2-3">۲.۳ محاسبه $W_f$ در مدار مغناطیسی با هسته و فاصله هوایی</h2>
 <p>مدار مغناطیسی ساده با هسته فرومغناطیس، سیم‌پیچ، مقاومت و فاصله هوایی مطابق شکل زیر است:</p>
 
 <div class="fig">
@@ -782,7 +1035,7 @@ window.MathJax = {
 <b>⚠ نکته مهم:</b> چگالی انرژی در فاصله هوایی $w_{f,g} = \dfrac{B_g^{2}}{2\mu_0}$ و در هسته فرومغناطیس $w_{f,c} = \dfrac{B_c^{2}}{2\mu_c}$ است. چون $\mu_0$ کوچک است، چگالی انرژی در فاصله هوایی بسیار بزرگ‌تر از هسته است.
 </div>
 
-<h3>مثال ۱: راکتور با هسته فرومغناطیس</h3>
+<h3 id="ex1">مثال ۱: راکتور با هسته فرومغناطیس</h3>
 <div class="problem">
 <b>صورت مسئله:</b> یک هسته فرومغناطیس E-شکل با ابعاد مطابق شکل زیر مفروض است. نفوذپذیری نسبی هسته $\mu_r = 1185$، طول متوسط مسیر مغناطیسی $l_c = 0.6\ \mathrm{m}$، سطح مقطع هسته $A_c = 36\ \mathrm{cm^2}$، سیم‌پیچی با $N = 250$ دور، دو فاصله هوایی هر یک به طول $l_g = 5\ \mathrm{mm}$ با سطح مقطع $A_g = 0.05\ \mathrm{m^2}$، و مقاومت سیم‌پیچ $R = 5\ \Omega$ است. اگر چگالی شار $B = 1\ \mathrm{T}$ باشد:
 <br><b>الف)</b> جریان DC و ولتاژ DC لازم برای تغذیه سیم‌پیچ.
@@ -872,10 +1125,10 @@ window.MathJax = {
 </div>
 </div>
 
-<!-- ==================== صفحه ۴: ۲.۴ کامل با اثبات ==================== -->
+<!-- ==================== صفحه ۵: ۲.۴ کامل با اثبات ==================== -->
 <div class="page">
 
-<h2>۲.۴ انرژی و شبه‌انرژی (هم‌انرژی / Co-energy)</h2>
+<h2 id="s2-4">۲.۴ انرژی و شبه‌انرژی (هم‌انرژی / Co-energy)</h2>
 <p>در یک سیستم مغناطیسی، علاوه بر <b>انرژی ذخیره‌شده</b> $W_f$، کمیت دیگری به نام <b>شبه‌انرژی</b> یا <b>هم‌انرژی</b> (Co-energy) با نماد $\bar{W}_f$ تعریف می‌شود:</p>
 
 <div class="eq">$$ W_f = \int_{0}^{\lambda} i\, d\lambda $$</div>
@@ -972,10 +1225,10 @@ window.MathJax = {
 </div>
 </div>
 
-<!-- ==================== صفحه ۵: ۲.۵ + مثال ۲ ==================== -->
+<!-- ==================== صفحه ۶: ۲.۵ + مثال ۲ ==================== -->
 <div class="page">
 
-<h2>۲.۵ محاسبه نیرو و گشتاور از انرژی</h2>
+<h2 id="s2-5">۲.۵ محاسبه نیرو و گشتاور از انرژی</h2>
 <p>نیروی مکانیکی وارد بر قسمت متحرک، از مشتق انرژی یا شبه‌انرژی نسبت به جابه‌جایی به دست می‌آید:</p>
 <div class="eq-row">
 <div class="eq">$$ f_m = -\left.\frac{\partial W_f(\lambda, x)}{\partial x}\right|_{\lambda = \mathrm{cte}} $$</div>
@@ -1015,7 +1268,7 @@ window.MathJax = {
 <span class="fig-caption">شکل ۲.۷: هسته E-شکل با پیستون متحرک</span>
 </div>
 
-<h3>مثال ۲: سیستم غیرخطی با فاصله هوایی متغیر</h3>
+<h3 id="ex2">مثال ۲: سیستم غیرخطی با فاصله هوایی متغیر</h3>
 <div class="problem">
 <b>صورت مسئله:</b> مشخصه $\lambda - i$ یک سیستم الکترومغناطیسی به‌صورت زیر است:
 <div class="eq">$$ i = \left(\frac{\lambda\, g}{0.09}\right)^{2} $$</div>
@@ -1068,10 +1321,10 @@ window.MathJax = {
 </div>
 </div>
 
-<!-- ==================== صفحه ۶: مثال ۳ ==================== -->
+<!-- ==================== صفحه ۷: مثال ۳ ==================== -->
 <div class="page">
 
-<h3>مثال ۳: حرکت آرام در برابر حرکت سریع</h3>
+<h3 id="ex3">مثال ۳: حرکت آرام در برابر حرکت سریع</h3>
 <div class="problem">
 <b>صورت مسئله:</b> منحنی‌های $\lambda - i$ برای دو موقعیت باز و بسته یک سیستم مغناطیسی خطی در شکل زیر نشان داده شده‌اند. اگر جریان سیم‌پیچ در حالی که $i = i_1$ است، از موقعیت باز به موقعیت بسته برود، محاسبه کنید:
 <br><b>الف)</b> کل انرژی الکتریکی ورودی $\Delta W_e$
@@ -1145,10 +1398,10 @@ window.MathJax = {
 </div>
 </div>
 
-<!-- ==================== صفحه ۷: مثال ۴ کامل ==================== -->
+<!-- ==================== صفحه ۸: مثال ۴ ==================== -->
 <div class="page">
 
-<h3>مثال ۴: نیروی متوسط با منحنی دو پاره‌خطی</h3>
+<h3 id="ex4">مثال ۴: نیروی متوسط با منحنی دو پاره‌خطی</h3>
 <div class="problem">
 <b>صورت مسئله:</b> منحنی $\lambda - i$ یک سیستم مغناطیسی از دو پاره‌خط تشکیل شده است.
 <p class="eq-title">حالت باز (برای تمام مقادیر):</p>
@@ -1266,10 +1519,10 @@ window.MathJax = {
 </div>
 </div>
 
-<!-- ==================== صفحه ۸: مثال ۵ + ۶ ==================== -->
+<!-- ==================== صفحه ۹: مثال ۵ + ۶ ==================== -->
 <div class="page">
 
-<h3>مثال ۵: سیستم U-شکل با پیستون متحرک</h3>
+<h3 id="ex5">مثال ۵: سیستم U-شکل با پیستون متحرک</h3>
 <div class="problem">
 <b>صورت مسئله:</b> در سیستم مغناطیسی زیر، هسته U-شکل ثابت و پیستون (آرمیچر) متحرک است. رلوکتانس هسته ناچیز ($\mathcal{R}_c = 0$). اگر عرض پیستون $w = 6\ \mathrm{mm}$، چگالی شار $B_0 = 0.8\ \mathrm{T}$ و فاصله هوایی ثابت $g = 3\ \mathrm{mm}$ باشد، نیروی وارد بر پیستون را بیابید.
 </div>
@@ -1327,7 +1580,7 @@ window.MathJax = {
 <div class="center"><span class="answer">$F_e = 4.584\ \mathrm{N}$</span></div>
 </div>
 
-<h3>مثال ۶: هسته L-شکل با محور x</h3>
+<h3 id="ex6">مثال ۶: هسته L-شکل با محور x</h3>
 <div class="problem">
 <b>صورت مسئله:</b> در سیستم مغناطیسی زیر، هسته L-شکل ثابت و آرمیچر متحرک است. رلوکتانس هسته ناچیز ($\mathcal{R}_c = 0$) و رلوکتانس فاصله هوایی به‌صورت زیر است:
 <div class="eq">$$ \mathcal{R}_g = \frac{g - x}{\mu_0 A} $$</div>
@@ -1373,10 +1626,10 @@ window.MathJax = {
 </div>
 </div>
 
-<!-- ==================== صفحه ۹: مثال ۷ + ۸ ==================== -->
+<!-- ==================== صفحه ۱۰: مثال ۷ + ۸ ==================== -->
 <div class="page">
 
-<h3>مثال ۷: هسته فولادی با تغذیه DC</h3>
+<h3 id="ex7">مثال ۷: هسته فولادی با تغذیه DC</h3>
 <div class="problem">
 <b>صورت مسئله:</b> هسته‌ای فولادی با سطح مقطع مربعی $6\ \mathrm{cm} \times 6\ \mathrm{cm}$ و طول متوسط مفروض است. سیم‌پیچی با $N = 300$ دور، مقاومت DC $R = 6\ \Omega$، شکاف هوایی به طول $g = 5\ \mathrm{mm}$ است. ولتاژ $V = 120\ \mathrm{V}$ اعمال می‌شود. نفوذپذیری نسبی هسته $\mu_r \to \infty$ فرض می‌شود.
 <br><b>الف)</b> چگالی شار $B_g$، انرژی ذخیره‌شده در فاصله هوایی و نیروی مکانیکی.
@@ -1442,7 +1695,7 @@ window.MathJax = {
 <div class="center"><span class="answer">$L = 40.71\ \mathrm{mH}$</span></div>
 </div>
 
-<h3>مثال ۸: تغذیه AC با امپدانس سیم‌پیچ</h3>
+<h3 id="ex8">مثال ۸: تغذیه AC با امپدانس سیم‌پیچ</h3>
 <div class="problem">
 <b>صورت مسئله:</b> همان سیستم مثال ۷، اما این بار سیم‌پیچ با منبع AC با ولتاژ مؤثر $V = 120\ \mathrm{V}$ و فرکانس $60\ \mathrm{Hz}$ تغذیه می‌شود. اگر $R = 6\ \Omega$ و $L = 40.71\ \mathrm{mH}$ باشد، جریان مؤثر و نیروی مکانیکی را محاسبه کنید.
 </div>
@@ -1475,10 +1728,10 @@ window.MathJax = {
 </div>
 </div>
 
-<!-- ==================== صفحه ۱۰: ۲.۶ با اثبات کامل ==================== -->
+<!-- ==================== صفحه ۱۱: ۲.۶ با اثبات کامل ==================== -->
 <div class="page">
 
-<h2>۲.۶ ماشین‌های الکتریکی دوار</h2>
+<h2 id="s2-6">۲.۶ ماشین‌های الکتریکی دوار</h2>
 <div class="note">
 <b>تعریف‌ها:</b>
 <ul>
@@ -1550,14 +1803,14 @@ window.MathJax = {
 </div>
 </div>
 
-<!-- ==================== صفحه ۱۱: ۲.۷ + مثال ۹ کامل ==================== -->
+<!-- ==================== صفحه ۱۲: ۲.۷ + مثال ۹ کامل ==================== -->
 <div class="page">
 
-<h2>۲.۷ گشتاور در ماشین تک‌فاز با روتور برجسته</h2>
+<h2 id="s2-7">۲.۷ گشتاور در ماشین تک‌فاز با روتور برجسته</h2>
 <p>در ماشین با روتور برجسته (Salient pole)، اندوکتانس استاتور با موقعیت روتور تغییر می‌کند:</p>
 <div class="eq">$$ L_{ss} = L_0 + L_2 \cos 2\theta $$</div>
 
-<h3>مثال ۹: ماشین تک‌فاز با روتور برجسته</h3>
+<h3 id="ex9">مثال ۹: ماشین تک‌فاز با روتور برجسته</h3>
 <div class="problem">
 <b>صورت مسئله:</b> در یک ماشین دوار با روتور برجسته، اندوکتانس استاتور به‌صورت $L_{ss} = L_0 + L_2\cos 2\theta$ و جریان سیم‌پیچ استاتور $i_s = I_{sm}\sin\omega t$ است.
 <br><b>الف)</b> منحنی $L_{ss}$ را بر حسب $\theta$ رسم نمایید.
@@ -1651,10 +1904,10 @@ window.MathJax = {
 </div>
 </div>
 
-<!-- ==================== صفحه ۱۲: مثال ۱۰ + جدول + یادداشت ==================== -->
+<!-- ==================== صفحه ۱۳: مثال ۱۰ + جدول + یادداشت ==================== -->
 <div class="page">
 
-<h3>مثال ۱۰: گشتاور در ماشین قطب برجسته (دو تحریکه)</h3>
+<h3 id="ex10">مثال ۱۰: گشتاور در ماشین قطب برجسته (دو تحریکه)</h3>
 <div class="problem">
 <b>صورت مسئله:</b> در ماشین دوار قطب برجسته، اندوکتانس‌ها و اندوکتانس متقابل به‌صورت زیر تعریف شده‌اند:
 <div class="eq">$$ L_{ss} = 0.6 + 0.2\cos 2\theta_r,\quad L_{rr} = 0.75 + 0.3\cos 2\theta_r,\quad M_{sr} = 0.8\cos\theta_r $$</div>
@@ -1718,7 +1971,7 @@ window.MathJax = {
 </div>
 </div>
 
-<h2>۲.۸ جدول خلاصه روابط</h2>
+<h2 id="s2-8">۲.۸ جدول خلاصه روابط</h2>
 <table>
 <thead>
 <tr><th style="width:22%">کمیت</th><th style="width:50%">رابطه</th><th style="width:28%">توضیح</th></tr>
