@@ -3,92 +3,60 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>جزوه اصول سیستم‌های مخابراتی</title>
-
-<!-- فونت فارسی -->
+<title>جزوه کامل اصول سیستم‌های مخابراتی</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
-
-<!-- MathJax (رندر فرمول‌ها با خروجی SVG برای سازگاری با PDF) -->
 <script>
 window.MathJax = {
   tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
-  svg: { fontCache: 'global' },
-  options: { enableMenu: false }
+  svg: { fontCache: 'global' }, options: { enableMenu: false }
 };
 </script>
 <script id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-
-<!-- html2pdf -->
 <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
-
 <style>
   :root{
-    --gold:#c9a227;
-    --gold-dark:#8a6d1a;
-    --gold-light:#f0e0a8;
-    --gold-soft:#fffbe8;
-    --ink:#1f2430;
-    --paper:#fffdf8;
+    --gold:#c9a227; --gold-dark:#8a6d1a; --gold-light:#f0e0a8;
+    --gold-soft:#fffbe8; --ink:#1f2430; --paper:#fffdf8;
   }
-
   *{ box-sizing:border-box; }
-
   html,body{ margin:0; padding:0; }
-
   body{
     background:#e9edf3;
     font-family:Vazirmatn, Tahoma, sans-serif;
-    color:var(--ink);
-    line-height:2;
-    padding:70px 12px 70px;
+    color:var(--ink); line-height:2;
+    padding:70px 12px;
     -webkit-font-smoothing:antialiased;
   }
-
-  /* ---------- نوار ابزار ---------- */
   .toolbar{
     position:fixed; top:14px; left:14px; z-index:999;
-    display:flex; gap:10px; align-items:center;
+    display:flex; gap:10px;
   }
   .btn{
-    font-family:inherit; font-size:0.95rem; font-weight:700;
+    font-family:inherit; font-size:.95rem; font-weight:700;
     border:none; border-radius:10px; padding:11px 20px;
     cursor:pointer; transition:.2s;
     box-shadow:0 4px 14px rgba(0,0,0,.18);
   }
-  .btn-gold{
-    background:linear-gradient(135deg,#e0be4a,#b8912a);
-    color:#2b2000;
-  }
+  .btn-gold{ background:linear-gradient(135deg,#e0be4a,#b8912a); color:#2b2000; }
   .btn-gold:hover{ transform:translateY(-2px); box-shadow:0 8px 20px rgba(184,145,42,.45); }
-  .btn-ghost{
-    background:#fff; color:#4a3a00; border:2px solid var(--gold);
-  }
-  .btn-ghost:hover{ background:var(--gold-soft); }
-  .btn[disabled]{ opacity:.6; cursor:wait; transform:none; }
+  .btn-ghost{ background:#fff; color:#4a3a00; border:2px solid var(--gold); }
+  .btn[disabled]{ opacity:.6; cursor:wait; }
 
-  /* ---------- برگه ---------- */
   .doc{
-    width:210mm; max-width:100%;
-    margin:0 auto;
-    background:var(--paper);
-    padding:8mm;
+    width:210mm; max-width:100%; margin:0 auto;
+    background:var(--paper); padding:8mm;
     box-shadow:0 14px 50px rgba(0,0,0,.18);
   }
   .paper{
-    border:3px double var(--gold);
-    border-radius:6px;
-    padding:9mm 8mm;
-    background:#fff;
+    border:3px double var(--gold); border-radius:6px;
+    padding:9mm 8mm; background:#fff;
   }
 
-  /* ---------- جلد ---------- */
+  /* جلد */
   .cover{
-    text-align:center;
-    padding:22px 16px 26px;
-    border:2px solid var(--gold);
-    border-radius:12px;
-    background:
-      radial-gradient(circle at 50% 0%, #fff9e3 0%, #ffffff 70%);
+    text-align:center; padding:22px 16px 26px;
+    border:2px solid var(--gold); border-radius:12px;
+    background:radial-gradient(circle at 50% 0%, #fff9e3 0%, #ffffff 70%);
     box-shadow:0 0 0 5px #fff, 0 0 0 6px var(--gold-light);
     margin-bottom:24px;
   }
@@ -96,116 +64,75 @@ window.MathJax = {
     display:inline-block;
     background:linear-gradient(135deg,#e0be4a,#b8912a);
     color:#2b2000; font-weight:700; font-size:.8rem;
-    padding:5px 18px; border-radius:999px; letter-spacing:.5px;
-    margin-bottom:14px;
+    padding:5px 18px; border-radius:999px; margin-bottom:14px;
   }
-  .cover h1{
-    margin:0 0 6px;
-    font-size:1.85rem; line-height:1.6;
-    color:#3a2c00;
-  }
-  .cover h2{
-    margin:0 0 16px;
-    font-size:1.05rem; font-weight:600; color:#7a6420;
-  }
-  .cover-line{
-    width:120px; height:3px; margin:0 auto 16px;
-    background:linear-gradient(90deg,transparent,var(--gold),transparent);
-  }
+  .cover h1{ margin:0 0 6px; font-size:1.85rem; line-height:1.6; color:#3a2c00; }
+  .cover h2{ margin:0 0 16px; font-size:1.05rem; font-weight:600; color:#7a6420; }
+  .cover-line{ width:120px; height:3px; margin:0 auto 16px;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent); }
   .cover p{ margin:4px 0; color:#5a5340; font-size:.92rem; }
 
-  /* ---------- کارت‌ها ---------- */
+  /* کارت */
   .card{
-    background:#fff;
-    border:1.5px solid var(--gold);
-    border-radius:12px;
-    padding:16px 20px 18px;
-    margin:22px 0;
+    background:#fff; border:1.5px solid var(--gold); border-radius:12px;
+    padding:16px 20px 18px; margin:22px 0;
     box-shadow:0 0 0 4px #fff, 0 0 0 5px var(--gold-light);
-    break-inside:avoid;
-    page-break-inside:avoid;
+    break-inside:avoid; page-break-inside:avoid;
   }
-
   .sec-title{
     display:flex; align-items:center; gap:10px;
-    margin:-16px -20px 16px;
-    padding:10px 18px;
+    margin:-16px -20px 16px; padding:10px 18px;
     background:linear-gradient(90deg,#c9a227,#e8cf7a 65%,#f6ecc4);
     color:#332600; font-weight:700; font-size:1.1rem;
-    border-radius:10px 10px 0 0;
-    border-bottom:1.5px solid var(--gold);
+    border-radius:10px 10px 0 0; border-bottom:1.5px solid var(--gold);
   }
   .sec-title .num{
     background:#fff; color:var(--gold-dark);
     width:28px; height:28px; border-radius:8px;
-    display:grid; place-items:center;
-    font-size:.9rem; font-weight:800;
-    flex:0 0 auto;
+    display:grid; place-items:center; font-size:.9rem; font-weight:800; flex:0 0 auto;
   }
-
   .card p{ margin:10px 0; text-align:justify; }
   .card ul, .card ol{ padding-right:22px; margin:10px 0; }
 
-  /* ---------- جعبه فرمول ---------- */
+  /* فرمول */
   .formula{
-    background:var(--gold-soft);
-    border:1px solid #e6d391;
-    border-right:5px solid var(--gold);
-    border-radius:8px;
-    padding:8px 16px;
-    margin:14px 0;
-    overflow-x:auto;
+    background:var(--gold-soft); border:1px solid #e6d391;
+    border-right:5px solid var(--gold); border-radius:8px;
+    padding:8px 16px; margin:14px 0; overflow-x:auto;
   }
-
-  /* ---------- نکته ---------- */
   .note{
-    background:#f4f9f4;
-    border:1px solid #cfe3cf;
-    border-right:5px solid #6aa96a;
-    border-radius:8px;
-    padding:10px 16px;
-    margin:14px 0;
-    font-size:.95rem;
+    background:#f4f9f4; border:1px solid #cfe3cf;
+    border-right:5px solid #6aa96a; border-radius:8px;
+    padding:10px 16px; margin:14px 0; font-size:.95rem;
   }
   .note b{ color:#2f6b2f; }
-
-  /* ---------- مثال ---------- */
-  .example{
-    background:#fffdf3;
-    border-right:6px solid var(--gold);
+  .warn{
+    background:#fff4e5; border:1px solid #f0cf9f;
+    border-right:5px solid #d99432; border-radius:8px;
+    padding:10px 16px; margin:14px 0; font-size:.95rem;
   }
+  .warn b{ color:#8a5a14; }
+
+  /* حل مثال */
   .solution{
-    background:#f7f9fc;
-    border:1px dashed #a9b8cc;
-    border-radius:10px;
-    padding:12px 18px;
-    margin:14px 0;
+    background:#f7f9fc; border:1px dashed #a9b8cc;
+    border-radius:10px; padding:12px 18px; margin:14px 0;
   }
   .solution-title{
     font-weight:800; color:#33507a; margin-bottom:6px;
     display:flex; align-items:center; gap:8px;
   }
-  .solution-title::before{
-    content:"✎"; font-size:1rem;
-  }
+  .solution-title::before{ content:"✎"; font-size:1rem; }
 
-  /* ---------- گام‌ها ---------- */
-  ol.steps{
-    counter-reset:st;
-    list-style:none;
-    padding:0; margin:12px 0;
-  }
+  /* گام‌ها */
+  ol.steps{ counter-reset:st; list-style:none; padding:0; margin:12px 0; }
   ol.steps > li{
-    counter-increment:st;
-    position:relative;
-    padding-right:42px;
-    margin:14px 0;
+    counter-increment:st; position:relative;
+    padding-right:42px; margin:14px 0;
   }
   ol.steps > li::before{
-    content:counter(st);
-    position:absolute; right:0; top:6px;
-    width:27px; height:27px;
-    border-radius:50%;
+    content:counter(st); position:absolute; right:0; top:6px;
+    width:27px; height:27px; border-radius:50%;
     background:linear-gradient(135deg,#e0be4a,#b8912a);
     color:#2b2000; font-weight:800; font-size:.82rem;
     display:grid; place-items:center;
@@ -213,56 +140,26 @@ window.MathJax = {
   }
   .step-title{ font-weight:700; color:#5c4a10; }
 
-  /* ---------- جدول ---------- */
-  table{
-    width:100%; border-collapse:collapse;
-    margin:14px 0; font-size:.93rem;
-  }
-  th{
-    background:linear-gradient(180deg,#f7e9bb,#f0dda0);
-    color:#4a3a00; font-weight:700;
-  }
-  th, td{
-    border:1px solid #dcc98c;
-    padding:8px 10px;
-    text-align:center;
-    vertical-align:middle;
-  }
+  /* جدول */
+  table{ width:100%; border-collapse:collapse; margin:14px 0; font-size:.93rem; }
+  th{ background:linear-gradient(180deg,#f7e9bb,#f0dda0); color:#4a3a00; font-weight:700; }
+  th, td{ border:1px solid #dcc98c; padding:8px 10px; text-align:center; vertical-align:middle; }
   tbody tr:nth-child(even){ background:#fffdf4; }
 
-  /* ---------- شکل‌ها ---------- */
-  .figrow{
-    display:flex; gap:16px; flex-wrap:wrap;
-    margin:16px 0;
-  }
-  .fig{
-    flex:1 1 260px;
-    background:#fff;
-    border:1px solid var(--gold-light);
-    border-radius:10px;
-    padding:10px;
-  }
-  .cap{
-    text-align:center; font-size:.82rem; color:#7a6a3a;
-    margin-top:6px;
-  }
+  /* شکل */
+  .figrow{ display:flex; gap:16px; flex-wrap:wrap; margin:16px 0; }
+  .fig{ flex:1 1 280px; background:#fff;
+    border:1px solid var(--gold-light); border-radius:10px; padding:10px; }
+  .fig.full{ flex:1 1 100%; }
+  .cap{ text-align:center; font-size:.82rem; color:#7a6a3a; margin-top:6px; }
 
-  /* ---------- فهرست ---------- */
+  /* فهرست */
   .toc{ list-style:none; padding:0; margin:0; }
-  .toc li{
-    display:flex; justify-content:space-between; align-items:baseline;
-    padding:7px 0;
-    border-bottom:1px dotted #e2d6a8;
-  }
+  .toc li{ display:flex; justify-content:space-between; align-items:baseline;
+    padding:7px 0; border-bottom:1px dotted #e2d6a8; }
   .toc li span:first-child{ font-weight:600; }
   .toc li span:last-child{ color:var(--gold-dark); font-weight:700; }
 
-  .kbd{
-    display:inline-block; background:#f3ecd6; border:1px solid #ddc98a;
-    border-radius:6px; padding:0 8px; font-size:.85rem;
-  }
-
-  /* ---------- چاپ ---------- */
   @media print{
     body{ background:#fff; padding:0; }
     .toolbar{ display:none !important; }
@@ -273,687 +170,617 @@ window.MathJax = {
   }
 </style>
 </head>
-
 <body>
 
-<!-- ======================= نوار ابزار ======================= -->
 <div class="toolbar">
-  <button class="btn btn-gold" id="btnPdf">⬇ دانلود جزوه (PDF)</button>
+  <button class="btn btn-gold" id="btnPdf">⬇ دانلود جزوه کامل (PDF)</button>
   <button class="btn btn-ghost" id="btnPrint">🖨 چاپ / ذخیره دستی</button>
 </div>
 
-<!-- ======================= سند ======================= -->
 <div id="doc">
  <div class="doc">
   <div class="paper">
 
-    <!-- ---------- جلد ---------- -->
+    <!-- ========== جلد ========== -->
     <div class="cover">
-      <div class="cover-badge">جزوه درس</div>
+      <div class="cover-badge">جزوه جامع و نهایی</div>
       <h1>اصول سیستم‌های مخابراتی</h1>
-      <h2>تبدیل فوریه، سیگنال علامت و چگالی طیفی انرژی</h2>
+      <h2>تبدیل فوریه — سیگنال sgn(t) — انرژی — ساختار سیستم — ظرفیت کانال</h2>
       <div class="cover-line"></div>
-      <p>درسنامه + مثال‌های حل‌شده به روش تشریحی کامل</p>
-      <p>مطابق با جزوه کلاسی — تحلیل سیگنال در حوزه فرکانس</p>
+      <p>شامل تمام مباحث جزوه کلاسی — نمودارها، فرمول‌ها و حل تشریحی کامل مثال‌ها</p>
     </div>
 
-    <!-- ---------- فهرست ---------- -->
+    <!-- ========== فهرست ========== -->
     <div class="card">
       <div class="sec-title"><span class="num">۰</span> فهرست مطالب</div>
       <ul class="toc">
-        <li><span>۱. تعریف تبدیل فوریه و شرط وجود</span><span>ص ۱</span></li>
-        <li><span>۲. سیگنال علامت (Signum) و ویژگی‌ها</span><span>ص ۲</span></li>
-        <li><span>۳. محاسبه تبدیل فوریه sgn(t) به روش حدی</span><span>ص ۲</span></li>
-        <li><span>۴. خواص مهم تبدیل فوریه</span><span>ص ۳</span></li>
-        <li><span>۵. چگالی طیفی انرژی (ESD) و قضیه پارسوال</span><span>ص ۴</span></li>
-        <li><span>۶. مثال‌های تکمیلی حل‌شده</span><span>ص ۵</span></li>
-        <li><span>۷. جدول تبدیل‌های پرکاربرد</span><span>ص ۶</span></li>
-        <li><span>۸. جمع‌بندی و تمرین</span><span>ص ۶</span></li>
+        <li><span>۱. تبدیل فوریه و معکوس آن</span><span>۱</span></li>
+        <li><span>۲. خواص تقارن X(f)</span><span>۲</span></li>
+        <li><span>۳. تفکیک X(f) به cos و sin</span><span>۳</span></li>
+        <li><span>۴. قضیه انرژی (پارسوال)</span><span>۴</span></li>
+        <li><span>۵. مثال حل‌شده پالس مستطیلی + طیف</span><span>۵</span></li>
+        <li><span>۶. سیگنال علامت sgn(t)</span><span>۶</span></li>
+        <li><span>۷. حل کامل F{sgn(t)} به روش حدی</span><span>۷</span></li>
+        <li><span>۸. کانولوشن و خواص فوریه</span><span>۸</span></li>
+        <li><span>۹. ساختار سیستم مخابراتی</span><span>۹</span></li>
+        <li><span>۱۰. انواع کانال‌های مخابراتی</span><span>۱۰</span></li>
+        <li><span>۱۱. روش‌های دسترسی چندگانه</span><span>۱۱</span></li>
+        <li><span>۱۲. ظرفیت کانال شانون-هارتلی</span><span>۱۲</span></li>
+        <li><span>۱۳. کانال گسسته و BSC</span><span>۱۳</span></li>
+        <li><span>۱۴. جدول تبدیل‌ها و تمرین</span><span>۱۴</span></li>
       </ul>
     </div>
 
-    <!-- ===================================================== -->
-    <!-- بخش ۱ -->
-    <!-- ===================================================== -->
+    <!-- ================ ۱ ================ -->
     <div class="card">
-      <div class="sec-title"><span class="num">۱</span> تعریف تبدیل فوریه و شرط وجود</div>
-
-      <p>
-        تبدیل فوریه، ابزار اصلی تحلیل سیستم‌های مخابراتی است؛ زیرا یک سیگنال در حوزه زمان را به
-        مؤلفه‌های نمایی مختلط $e^{j2\pi f t}$ تجزیه می‌کند و بدین ترتیب پاسخ سیستم‌های خطی
-        تغییرناپذیر با زمان (LTI) به‌سادگی از طریق ضرب در پاسخ فرکانسی به‌دست می‌آید.
-      </p>
-
+      <div class="sec-title"><span class="num">۱</span> تبدیل فوریه و معکوس آن</div>
       <div class="formula">
-        $$X(f)=\mathcal{F}\{x(t)\}=\int_{-\infty}^{+\infty}x(t)\,e^{-j2\pi f t}\,dt$$
-        $$x(t)=\mathcal{F}^{-1}\{X(f)\}=\int_{-\infty}^{+\infty}X(f)\,e^{+j2\pi f t}\,df$$
+        $$\mathcal{F}\{x(t)\}=X(f)=\int_{-\infty}^{+\infty}x(t)\,e^{-j2\pi f t}\,dt,\quad -\infty<f<+\infty$$
+        $$\mathcal{F}^{-1}\{X(f)\}=x(t)=\int_{-\infty}^{+\infty}X(f)\,e^{+j2\pi f t}\,df,\quad -\infty<t<+\infty$$
       </div>
-
-      <p>
-        در این جزوه از نماد $\mathcal{F}\{\cdot\}$ برای تبدیل فوریه استفاده می‌شود و متغیر فرکانس
-        $f$ بر حسب هرتز است. بنابراین ضریب $2\pi$ در توان نمایی ظاهر می‌شود
-        (نه $\omega$).
-      </p>
-
-      <p><b>شرط کافی وجود (به مفهوم کلاسیک):</b></p>
+      <p><b>شرط کافی وجود تبدیل فوریه:</b></p>
       <div class="formula">
-        $$\int_{-\infty}^{+\infty}\bigl|x(t)\bigr|\,dt<\infty
-        \quad\Longrightarrow\quad X(f)\ \text{وجود دارد و پیوسته است}$$
+        $$\int_{-\infty}^{+\infty}\bigl|x(t)\bigr|\,dt<\infty\ \Longrightarrow\ X(f)\ \text{وجود دارد و پیوسته است}$$
       </div>
+      <div class="warn">
+        <b>نکته:</b> سیگنال‌هایی مثل $u(t)$ و $\operatorname{sgn}(t)$ در این شرط صدق نمی‌کنند و باید از <b>روش حدی</b> استفاده شود.
+      </div>
+    </div>
 
+    <!-- ================ ۲ ================ -->
+    <div class="card">
+      <div class="sec-title"><span class="num">۲</span> خواص تقارن X(f)</div>
+      <p><b>۱) تقارن هرمیتی — اگر $x(t)$ حقیقی باشد:</b></p>
+      <div class="formula">
+        $$X(f)=\overline{X(-f)}=X^{*}(-f)\ \Longrightarrow\ |X(f)|\ \text{زوج},\ \angle X(f)\ \text{فرد}$$
+      </div>
+      <p><b>۲) اگر $x(t)$ حقیقی و زوج باشد:</b></p>
+      <div class="formula">
+        $$x(-t)=x(t)\ \Longrightarrow\ X(f)\ \text{حقیقی و زوج}$$
+      </div>
+      <p><b>۳) اگر $x(t)$ حقیقی و فرد باشد:</b></p>
+      <div class="formula">
+        $$x(-t)=-x(t)\ \Longrightarrow\ X(f)\ \text{موهومی خالص و فرد}$$
+      </div>
       <div class="note">
-        <b>نکته کلیدی:</b> بسیاری از سیگنال‌های مهم مخابراتی — مانند $u(t)$ و $\operatorname{sgn}(t)$ —
-        در شرط بالا صدق نمی‌کنند (انرژی‌شان متناهی نیست و انتگرال قدرمطلق واگرا می‌شود).
-        برای چنین سیگنال‌هایی از <b>تبدیل فوریه تعمیم‌یافته</b> یا <b>روش حدی</b> استفاده می‌کنیم:
-        ابتدا سیگنال را با یک تابع میراکننده تقریب می‌زنیم، تبدیل را محاسبه می‌کنیم و سپس حد می‌گیریم.
+        <b>کاربرد:</b> این خواص در تحلیل فیلترها و سیستم‌های مدولاسیون بسیار مهم هستند.
       </div>
     </div>
 
-    <!-- ===================================================== -->
-    <!-- بخش ۲ -->
-    <!-- ===================================================== -->
+    <!-- ================ ۳ ================ -->
     <div class="card">
-      <div class="sec-title"><span class="num">۲</span> سیگنال علامت (Signum) و ویژگی‌ها</div>
+      <div class="sec-title"><span class="num">۳</span> تفکیک X(f) به cos و sin</div>
+      <p>با استفاده از اتحاد اویلر:</p>
+      <div class="formula">
+        $$X(f)=\int_{-\infty}^{+\infty}x(t)\cos(2\pi ft)\,dt-j\int_{-\infty}^{+\infty}x(t)\sin(2\pi ft)\,dt$$
+      </div>
+      <div class="formula">
+        $$\operatorname{Re}\{X(f)\}=\int_{-\infty}^{+\infty}x(t)\cos(2\pi ft)\,dt\ \text{(زوج)}$$
+        $$\operatorname{Im}\{X(f)\}=-\int_{-\infty}^{+\infty}x(t)\sin(2\pi ft)\,dt\ \text{(فرد)}$$
+      </div>
+    </div>
 
-      <p>سیگنال علامت به‌صورت زیر تعریف می‌شود:</p>
+    <!-- ================ ۴ ================ -->
+    <div class="card">
+      <div class="sec-title"><span class="num">۴</span> قضیه انرژی (پارسوال)</div>
+      <div class="formula">
+        $$\boxed{\ E_{\infty}=\int_{-\infty}^{+\infty}\bigl|x(t)\bigr|^{2}\,dt=\int_{-\infty}^{+\infty}\bigl|X(f)\bigr|^{2}\,df\ }$$
+      </div>
+      <p>کمیت $G(f)=|X(f)|^{2}$ را <b>چگالی طیفی انرژی</b> (ESD) می‌نامیم.</p>
+    </div>
+
+    <!-- ================ ۵ ================ -->
+    <div class="card">
+      <div class="sec-title"><span class="num">۵</span> مثال حل‌شده — پالس مستطیلی و طیف آن</div>
 
       <div class="formula">
-        $$\operatorname{sgn}(t)=
-        \begin{cases}
-        +1, & t>0\\[2pt]
-        \ \ 0, & t=0\\[2pt]
-        -1, & t<0
-        \end{cases}$$
+        $$x(t)=\operatorname{rect}\!\left(\frac{t}{\tau}\right)=\begin{cases}1, & |t|<\tau/2\\ 0, & \text{غیر این}\end{cases}$$
       </div>
-
-      <p><b>ویژگی‌های مهم:</b></p>
-      <ul>
-        <li>تابعی <b>فرد</b> است: $\operatorname{sgn}(-t)=-\operatorname{sgn}(t)$</li>
-        <li>رابطه با پله واحد: $u(t)=\dfrac{1+\operatorname{sgn}(t)}{2}$ و $\operatorname{sgn}(t)=2u(t)-1$</li>
-        <li>مشتق آن (به مفهوم توزیعی): $\dfrac{d}{dt}\operatorname{sgn}(t)=2\delta(t)$</li>
-        <li>انرژی و انتگرال قدرمطلق آن واگرا است: $\displaystyle\int_{-\infty}^{\infty}|\operatorname{sgn}(t)|dt=\infty$</li>
-      </ul>
 
       <div class="figrow">
-        <div class="fig">
-          <div id="plot-sgn"></div>
-          <div class="cap">شکل ۱: سیگنال $\operatorname{sgn}(t)$ و تقریب میرای $e^{-\alpha|t|}\operatorname{sgn}(t)$ با $\alpha=1$</div>
+        <div class="fig"><div id="plot-rect"></div>
+          <div class="cap">شکل ۱: پالس مستطیلی در حوزه زمان</div>
         </div>
       </div>
 
-      <div class="note">
-        چون $\operatorname{sgn}(t)$ در $t=0$ پرش دارد و در بی‌نهایت صفر نمی‌شود،
-        تبدیل فوریه آن شامل <b>توابع تعمیم‌یافته</b> نیست ولی شکل ساده‌ای دارد:
-        $X(f)=\dfrac{1}{j\pi f}$ که در $f=0$ تکینگی دارد.
+      <div class="solution">
+        <div class="solution-title">حل تشریحی کامل</div>
+
+        <p><b>گام ۱ — نوشتن انتگرال:</b></p>
+        <div class="formula">
+          $$X(f)=\int_{-\tau/2}^{+\tau/2}e^{-j2\pi f t}\,dt$$
+        </div>
+
+        <p><b>گام ۲ — استفاده از تقارن زوج (فقط کسینوسی می‌ماند):</b></p>
+        <div class="formula">
+          $$X(f)=2\int_{0}^{\tau/2}\cos(2\pi ft)\,dt$$
+        </div>
+
+        <p><b>گام ۳ — محاسبه انتگرال:</b></p>
+        <div class="formula">
+          $$X(f)=2\cdot\left[\frac{\sin(2\pi ft)}{2\pi f}\right]_{0}^{\tau/2}=\frac{\sin(\pi f\tau)}{\pi f}$$
+        </div>
+
+        <p><b>گام ۴ — تبدیل به سینک:</b></p>
+        <div class="formula">
+          $$\boxed{\ X(f)=\tau\,\operatorname{sinc}(f\tau)\ }$$
+        </div>
+      </div>
+
+      <div class="figrow">
+        <div class="fig"><div id="plot-mag"></div>
+          <div class="cap">شکل ۲: دامنه $|X(f)|=2|\operatorname{sinc}(2f)|$ با قله‌های فرعی 0.228 و 0.132</div>
+        </div>
+        <div class="fig"><div id="plot-phase"></div>
+          <div class="cap">شکل ۳: فاز $\angle X(f)$ با پرش‌های ۱۸۰°</div>
+        </div>
+      </div>
+
+      <div class="figrow">
+        <div class="fig full"><div id="plot-esd"></div>
+          <div class="cap">شکل ۴: چگالی طیفی انرژی $G(f)=\tau^{2}\operatorname{sinc}^{2}(f\tau)$</div>
+        </div>
       </div>
     </div>
 
-    <!-- ===================================================== -->
-    <!-- بخش ۳ -->
-    <!-- ===================================================== -->
+    <!-- ================ ۶ ================ -->
     <div class="card">
-      <div class="sec-title"><span class="num">۳</span> محاسبه تبدیل فوریه $\operatorname{sgn}(t)$ به روش حدی</div>
+      <div class="sec-title"><span class="num">۶</span> سیگنال علامت sgn(t)</div>
+      <div class="formula">
+        $$\operatorname{sgn}(t)=\frac{t}{|t|}=\begin{cases}+1, & t>0\\ 0, & t=0\\ -1, & t<0\end{cases}$$
+      </div>
+      <p><b>ویژگی‌ها:</b></p>
+      <ul>
+        <li>فرد: $\operatorname{sgn}(-t)=-\operatorname{sgn}(t)$</li>
+        <li>$\operatorname{sgn}(t)=2u(t)-1$</li>
+        <li>$\dfrac{d}{dt}\operatorname{sgn}(t)=2\delta(t)$</li>
+      </ul>
+      <div class="figrow">
+        <div class="fig full"><div id="plot-sgn"></div>
+          <div class="cap">شکل ۵: sgn(t) و تقریب‌های میراکنده $e^{-\alpha|t|}\operatorname{sgn}(t)$</div>
+        </div>
+      </div>
+    </div>
 
-      <p>
-        هدف: محاسبه $X(f)=\mathcal{F}\{\operatorname{sgn}(t)\}$.
-        از آنجا که سیگنال انتگرال‌پذیر مطلق نیست، از یک دنباله تقریبی استفاده می‌کنیم.
-      </p>
+    <!-- ================ ۷ ================ -->
+    <div class="card">
+      <div class="sec-title"><span class="num">۷</span> حل کامل F{sgn(t)} به روش حدی</div>
 
       <ol class="steps">
         <li>
-          <span class="step-title">تعریف دنباله تقریبی (تابع میرا)</span>
-          <div class="formula">
-            $$n(t,\alpha)=e^{-\alpha|t|}\operatorname{sgn}(t),\qquad \alpha>0$$
-          </div>
-          <p>
-            چون $\lim_{\alpha\to 0}e^{-\alpha|t|}=1$، داریم
-            $\lim_{\alpha\to 0}n(t,\alpha)=\operatorname{sgn}(t)$.
-            برای هر $\alpha>0$ این تابع انتگرال‌پذیر مطلق است و تبدیل فوریه‌اش به مفهوم کلاسیک وجود دارد.
-          </p>
+          <span class="step-title">تعریف تابع میراکنده</span>
+          <div class="formula">$$n(t,\alpha)=e^{-\alpha|t|}\operatorname{sgn}(t),\qquad \alpha>0$$</div>
         </li>
-
         <li>
-          <span class="step-title">نوشتن انتگرال تبدیل فوریه با تفکیک بازه</span>
-          <div class="formula">
-            $$N(f,\alpha)=\int_{-\infty}^{+\infty}n(t,\alpha)e^{-j2\pi f t}dt
-            =\underbrace{\int_{-\infty}^{0}\bigl(-e^{\alpha t}\bigr)e^{-j2\pi f t}dt}_{I_1}
-            +\underbrace{\int_{0}^{+\infty}e^{-\alpha t}e^{-j2\pi f t}dt}_{I_2}$$
-          </div>
-          <p>
-            توجه کنید که در بازه $t<0$ داریم $|t|=-t$ و بنابراین
-            $e^{-\alpha|t|}=e^{+\alpha t}$؛ همچنین $\operatorname{sgn}(t)=-1$ که منجر به ضریب $-1$ شده است.
-          </p>
+          <span class="step-title">حد α→0</span>
+          <div class="formula">$$\lim_{\alpha\to 0}n(t,\alpha)=\operatorname{sgn}(t)$$</div>
         </li>
-
         <li>
-          <span class="step-title">محاسبه انتگرال اول $I_1$</span>
+          <span class="step-title">نوشتن تبدیل فوریه</span>
+          <div class="formula">$$\mathcal{F}\{n(t,\alpha)\}=\int_{-\infty}^{+\infty}n(t,\alpha)e^{-j2\pi ft}dt$$</div>
+        </li>
+        <li>
+          <span class="step-title">تفکیک بازه</span>
           <div class="formula">
-            $$I_1=-\int_{-\infty}^{0}e^{(\alpha-j2\pi f)t}dt
-            =-\left[\frac{e^{(\alpha-j2\pi f)t}}{\alpha-j2\pi f}\right]_{-\infty}^{0}$$
-          </div>
-          <p>
-            چون $\alpha>0$، در حد $t\to-\infty$ نمایی به صفر میل می‌کند. بنابراین:
-          </p>
-          <div class="formula">
-            $$I_1=-\frac{1}{\alpha-j2\pi f}$$
+            $$=\int_{-\infty}^{0}(-e^{\alpha t})e^{-j2\pi ft}dt+\int_{0}^{+\infty}e^{-\alpha t}e^{-j2\pi ft}dt$$
           </div>
         </li>
-
         <li>
-          <span class="step-title">محاسبه انتگرال دوم $I_2$</span>
+          <span class="step-title">محاسبه هر انتگرال</span>
           <div class="formula">
-            $$I_2=\int_{0}^{+\infty}e^{-(\alpha+j2\pi f)t}dt
-            =\left[\frac{e^{-(\alpha+j2\pi f)t}}{-(\alpha+j2\pi f)}\right]_{0}^{+\infty}
-            =\frac{1}{\alpha+j2\pi f}$$
+            $$I_1=-\frac{1}{\alpha-j2\pi f},\qquad I_2=\frac{1}{\alpha+j2\pi f}$$
           </div>
         </li>
-
         <li>
-          <span class="step-title">جمع دو انتگرال و ساده‌سازی</span>
+          <span class="step-title">جمع و نتیجه میانی (مطابق جزوه)</span>
           <div class="formula">
-            $$N(f,\alpha)=\frac{1}{\alpha+j2\pi f}-\frac{1}{\alpha-j2\pi f}$$
-            $$=\frac{(\alpha-j2\pi f)-(\alpha+j2\pi f)}{(\alpha+j2\pi f)(\alpha-j2\pi f)}
-            =\frac{-4\pi j f}{\alpha^{2}+(2\pi f)^{2}}$$
-          </div>
-          <div class="note">
-            در مخرج از اتحاد $(a+b)(a-b)=a^2-b^2$ استفاده شد:
-            $(\alpha+j2\pi f)(\alpha-j2\pi f)=\alpha^{2}-(j2\pi f)^{2}=\alpha^{2}+(2\pi f)^{2}$.
+            $$N(f,\alpha)=\frac{-4\pi jf}{\alpha^{2}-(2\pi jf)^{2}}$$
           </div>
         </li>
-
         <li>
-          <span class="step-title">حدگیری به ازای $\alpha\to 0$</span>
+          <span class="step-title">حدگیری نهایی</span>
           <div class="formula">
-            $$X(f)=\lim_{\alpha\to 0}N(f,\alpha)
-            =\frac{-4\pi j f}{(2\pi f)^{2}}
-            =\frac{-4\pi j f}{4\pi^{2}f^{2}}
-            =\frac{-j}{\pi f}
-            =\frac{1}{j\pi f}$$
+            $$\mathcal{F}\{\operatorname{sgn}(t)\}=\frac{-4\pi jf}{4\pi^{2}f^{2}}=\frac{1}{j\pi f}=\frac{2}{2\pi jf}$$
           </div>
         </li>
       </ol>
 
       <div class="formula">
-        $$\boxed{\ \mathcal{F}\{\operatorname{sgn}(t)\}=\frac{1}{j\pi f}\ }$$
-      </div>
-
-      <p><b>بررسی نتیجه:</b></p>
-      <ul>
-        <li>دامنه: $\bigl|X(f)\bigr|=\dfrac{1}{\pi|f|}$ — تابعی زوج و نزولی نسبت به $|f|$.</li>
-        <li>فاز: برای $f>0$ برابر $-90^{\circ}$ و برای $f<0$ برابر $+90^{\circ}$ (تابعی فرد).</li>
-        <li>در $f=0$ تبدیل تکین است، که بازتاب مستقیم مؤلفه DC نامتناهی سیگنال است.</li>
-      </ul>
-
-      <div class="note">
-        <b>نکته:</b> همین نتیجه را می‌توان از خاصیت دوگانی نیز به‌دست آورد؛
-        می‌دانیم $\mathcal{F}\left\{\dfrac{1}{\pi t}\right\}=-j\operatorname{sgn}(f)$،
-        و با اعمال دوگانی به $\mathcal{F}\{\operatorname{sgn}(t)\}=\dfrac{1}{j\pi f}$ می‌رسیم.
-      </div>
-    </div>
-
-    <!-- ===================================================== -->
-    <!-- بخش ۴ -->
-    <!-- ===================================================== -->
-    <div class="card">
-      <div class="sec-title"><span class="num">۴</span> خواص مهم تبدیل فوریه</div>
-
-      <p>در ادامه، خواصی که در حل مسائل مخابراتی بیشترین کاربرد را دارند مرور می‌شوند.</p>
-
-      <table>
-        <thead>
-          <tr><th>ویژگی</th><th>در حوزه زمان</th><th>در حوزه فرکانس</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>خطی‌بودن</td><td>$a\,x_1(t)+b\,x_2(t)$</td><td>$a\,X_1(f)+b\,X_2(f)$</td></tr>
-          <tr><td>کانولوشن</td><td>$x(t)*y(t)$</td><td>$X(f)\cdot Y(f)$</td></tr>
-          <tr><td>ضرب</td><td>$x(t)\cdot y(t)$</td><td>$X(f)*Y(f)$</td></tr>
-          <tr><td>شیفت زمانی</td><td>$x(t-t_0)$</td><td>$X(f)e^{-j2\pi f t_0}$</td></tr>
-          <tr><td>شیفت فرکانسی</td><td>$x(t)e^{j2\pi f_0 t}$</td><td>$X(f-f_0)$</td></tr>
-          <tr><td>مقیاس زمانی</td><td>$x(at)$</td><td>$\dfrac{1}{|a|}X\!\left(\dfrac{f}{a}\right)$</td></tr>
-          <tr><td>مشتق‌گیری</td><td>$\dfrac{d}{dt}x(t)$</td><td>$j2\pi f\,X(f)$</td></tr>
-          <tr><td>دوگانی</td><td>$X(t)$</td><td>$x(-f)$</td></tr>
-        </tbody>
-      </table>
-
-      <p><b>۱) خاصیت کانولوشن (مهم‌ترین خاصیت):</b></p>
-      <div class="formula">
-        $$y(t)=x(t)*y(t)\ \xrightarrow{\ \mathcal{F}\ }\ Y(f)=X(f)\cdot Y(f)$$
-        $$x(t)*y(t)\ \triangleq\ \int_{-\infty}^{+\infty}x(\tau)\,y(t-\tau)\,d\tau$$
-      </div>
-      <p>
-        این خاصیت پایه‌ی تحلیل سیستم‌های LTI است: خروجی سیستم برابر کانولوشن ورودی با پاسخ ضربه است،
-        که در حوزه فرکانس به یک <b>ضرب ساده</b> تبدیل می‌شود.
-      </p>
-
-      <p><b>۲) قضیه پارسوال (حفظ انرژی):</b></p>
-      <div class="formula">
-        $$E=\int_{-\infty}^{+\infty}\bigl|x(t)\bigr|^{2}dt
-        =\int_{-\infty}^{+\infty}\bigl|X(f)\bigr|^{2}df$$
-      </div>
-    </div>
-
-    <!-- ===================================================== -->
-    <!-- بخش ۵ -->
-    <!-- ===================================================== -->
-    <div class="card">
-      <div class="sec-title"><span class="num">۵</span> چگالی طیفی انرژی (ESD) و مثال پالس مستطیلی</div>
-
-      <p>
-        برای سیگنال‌های انرژی‌متناهی (توان متوسط صفر)، کمیت
-        $G(f)=|X(f)|^{2}$ را <b>چگالی طیفی انرژی</b> می‌نامیم.
-        این تابع نشان می‌دهد انرژی سیگنال چگونه روی محور فرکانس توزیع شده است.
-      </p>
-
-      <div class="formula">
-        $$G(f)=\bigl|X(f)\bigr|^{2}\ \ge 0,\qquad
-        E=\int_{-\infty}^{+\infty}G(f)\,df$$
-      </div>
-
-      <p><b>مثال ۲ — پالس مستطیلی:</b></p>
-
-      <p>سیگنال زیر را در نظر بگیرید:</p>
-      <div class="formula">
-        $$x(t)=\operatorname{rect}\!\left(\frac{t}{\tau}\right)=
-        \begin{cases}1, & |t|<\dfrac{\tau}{2}\\[4pt] 0, & \text{در غیر این صورت}\end{cases}$$
-      </div>
-
-      <div class="solution">
-        <div class="solution-title">حل تشریحی</div>
-
-        <p><b>گام ۱ — محاسبه تبدیل فوریه:</b></p>
-        <div class="formula">
-          $$X(f)=\int_{-\tau/2}^{+\tau/2}1\cdot e^{-j2\pi f t}dt
-          =\left[\frac{e^{-j2\pi f t}}{-j2\pi f}\right]_{-\tau/2}^{+\tau/2}
-          =\frac{e^{j\pi f\tau}-e^{-j\pi f\tau}}{j2\pi f}$$
-        </div>
-
-        <p><b>گام ۲ — تبدیل به شکل سینک:</b></p>
-        <div class="formula">
-          $$\frac{e^{j\pi f\tau}-e^{-j\pi f\tau}}{j2\pi f}
-          =\frac{2j\sin(\pi f\tau)}{j2\pi f}
-          =\frac{\sin(\pi f\tau)}{\pi f}
-          =\tau\,\operatorname{sinc}(f\tau)$$
-        </div>
-        <p>که در آن $\operatorname{sinc}(x)=\dfrac{\sin(\pi x)}{\pi x}$ و $\operatorname{sinc}(0)=1$.</p>
-
-        <p><b>گام ۳ — دامنه و فاز:</b></p>
-        <div class="formula">
-          $$\bigl|X(f)\bigr|=\tau\bigl|\operatorname{sinc}(f\tau)\bigr|,\qquad
-          \angle X(f)=
-          \begin{cases}0, & \operatorname{sinc}(f\tau)>0\\ \pi, & \operatorname{sinc}(f\tau)<0\end{cases}$$
-        </div>
-        <p>
-          صفرهای طیف در $f=\pm\dfrac{k}{\tau}$ رخ می‌دهند (به‌ازای $k=1,2,3,\dots$).
-          در تغییر علامت، فاز $180^{\circ}$ پرش می‌کند.
-        </p>
-
-        <p><b>گام ۴ — انرژی و چگالی طیفی انرژی:</b></p>
-        <div class="formula">
-          $$E=\int_{-\tau/2}^{+\tau/2}1^{2}\,dt=\tau$$
-          $$G(f)=\bigl|X(f)\bigr|^{2}=\tau^{2}\operatorname{sinc}^{2}(f\tau)$$
-        </div>
-
-        <p><b>گام ۵ — بررسی با قضیه پارسوال:</b></p>
-        <div class="formula">
-          $$\int_{-\infty}^{+\infty}\tau^{2}\operatorname{sinc}^{2}(f\tau)\,df
-          =\tau^{2}\cdot\frac{1}{\tau}=\tau\ \checkmark$$
-        </div>
-        <p>
-          که با مقدار انرژی در حوزه زمان یکسان است و صحت محاسبات را تأیید می‌کند.
-        </p>
+        $$\boxed{\ \mathcal{F}\{\operatorname{sgn}(t)\}=\dfrac{1}{j\pi f}\ }$$
       </div>
 
       <div class="figrow">
-        <div class="fig">
-          <div id="plot-mag"></div>
-          <div class="cap">شکل ۲: دامنه طیف $|X(f)|=2|\operatorname{sinc}(2f)|$ برای $\tau=2$</div>
+        <div class="fig"><div id="plot-approx"></div>
+          <div class="cap">شکل ۶: همگرایی n(t,α) به sgn(t)</div>
         </div>
-        <div class="fig">
-          <div id="plot-phase"></div>
-          <div class="cap">شکل ۳: فاز طیف $\angle X(f)$؛ پرش‌های $180^{\circ}$ در محل تغییر علامت</div>
-        </div>
-      </div>
-
-      <div class="note">
-        <b>تفسیر مهندسی:</b> هرچه پهنای پالس $\tau$ کوچک‌تر باشد، پهنای باند اصلی طیف
-        (فاصله تا اولین صفر $\pm 1/\tau$) بزرگ‌تر می‌شود. این همان
-        <b>رابطه عکس زمان–فرکانس</b> است: پالس باریک در زمان ⟺ طیف پهن در فرکانس.
       </div>
     </div>
 
-    <!-- ===================================================== -->
-    <!-- بخش ۶ -->
-    <!-- ===================================================== -->
+    <!-- ================ ۸ ================ -->
     <div class="card">
-      <div class="sec-title"><span class="num">۶</span> مثال‌های تکمیلی حل‌شده</div>
-
-      <!-- مثال الف -->
-      <p><b>مثال ۳ — تبدیل فوریه پله واحد $u(t)$ با استفاده از نتیجه $\operatorname{sgn}(t)$</b></p>
-
-      <div class="solution">
-        <div class="solution-title">حل تشریحی</div>
-        <p><b>گام ۱ — نوشتن $u(t)$ بر حسب $\operatorname{sgn}(t)$:</b></p>
-        <div class="formula">
-          $$u(t)=\frac{1+\operatorname{sgn}(t)}{2}=\frac{1}{2}+\frac{1}{2}\operatorname{sgn}(t)$$
-        </div>
-
-        <p><b>گام ۲ — اعمال تبدیل فوریه و خطی‌بودن:</b></p>
-        <div class="formula">
-          $$\mathcal{F}\{u(t)\}=\frac{1}{2}\mathcal{F}\{1\}+\frac{1}{2}\mathcal{F}\{\operatorname{sgn}(t)\}$$
-        </div>
-        <p>با دانستن $\mathcal{F}\{1\}=\delta(f)$ و نتیجه بخش ۳:</p>
-        <div class="formula">
-          $$\boxed{\ \mathcal{F}\{u(t)\}=\frac{1}{2}\delta(f)+\frac{1}{j2\pi f}\ }$$
-        </div>
-        <p>
-          جمله $\delta(f)$ مؤلفه DC و جمله $\dfrac{1}{j2\pi f}$ بخش متغیر سیگنال را نشان می‌دهد.
-        </p>
+      <div class="sec-title"><span class="num">۸</span> کانولوشن و خواص تبدیل فوریه</div>
+      <div class="formula">
+        $$n(t)*y(t)\ \triangleq\ \int_{-\infty}^{+\infty}n(\tau)\,y(t-\tau)\,d\tau
+        \ \triangleq\ \int_{-\infty}^{+\infty}y(\tau)\,n(t-\tau)\,d\tau$$
       </div>
-
-      <!-- مثال ب -->
-      <p><b>مثال ۴ — تبدیل فوریه $x(t)=e^{-\alpha|t|}$ با $\alpha>0$</b></p>
-
-      <div class="solution">
-        <div class="solution-title">حل تشریحی</div>
-        <p><b>گام ۱ — تفکیک بازه:</b></p>
-        <div class="formula">
-          $$X(f)=\int_{-\infty}^{0}e^{\alpha t}e^{-j2\pi f t}dt+\int_{0}^{+\infty}e^{-\alpha t}e^{-j2\pi f t}dt$$
-        </div>
-
-        <p><b>گام ۲ — محاسبه انتگرال‌ها:</b></p>
-        <div class="formula">
-          $$\int_{-\infty}^{0}e^{(\alpha-j2\pi f)t}dt=\frac{1}{\alpha-j2\pi f},\qquad
-          \int_{0}^{+\infty}e^{-(\alpha+j2\pi f)t}dt=\frac{1}{\alpha+j2\pi f}$$
-        </div>
-
-        <p><b>گام ۳ — جمع و ساده‌سازی:</b></p>
-        <div class="formula">
-          $$X(f)=\frac{1}{\alpha-j2\pi f}+\frac{1}{\alpha+j2\pi f}
-          =\boxed{\ \frac{2\alpha}{\alpha^{2}+(2\pi f)^{2}}\ }$$
-        </div>
-        <p>طیف حاصل حقیقی، زوج و همواره مثبت است (فاز صفر).</p>
-
-        <p><b>گام ۴ — حالت خاص $\alpha\to 0$:</b></p>
-        <div class="formula">
-          $$\lim_{\alpha\to 0}\frac{2\alpha}{\alpha^{2}+(2\pi f)^{2}}=0\quad (f\neq 0)$$
-        </div>
-        <p>
-          یعنی حذف میرایی، طیف را به سمت تکینگی در $f=0$ می‌برد — همان رفتاری که در
-          مسئله $\operatorname{sgn}(t)$ دیدیم.
-        </p>
+      <div class="formula">
+        $$\mathcal{F}\{n(t)*y(t)\}=X(f)\cdot Y(f),\qquad \mathcal{F}\{n(t)\cdot y(t)\}=X(f)*Y(f)$$
       </div>
-
-      <!-- مثال ج -->
-      <p><b>مثال ۵ — کانولوشن دو پالس مستطیلی و ارتباط با خاصیت کانولوشن</b></p>
-
-      <div class="solution">
-        <div class="solution-title">حل تشریحی</div>
-        <p><b>گام ۱ — استفاده از خاصیت کانولوشن در حوزه فرکانس:</b></p>
-        <div class="formula">
-          $$\mathcal{F}\left\{\operatorname{rect}\!\left(\frac{t}{\tau}\right)*\operatorname{rect}\!\left(\frac{t}{\tau}\right)\right\}
-          =\Bigl[\tau\operatorname{sinc}(f\tau)\Bigr]^{2}=\tau^{2}\operatorname{sinc}^{2}(f\tau)$$
-        </div>
-
-        <p><b>گام ۲ — بازگشت به حوزه زمان:</b></p>
-        <p>
-          می‌دانیم $\mathcal{F}\{\operatorname{tri}(t/\tau)\}=\tau\operatorname{sinc}^{2}(f\tau)$،
-          پس با یک‌بار دیگر اعمال این رابطه:
-        </p>
-        <div class="formula">
-          $$\operatorname{rect}\!\left(\frac{t}{\tau}\right)*\operatorname{rect}\!\left(\frac{t}{\tau}\right)
-          =\tau\cdot\operatorname{tri}\!\left(\frac{t}{\tau}\right)$$
-        </div>
-        <p>که در آن</p>
-        <div class="formula">
-          $$\operatorname{tri}(x)=
-          \begin{cases}1-|x|, & |x|<1\\ 0, & |x|\ge 1\end{cases}$$
-        </div>
-
-        <p><b>گام ۳ — بررسی نتیجه:</b></p>
-        <ul>
-          <li>کانولوشن دو پالس مربعی هم‌عرض، یک پالس <b>مثلثی</b> با پهنای $2\tau$ می‌دهد.</li>
-          <li>ارتفاع مثلث برابر $\tau$ است (مساحت پالس اول).</li>
-          <li>طیف نتیجه، مربع طیف پالس اصلی است ⟹ هموارسازی و کاهش سایدلوب‌ها.</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- ===================================================== -->
-    <!-- بخش ۷ -->
-    <!-- ===================================================== -->
-    <div class="card">
-      <div class="sec-title"><span class="num">۷</span> جدول تبدیل‌های پرکاربرد</div>
-
       <table>
-        <thead>
-          <tr>
-            <th style="width:45%">سیگنال در حوزه زمان $x(t)$</th>
-            <th>تبدیل فوریه $X(f)$</th>
-          </tr>
-        </thead>
+        <thead><tr><th>ویژگی</th><th>حوزه زمان</th><th>حوزه فرکانس</th></tr></thead>
         <tbody>
-          <tr><td>$\delta(t)$</td><td>$1$</td></tr>
-          <tr><td>$1$</td><td>$\delta(f)$</td></tr>
-          <tr><td>$\operatorname{sgn}(t)$</td><td>$\dfrac{1}{j\pi f}$</td></tr>
-          <tr><td>$u(t)$</td><td>$\dfrac{1}{j2\pi f}+\dfrac{1}{2}\delta(f)$</td></tr>
-          <tr><td>$\operatorname{rect}(t/\tau)$</td><td>$\tau\,\operatorname{sinc}(f\tau)$</td></tr>
-          <tr><td>$\operatorname{tri}(t/\tau)$</td><td>$\tau\,\operatorname{sinc}^{2}(f\tau)$</td></tr>
-          <tr><td>$e^{-\alpha t}u(t),\ \alpha>0$</td><td>$\dfrac{1}{\alpha+j2\pi f}$</td></tr>
-          <tr><td>$e^{-\alpha|t|},\ \alpha>0$</td><td>$\dfrac{2\alpha}{\alpha^{2}+(2\pi f)^{2}}$</td></tr>
-          <tr><td>$\cos(2\pi f_0 t)$</td><td>$\dfrac{1}{2}\bigl[\delta(f-f_0)+\delta(f+f_0)\bigr]$</td></tr>
-          <tr><td>$\sin(2\pi f_0 t)$</td><td>$\dfrac{1}{2j}\bigl[\delta(f-f_0)-\delta(f+f_0)\bigr]$</td></tr>
+          <tr><td>خطی‌بودن</td><td>$a x_1+b x_2$</td><td>$a X_1+b X_2$</td></tr>
+          <tr><td>کانولوشن</td><td>$x(t)*y(t)$</td><td>$X(f)\cdot Y(f)$</td></tr>
+          <tr><td>ضرب</td><td>$x(t)\cdot y(t)$</td><td>$X(f)*Y(f)$</td></tr>
+          <tr><td>شیفت زمانی</td><td>$x(t-t_0)$</td><td>$X(f)e^{-j2\pi ft_0}$</td></tr>
+          <tr><td>شیفت فرکانسی</td><td>$x(t)e^{j2\pi f_0t}$</td><td>$X(f-f_0)$</td></tr>
+          <tr><td>مقیاس زمانی</td><td>$x(at)$</td><td>$\frac{1}{|a|}X(f/a)$</td></tr>
+          <tr><td>مشتق</td><td>$\frac{d}{dt}x(t)$</td><td>$j2\pi f\,X(f)$</td></tr>
+          <tr><td>دوگانی</td><td>$X(t)$</td><td>$x(-f)$</td></tr>
         </tbody>
       </table>
     </div>
 
-    <!-- ===================================================== -->
-    <!-- بخش ۸ -->
-    <!-- ===================================================== -->
+    <!-- ================ ۹ ================ -->
     <div class="card">
-      <div class="sec-title"><span class="num">۸</span> جمع‌بندی و تمرین</div>
+      <div class="sec-title"><span class="num">۹</span> ساختار کلی سیستم مخابراتی</div>
 
-      <p><b>خلاصه فرمول‌های کلیدی این جزوه:</b></p>
-      <div class="formula">
-        $$\mathcal{F}\{\operatorname{sgn}(t)\}=\frac{1}{j\pi f},\qquad
-        \mathcal{F}\{u(t)\}=\frac{1}{2}\delta(f)+\frac{1}{j2\pi f}$$
-        $$\mathcal{F}\{\operatorname{rect}(t/\tau)\}=\tau\operatorname{sinc}(f\tau),\qquad
-        G(f)=\bigl|X(f)\bigr|^{2}$$
-        $$\int_{-\infty}^{+\infty}\bigl|x(t)\bigr|^{2}dt=\int_{-\infty}^{+\infty}\bigl|X(f)\bigr|^{2}df$$
+      <div class="figrow">
+        <div class="fig full"><div id="plot-block"></div>
+          <div class="cap">شکل ۷: نمودار بلوکی سیستم مخابراتی دیجیتال</div>
+        </div>
       </div>
 
-      <p><b>تمرین‌های پیشنهادی:</b></p>
-      <ol>
-        <li>با استفاده از خاصیت دوگانی، $\mathcal{F}\left\{\dfrac{1}{\pi t}\right\}$ را محاسبه کنید.</li>
-        <li>
-          نشان دهید $\mathcal{F}\{\operatorname{sgn}(t)\cos(2\pi f_0 t)\}
-          =\dfrac{1}{2j\pi}\left[\dfrac{1}{f-f_0}+\dfrac{1}{f+f_0}\right]$.
-        </li>
-        <li>انرژی سیگنال $x(t)=e^{-2t}u(t)$ را هم در حوزه زمان و هم با قضیه پارسوال محاسبه و مقایسه کنید.</li>
-        <li>پهنای باند اول (اولین صفر طیف) پالس مستطیلی با $\tau=1\,\text{ms}$ را بر حسب کیلوهرتز به‌دست آورید.</li>
-      </ol>
+      <table>
+        <thead><tr><th>بلوک</th><th>وظیفه</th></tr></thead>
+        <tbody>
+          <tr><td>منبع</td><td>تولید پیام</td></tr>
+          <tr><td>کدکننده منبع</td><td>فشرده‌سازی، حذف افزونگی</td></tr>
+          <tr><td>کدکننده کانال</td><td>افزودن افزونگی برای مقابله با نویز</td></tr>
+          <tr><td>مدولاتور</td><td>تبدیل باندپایه به سیگنال ارسالی</td></tr>
+          <tr><td>کانال</td><td>واسط انتقال (تضعیف + نویز)</td></tr>
+          <tr><td>دمدولاتور</td><td>استخراج سیگنال پیام</td></tr>
+          <tr><td>کدگشای کانال</td><td>تصحیح خطا</td></tr>
+          <tr><td>کدگشای منبع</td><td>بازسازی پیام اصلی</td></tr>
+          <tr><td>مقصد</td><td>دریافت نهایی</td></tr>
+        </tbody>
+      </table>
+
+      <div class="formula">
+        $$R_s=\text{نرخ نماد},\ R_b=\text{نرخ بیت},\ R_c=\text{نرخ کانال}$$
+        $$F=\frac{R_b}{2}\ \text{(رابطه نایکوئیست)}$$
+      </div>
+    </div>
+
+    <!-- ================ ۱۰ ================ -->
+    <div class="card">
+      <div class="sec-title"><span class="num">۱۰</span> انواع کانال‌های مخابراتی</div>
+      <table>
+        <thead><tr><th>نوع کانال</th><th>ویژگی</th><th>کاربرد</th></tr></thead>
+        <tbody>
+          <tr><td>سیمی (زوج به‌هم‌تابیده، هم‌محور)</td><td>ارزان، پهنای باند محدود</td><td>تلفن، LAN</td></tr>
+          <tr><td>رادیویی</td><td>انتشار امواج، نیاز به آنتن</td><td>رادیو، TV</td></tr>
+          <tr><td>ماکروویو</td><td>GHz، نیاز به خط دید (LOS)</td><td>نقطه‌به‌نقطه</td></tr>
+          <tr><td>نوری (فیبر)</td><td>پهنای باند زیاد، تضعیف کم</td><td>شبکه پرسرعت</td></tr>
+          <tr><td>ماهواره‌ای</td><td>پوشش گسترده، تأخیر ~۲۵۰ms</td><td>GPS، پخش</td></tr>
+          <tr><td>Hybrid</td><td>ترکیب چند نوع</td><td>شبکه پیچیده</td></tr>
+          <tr><td>زیرآب</td><td>صوتی، پهنای باند کم</td><td>سونار</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ================ ۱۱ ================ -->
+    <div class="card">
+      <div class="sec-title"><span class="num">۱۱</span> روش‌های دسترسی چندگانه</div>
+      <table>
+        <thead><tr><th>روش</th><th>نام کامل</th><th>اصل کار</th></tr></thead>
+        <tbody>
+          <tr><td><b>FDMA</b></td><td>Frequency Division Multiple Access</td><td>هر کاربر یک باند فرکانسی</td></tr>
+          <tr><td><b>TDMA</b></td><td>Time Division Multiple Access</td><td>هر کاربر یک بازه زمانی</td></tr>
+          <tr><td><b>CDMA</b></td><td>Code Division Multiple Access</td><td>کدهای متعامد همزمان</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ================ ۱۲ ================ -->
+    <div class="card">
+      <div class="sec-title"><span class="num">۱۲</span> ظرفیت کانال شانون-هارتلی</div>
+
+      <div class="formula">
+        $$\boxed{\ C=B\,\log_{2}\!\left(1+\frac{S}{N}\right)\ \ [\text{bit/s}]\ }$$
+      </div>
+
+      <p>با نویز سفید گاوسی $N=N_0B$:</p>
+      <div class="formula">
+        $$C=B\,\log_{2}\!\left(1+\frac{S}{N_0B}\right)$$
+      </div>
+
+      <div class="solution">
+        <div class="solution-title">مثال حل‌شده — کانال تلفنی (مطابق جزوه)</div>
+        <p>کانال با $B=3\,\text{kHz}$ و $S/N=10^{3}$:</p>
+        <div class="formula">
+          $$C=3000\cdot\log_{2}(1+1000)\approx 3000\times 9.97\approx 29.9\ \text{kbit/s}$$
+        </div>
+        <p>یعنی حداکثر قادر است حدود <b>۳۰ kbit/s</b> منتقل کند.</p>
+      </div>
 
       <div class="note">
-        <b>راهنمای حل تمرین ۳:</b> در حوزه زمان
-        $E=\displaystyle\int_{0}^{\infty}e^{-4t}dt=\frac{1}{4}$؛
-        در حوزه فرکانس $X(f)=\dfrac{1}{2+j2\pi f}$ و
-        $E=\displaystyle\int_{-\infty}^{\infty}\frac{df}{4+4\pi^{2}f^{2}}=\frac{1}{4}$.
+        <b>حالت مجانبی:</b> $B\to\infty \Longrightarrow C_\infty=\dfrac{S}{N_0}\log_2 e\approx 1.44\dfrac{S}{N_0}$
       </div>
+    </div>
+
+    <!-- ================ ۱۳ ================ -->
+    <div class="card">
+      <div class="sec-title"><span class="num">۱۳</span> کانال گسسته و BSC</div>
+      <div class="formula">
+        $$C=\max_{p(x)}I(X;Y),\qquad I(X;Y)=H(Y)-H(Y|X)$$
+      </div>
+      <p><b>کانال BSC:</b></p>
+      <div class="formula">
+        $$C=1-H(p),\qquad H(p)=-p\log_2 p-(1-p)\log_2(1-p)$$
+      </div>
+      <table>
+        <thead><tr><th>$p$</th><th>$H(p)$</th><th>$C=1-H(p)$</th><th>تفسیر</th></tr></thead>
+        <tbody>
+          <tr><td>0</td><td>0</td><td>1</td><td>بدون خطا</td></tr>
+          <tr><td>0.5</td><td>1</td><td>0</td><td>خروجی مستقل</td></tr>
+          <tr><td>1</td><td>0</td><td>1</td><td>معکوس‌کننده</td></tr>
+        </tbody>
+      </table>
+      <p><b>قضیه کدگذاری کانال شانون:</b> برای $R<C$ کد با خطای دلخواه کوچک وجود دارد.</p>
+    </div>
+
+    <!-- ================ ۱۴ ================ -->
+    <div class="card">
+      <div class="sec-title"><span class="num">۱۴</span> جدول تبدیل‌ها و تمرین</div>
+      <table>
+        <thead><tr><th>$x(t)$</th><th>$X(f)$</th></tr></thead>
+        <tbody>
+          <tr><td>$\delta(t)$</td><td>$1$</td></tr>
+          <tr><td>$1$</td><td>$\delta(f)$</td></tr>
+          <tr><td>$\operatorname{sgn}(t)$</td><td>$1/(j\pi f)$</td></tr>
+          <tr><td>$u(t)$</td><td>$1/(j2\pi f)+\delta(f)/2$</td></tr>
+          <tr><td>$\operatorname{rect}(t/\tau)$</td><td>$\tau\operatorname{sinc}(f\tau)$</td></tr>
+          <tr><td>$\operatorname{tri}(t/\tau)$</td><td>$\tau\operatorname{sinc}^{2}(f\tau)$</td></tr>
+          <tr><td>$e^{-\alpha t}u(t)$</td><td>$1/(\alpha+j2\pi f)$</td></tr>
+          <tr><td>$e^{-\alpha|t|}$</td><td>$2\alpha/[\alpha^{2}+(2\pi f)^{2}]$</td></tr>
+          <tr><td>$\cos(2\pi f_0t)$</td><td>$[\delta(f-f_0)+\delta(f+f_0)]/2$</td></tr>
+        </tbody>
+      </table>
+
+      <p><b>تمرین‌ها:</b></p>
+      <ol>
+        <li>با دوگانی، $\mathcal{F}\{1/(\pi t)\}$ را بیابید.</li>
+        <li>اگر $x(t)$ حقیقی و زوج باشد، $X(f)$ حقیقی و زوج است — اثبات کنید.</li>
+        <li>ظرفیت کانال $B=1$ MHz و $S/N=100$ را محاسبه کنید.</li>
+        <li>انرژی $e^{-3t}u(t)$ را با پارسوال بیابید.</li>
+      </ol>
     </div>
 
     <div style="text-align:center;color:#a08c4a;font-size:.82rem;margin-top:26px;">
       — پایان جزوه —
     </div>
 
-  </div><!-- /paper -->
- </div><!-- /doc -->
-</div><!-- /#doc -->
+  </div>
+ </div>
+</div>
 
 <script>
-/* ============================================================
-   ۱) رسم شکل‌ها با SVG
-   ============================================================ */
-const GOLD = '#c9a227', INK = '#2b3446', GRID = '#e8e8e8';
+/* ===== ابزار رسم SVG ===== */
+const GOLD='#c9a227', GOLD_D='#8a6d1a', INK='#2b3446', GRID='#ececec';
+const BLUE='#2b6cb0', RED='#c0392b', GREEN='#2f8f4e';
 
-function sinc(x){
-  if (Math.abs(x) < 1e-12) return 1;
-  return Math.sin(Math.PI * x) / (Math.PI * x);
-}
+function sinc(x){ return Math.abs(x)<1e-12 ? 1 : Math.sin(Math.PI*x)/(Math.PI*x); }
 
 function plot(cfg){
-  const w = cfg.w || 600, h = cfg.h || 260;
-  const pad = { l: 52, r: 26, t: 18, b: 38 };
-  const W = w - pad.l - pad.r, H = h - pad.t - pad.b;
-  const { xmin, xmax, ymin, ymax } = cfg;
-
-  const px = x => pad.l + (x - xmin) / (xmax - xmin) * W;
-  const py = y => pad.t + H - (y - ymin) / (ymax - ymin) * H;
-
-  let s = `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">`;
-
-  /* شبکه */
-  (cfg.xTicks || []).forEach(t => {
-    s += `<line x1="${px(t).toFixed(1)}" y1="${pad.t}" x2="${px(t).toFixed(1)}" y2="${pad.t + H}" stroke="${GRID}" stroke-width="1"/>`;
-  });
-  (cfg.yTicks || []).forEach(t => {
-    s += `<line x1="${pad.l}" y1="${py(t).toFixed(1)}" x2="${pad.l + W}" y2="${py(t).toFixed(1)}" stroke="${GRID}" stroke-width="1"/>`;
-  });
-
-  /* محورها */
-  const y0 = py(Math.min(Math.max(0, ymin), ymax));
-  const x0 = px(Math.min(Math.max(0, xmin), xmax));
-  s += `<line x1="${pad.l}" y1="${y0.toFixed(1)}" x2="${pad.l + W}" y2="${y0.toFixed(1)}" stroke="${INK}" stroke-width="1.6"/>`;
-  s += `<line x1="${x0.toFixed(1)}" y1="${pad.t}" x2="${x0.toFixed(1)}" y2="${pad.t + H}" stroke="${INK}" stroke-width="1.6"/>`;
-
-  /* برچسب‌ها */
-  (cfg.xTicks || []).forEach(t => {
-    s += `<text x="${px(t).toFixed(1)}" y="${pad.t + H + 20}" font-size="12" fill="#6a7385" text-anchor="middle">${t}</text>`;
-  });
-  (cfg.yTicks || []).forEach(t => {
-    s += `<text x="${pad.l - 9}" y="${(py(t) + 4).toFixed(1)}" font-size="12" fill="#6a7385" text-anchor="end">${t}</text>`;
-  });
-
-  if (cfg.xLabel) {
-    s += `<text x="${pad.l + W}" y="${y0 + 20}" font-size="13" font-style="italic" fill="${INK}" text-anchor="end">${cfg.xLabel}</text>`;
-  }
-  if (cfg.yLabel) {
-    s += `<text x="${pad.l - 6}" y="${pad.t - 6}" font-size="13" font-style="italic" fill="${INK}" text-anchor="start">${cfg.yLabel}</text>`;
-  }
-
-  /* سری‌ها */
-  (cfg.series || []).forEach(se => {
-    const N = 1400;
-    let d = '', pen = false;
-    for (let i = 0; i <= N; i++) {
-      const x = xmin + (xmax - xmin) * i / N;
-      let y = se.fn(x);
-      if (!isFinite(y)) { pen = false; continue; }
-      if (se.clamp) y = Math.max(ymin, Math.min(ymax, y));
-      d += (pen ? ' L' : ' M') + px(x).toFixed(1) + ',' + py(y).toFixed(1);
-      pen = true;
+  const w=cfg.w||640, h=cfg.h||300;
+  const pad={l:60,r:30,t:30,b:45};
+  const W=w-pad.l-pad.r, H=h-pad.t-pad.b;
+  const {xmin,xmax,ymin,ymax}=cfg;
+  const px=x=>pad.l+(x-xmin)/(xmax-xmin)*W;
+  const py=y=>pad.t+H-(y-ymin)/(ymax-ymin)*H;
+  let s=`<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:Vazirmatn,sans-serif">`;
+  (cfg.xTicks||[]).forEach(t=>{ s+=`<line x1="${px(t).toFixed(1)}" y1="${pad.t}" x2="${px(t).toFixed(1)}" y2="${pad.t+H}" stroke="${GRID}" stroke-width="1"/>`; });
+  (cfg.yTicks||[]).forEach(t=>{ s+=`<line x1="${pad.l}" y1="${py(t).toFixed(1)}" x2="${pad.l+W}" y2="${py(t).toFixed(1)}" stroke="${GRID}" stroke-width="1"/>`; });
+  const y0=py(Math.min(Math.max(0,ymin),ymax));
+  const x0=px(Math.min(Math.max(0,xmin),xmax));
+  s+=`<line x1="${pad.l}" y1="${y0.toFixed(1)}" x2="${pad.l+W}" y2="${y0.toFixed(1)}" stroke="${INK}" stroke-width="1.6"/>`;
+  s+=`<line x1="${x0.toFixed(1)}" y1="${pad.t}" x2="${x0.toFixed(1)}" y2="${pad.t+H}" stroke="${INK}" stroke-width="1.6"/>`;
+  (cfg.xTicks||[]).forEach(t=>{ s+=`<text x="${px(t).toFixed(1)}" y="${pad.t+H+20}" font-size="12" fill="#6a7385" text-anchor="middle">${t}</text>`; });
+  (cfg.yTicks||[]).forEach(t=>{ s+=`<text x="${pad.l-9}" y="${(py(t)+4).toFixed(1)}" font-size="12" fill="#6a7385" text-anchor="end">${t}</text>`; });
+  if(cfg.xLabel) s+=`<text x="${pad.l+W}" y="${y0+22}" font-size="13" font-style="italic" fill="${INK}" text-anchor="end">${cfg.xLabel}</text>`;
+  if(cfg.yLabel) s+=`<text x="${pad.l-6}" y="${pad.t-8}" font-size="13" font-style="italic" fill="${INK}" text-anchor="start">${cfg.yLabel}</text>`;
+  (cfg.series||[]).forEach(se=>{
+    const N=1600; let d='',pen=false;
+    for(let i=0;i<=N;i++){
+      const x=xmin+(xmax-xmin)*i/N;
+      let y=se.fn(x);
+      if(!isFinite(y)){pen=false;continue;}
+      if(se.clamp) y=Math.max(ymin,Math.min(ymax,y));
+      d+=(pen?' L':' M')+px(x).toFixed(1)+','+py(y).toFixed(1);
+      pen=true;
     }
-    s += `<path d="${d}" fill="none" stroke="${se.color}" stroke-width="${se.width || 2}" ${se.dash ? `stroke-dasharray="${se.dash}"` : ''} stroke-linejoin="round" stroke-linecap="round"/>`;
+    s+=`<path d="${d}" fill="none" stroke="${se.color}" stroke-width="${se.width||2}" ${se.dash?`stroke-dasharray="${se.dash}"`:''} stroke-linejoin="round" stroke-linecap="round"/>`;
   });
-
-  s += `</svg>`;
+  (cfg.annotations||[]).forEach(a=>{
+    const cx=px(a.x), cy=py(a.y);
+    if(a.type==='dot') s+=`<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${a.r||4}" fill="${a.color||RED}"/>`;
+    if(a.type==='text'){
+      const anchor=a.anchor||'middle', dy=a.dy||-10;
+      s+=`<text x="${(cx+(a.dx||0)).toFixed(1)}" y="${(cy+dy).toFixed(1)}" font-size="${a.size||12}" font-weight="${a.bold?700:400}" fill="${a.color||RED}" text-anchor="${anchor}">${a.text}</text>`;
+    }
+  });
+  s+=`</svg>`;
   return s;
 }
 
-function buildPlots(){
-  /* شکل ۱: sgn(t) و تقریب میرای آن */
-  const elSgn = document.getElementById('plot-sgn');
-  if (elSgn) elSgn.innerHTML = plot({
-    xmin: -3, xmax: 3, ymin: -1.5, ymax: 1.5,
-    xTicks: [-3, -2, -1, 0, 1, 2, 3],
-    yTicks: [-1, 0, 1],
-    xLabel: 't', yLabel: 'x(t)',
-    series: [
-      { fn: t => Math.tanh(2.5 * t), color: GOLD, width: 2.4, dash: '6 4' },
-      { fn: t => (t >= 0 ? 1 : -1), color: INK, width: 2.2 }
-    ]
-  });
-
-  /* شکل ۲: |X(f)| برای پالس مستطیلی τ=2 */
-  const elMag = document.getElementById('plot-mag');
-  if (elMag) elMag.innerHTML = plot({
-    xmin: -3, xmax: 3, ymin: -0.15, ymax: 2.25,
-    xTicks: [-3, -2, -1, 0, 1, 2, 3],
-    yTicks: [0, 0.5, 1, 1.5, 2],
-    xLabel: 'f', yLabel: '|X(f)|',
-    series: [
-      { fn: f => Math.abs(2 * sinc(2 * f)), color: GOLD, width: 2.3 }
-    ]
-  });
-
-  /* شکل ۳: فاز X(f) */
-  const elPhase = document.getElementById('plot-phase');
-  if (elPhase) elPhase.innerHTML = plot({
-    xmin: -3, xmax: 3, ymin: -35, ymax: 215,
-    xTicks: [-3, -2, -1, 0, 1, 2, 3],
-    yTicks: [0, 90, 180],
-    xLabel: 'f', yLabel: '∠X(f)',
-    series: [
-      { fn: f => (Math.sin(2 * Math.PI * f) >= 0 ? 0 : 180), color: '#2b6cb0', width: 2.2 }
-    ]
-  });
-}
-
-buildPlots();
-
-/* ============================================================
-   ۲) دانلود PDF
-   ============================================================ */
-const btnPdf = document.getElementById('btnPdf');
-const btnPrint = document.getElementById('btnPrint');
-
-btnPdf.addEventListener('click', async () => {
-  const old = btnPdf.textContent;
-  btnPdf.disabled = true;
-  btnPdf.textContent = '⏳ در حال ساخت PDF...';
-
-  try {
-    /* اطمینان از پایان رندر فرمول‌ها */
-    if (window.MathJax && MathJax.startup && MathJax.startup.promise) {
-      await MathJax.startup.promise;
-    }
-    /* اطمینان از بارگذاری فونت‌ها */
-    if (document.fonts && document.fonts.ready) {
-      await document.fonts.ready;
-    }
-    /* کمی تأخیر برای اطمینان از رندر کامل SVG */
-    await new Promise(r => setTimeout(r, 350));
-
-    const element = document.getElementById('doc');
-
-    const opt = {
-      margin:       [8, 8, 8, 8],
-      filename:     'jozve-osul-mokhaberat.pdf',
-      image:        { type: 'jpeg', quality: 0.98 },
-      html2canvas:  {
-        scale: 2,
-        useCORS: true,
-        allowTaint: false,
-        backgroundColor: '#ffffff',
-        scrollX: 0,
-        scrollY: 0,
-        windowWidth: element.scrollWidth
-      },
-      jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
-      pagebreak:    { mode: ['css', 'legacy'], avoid: ['.card', '.formula', '.solution', 'tr'] }
-    };
-
-    await html2pdf().set(opt).from(element).save();
-
-  } catch (e) {
-    console.error(e);
-    alert('خطا در ساخت PDF. از دکمه «چاپ / ذخیره دستی» استفاده کنید.');
-  } finally {
-    btnPdf.disabled = false;
-    btnPdf.textContent = old;
-  }
+/* ===== نمودارها ===== */
+document.getElementById('plot-sgn').innerHTML = plot({
+  w:700,h:320, xmin:-4,xmax:4,ymin:-1.6,ymax:1.6,
+  xTicks:[-4,-3,-2,-1,0,1,2,3,4], yTicks:[-1,0,1], xLabel:'t',yLabel:'x(t)',
+  series:[
+    { fn:t=>(t>=0?1:-1), color:INK, width:2.6 },
+    { fn:t=>Math.exp(-0.3*Math.abs(t))*Math.sign(t), color:'#c9a227', width:1.8, dash:'6 4' },
+    { fn:t=>Math.exp(-0.8*Math.abs(t))*Math.sign(t), color:'#e0a800', width:1.8, dash:'4 4' },
+    { fn:t=>Math.exp(-2*Math.abs(t))*Math.sign(t), color:'#b8912a', width:1.8, dash:'2 4' }
+  ],
+  annotations:[
+    {type:'text',x:-0.15,y:1.35,text:'sgn(t)',color:INK,size:12,bold:true,anchor:'end'},
+    {type:'text',x:2.4,y:0.75,text:'α=0.3',color:'#c9a227',size:11,anchor:'start'},
+    {type:'text',x:2.4,y:0.42,text:'α=0.8',color:'#e0a800',size:11,anchor:'start'},
+    {type:'text',x:2.4,y:0.15,text:'α=2.0',color:'#b8912a',size:11,anchor:'start'}
+  ]
 });
 
-btnPrint.addEventListener('click', () => window.print());
+document.getElementById('plot-approx').innerHTML = plot({
+  w:620,h:280, xmin:-3,xmax:3,ymin:-1.4,ymax:1.4,
+  xTicks:[-3,-2,-1,0,1,2,3], yTicks:[-1,0,1], xLabel:'t',yLabel:'n(t,α)',
+  series:[
+    { fn:t=>Math.sign(t), color:'#999', width:1.5, dash:'3 3' },
+    { fn:t=>Math.exp(-0.4*Math.abs(t))*Math.sign(t), color:GOLD, width:2.2 },
+    { fn:t=>Math.exp(-2.5*Math.abs(t))*Math.sign(t), color:BLUE, width:2.2 }
+  ]
+});
+
+document.getElementById('plot-rect').innerHTML = plot({
+  w:620,h:280, xmin:-3,xmax:3,ymin:-0.3,ymax:1.4,
+  xTicks:[-2,-1,-0.5,0,0.5,1,2], yTicks:[0,0.5,1], xLabel:'t',yLabel:'x(t)',
+  series:[ { fn:t=>(Math.abs(t)<1?1:0), color:GOLD, width:2.6 } ],
+  annotations:[
+    {type:'text',x:-1,y:0,text:'−τ/2',color:GOLD_D,size:12,dy:18,bold:true},
+    {type:'text',x:1,y:0,text:'+τ/2',color:GOLD_D,size:12,dy:18,bold:true},
+    {type:'text',x:0,y:0.85,text:'τ=2',color:GOLD_D,size:13,dy:-5,bold:true}
+  ]
+});
+
+document.getElementById('plot-mag').innerHTML = plot({
+  w:660,h:320, xmin:-2.6,xmax:2.6,ymin:-0.35,ymax:2.35,
+  xTicks:[-2,-1.5,-1,-0.5,0,0.5,1,1.5,2], yTicks:[0,0.5,1,1.5,2], xLabel:'f',yLabel:'|X(f)|',
+  series:[ { fn:f=>Math.abs(2*sinc(2*f)), color:GOLD, width:2.6 } ],
+  annotations:[
+    {type:'dot',x:0,y:2,color:RED,r:5},
+    {type:'text',x:0,y:2,text:'2',color:RED,size:13,bold:true,dy:-12},
+    {type:'text',x:-0.5,y:0,text:'1/τ',color:GOLD_D,size:11,dy:18,bold:true},
+    {type:'text',x: 0.5,y:0,text:'1/τ',color:GOLD_D,size:11,dy:18,bold:true},
+    {type:'text',x:-1,y:0,text:'2/τ',color:GOLD_D,size:11,dy:18,bold:true},
+    {type:'text',x: 1,y:0,text:'2/τ',color:GOLD_D,size:11,dy:18,bold:true},
+    {type:'text',x:-1.5,y:0,text:'3/τ',color:GOLD_D,size:11,dy:18,bold:true},
+    {type:'text',x: 1.5,y:0,text:'3/τ',color:GOLD_D,size:11,dy:18,bold:true},
+    {type:'dot',x:-0.74,y:0.454,color:BLUE,r:4},
+    {type:'dot',x: 0.74,y:0.454,color:BLUE,r:4},
+    {type:'text',x:-0.74,y:0.454,text:'0.228',color:BLUE,size:11,bold:true,dy:-10},
+    {type:'text',x: 0.74,y:0.454,text:'0.228',color:BLUE,size:11,bold:true,dy:-10},
+    {type:'dot',x:-1.23,y:0.264,color:GREEN,r:4},
+    {type:'dot',x: 1.23,y:0.264,color:GREEN,r:4},
+    {type:'text',x:-1.23,y:0.264,text:'0.132',color:GREEN,size:11,bold:true,dy:-10},
+    {type:'text',x: 1.23,y:0.264,text:'0.132',color:GREEN,size:11,bold:true,dy:-10}
+  ]
+});
+
+document.getElementById('plot-phase').innerHTML = plot({
+  w:660,h:320, xmin:-2.6,xmax:2.6,ymin:-40,ymax:220,
+  xTicks:[-2,-1,0,1,2], yTicks:[0,90,180], xLabel:'f',yLabel:'∠X(f) [deg]',
+  series:[ { fn:f=>(Math.sin(2*Math.PI*f)>=0?0:180), color:BLUE, width:2.6 } ],
+  annotations:[
+    {type:'dot',x:0.5,y:180,color:RED,r:4},
+    {type:'text',x:0.5,y:180,text:'180°',color:RED,size:12,bold:true,dy:-10},
+    {type:'text',x:-0.5,y:0,text:'0°',color:RED,size:12,bold:true,dy:-10},
+    {type:'text',x:1.5,y:0,text:'0°',color:RED,size:12,bold:true,dy:-10}
+  ]
+});
+
+document.getElementById('plot-esd').innerHTML = plot({
+  w:700,h:300, xmin:-2.6,xmax:2.6,ymin:-0.35,ymax:4.6,
+  xTicks:[-2,-1.5,-1,-0.5,0,0.5,1,1.5,2], yTicks:[0,1,2,3,4], xLabel:'f',yLabel:'G(f)=|X(f)|²',
+  series:[ { fn:f=>Math.pow(2*sinc(2*f),2), color:'#7a5c00', width:2.6 } ],
+  annotations:[
+    {type:'dot',x:0,y:4,color:RED,r:5},
+    {type:'text',x:0,y:4,text:'G(0)=4',color:RED,size:12,bold:true,dy:-12},
+    {type:'text',x:-0.5,y:0,text:'1/τ',color:GOLD_D,size:11,dy:18,bold:true},
+    {type:'text',x: 0.5,y:0,text:'1/τ',color:GOLD_D,size:11,dy:18,bold:true}
+  ]
+});
+
+/* ===== نمودار بلوکی سیستم مخابراتی ===== */
+function buildBlockDiagram(){
+  const el = document.getElementById('plot-block');
+  if(!el) return;
+  const W=900, H=260;
+  const blocks=[
+    { label:'منبع', sub:'Source' },
+    { label:'کدکننده منبع', sub:'Source Enc.' },
+    { label:'کدکننده کانال', sub:'Channel Enc.' },
+    { label:'مدولاتور', sub:'Modulator' },
+    { label:'کانال', sub:'Channel' },
+    { label:'دمدولاتور', sub:'Demodulator' },
+    { label:'کدگشای کانال', sub:'Channel Dec.' },
+    { label:'کدگشای منبع', sub:'Source Dec.' },
+    { label:'مقصد', sub:'Destination' }
+  ];
+  const colors=['#e8e0b8','#f0e0a8','#e8cf7a','#e0be4a','#d4a72c','#e0be4a','#e8cf7a','#f0e0a8','#e8e0b8'];
+  const boxW=78, boxH=55, gap=12;
+  const totalW=blocks.length*boxW+(blocks.length-1)*gap;
+  const startX=(W-totalW)/2;
+  const yBox=90;
+  let s=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:Vazirmatn,sans-serif">`;
+  blocks.forEach((b,i)=>{
+    const x=startX+i*(boxW+gap);
+    s+=`<rect x="${x}" y="${yBox}" width="${boxW}" height="${boxH}" rx="8" fill="${colors[i]}" stroke="#8a6d1a" stroke-width="1.4"/>`;
+    s+=`<text x="${x+boxW/2}" y="${yBox+22}" font-size="10.5" font-weight="700" fill="#3a2c00" text-anchor="middle">${b.label}</text>`;
+    s+=`<text x="${x+boxW/2}" y="${yBox+40}" font-size="8.5" fill="#7a6420" text-anchor="middle" font-style="italic">${b.sub}</text>`;
+    if(i<blocks.length-1){
+      const x1=x+boxW, x2=x+boxW+gap, yMid=yBox+boxH/2;
+      s+=`<line x1="${x1}" y1="${yMid}" x2="${x2}" y2="${yMid}" stroke="#8a6d1a" stroke-width="1.8" marker-end="url(#arrGold)"/>`;
+    }
+  });
+  const channelX=startX+4*(boxW+gap)+boxW/2;
+  s+=`<line x1="${channelX}" y1="${yBox-38}" x2="${channelX}" y2="${yBox-4}" stroke="${RED}" stroke-width="2" marker-end="url(#arrRed)"/>`;
+  s+=`<text x="${channelX}" y="${yBox-48}" font-size="12" font-weight="700" fill="${RED}" text-anchor="middle">نویز</text>`;
+  const rateLabels=[
+    {i:0,text:'Message'},{i:1,text:'Data / Rs'},{i:2,text:'Rc'},{i:3,text:'Rb'}
+  ];
+  rateLabels.forEach(r=>{
+    const x=startX+r.i*(boxW+gap)+boxW+gap/2;
+    s+=`<text x="${x}" y="${yBox-10}" font-size="9.5" fill="#5c4a10" text-anchor="middle" font-style="italic">${r.text}</text>`;
+  });
+  s+=`<text x="${W/2}" y="${H-18}" font-size="11" fill="#7a6420" text-anchor="middle" font-style="italic">جهت جریان اطلاعات: از منبع به مقصد</text>`;
+  s+=`<defs>
+    <marker id="arrGold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8a6d1a"/></marker>
+    <marker id="arrRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="${RED}"/></marker>
+  </defs>`;
+  s+=`</svg>`;
+  el.innerHTML=s;
+}
+buildBlockDiagram();
+
+/* ===== دانلود PDF ===== */
+const btnPdf=document.getElementById('btnPdf');
+const btnPrint=document.getElementById('btnPrint');
+btnPdf.addEventListener('click',async()=>{
+  const old=btnPdf.textContent;
+  btnPdf.disabled=true; btnPdf.textContent='⏳ در حال ساخت PDF...';
+  try{
+    if(window.MathJax&&MathJax.startup&&MathJax.startup.promise) await MathJax.startup.promise;
+    if(document.fonts&&document.fonts.ready) await document.fonts.ready;
+    await new Promise(r=>setTimeout(r,400));
+    const element=document.getElementById('doc');
+    await html2pdf().set({
+      margin:[8,8,8,8],
+      filename:'jozve-kamel-osul-mokhaberat.pdf',
+      image:{type:'jpeg',quality:0.98},
+      html2canvas:{scale:2,useCORS:true,allowTaint:false,backgroundColor:'#ffffff',scrollX:0,scrollY:0,windowWidth:element.scrollWidth},
+      jsPDF:{unit:'mm',format:'a4',orientation:'portrait'},
+      pagebreak:{mode:['css','legacy'],avoid:['.card','.formula','.solution','tr','.fig']}
+    }).from(element).save();
+  }catch(e){
+    console.error(e);
+    alert('خطا در ساخت PDF. از دکمه چاپ استفاده کنید.');
+  }finally{
+    btnPdf.disabled=false; btnPdf.textContent=old;
+  }
+});
+btnPrint.addEventListener('click',()=>window.print());
 </script>
 
 </body>
-  </html>
+                                                         </html>
