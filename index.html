@@ -156,7 +156,7 @@ window.MathJax = {
   .note b { color: #8a6b1e; }
   .toc { background: #eaf2f8; border: 1.5px solid #5b9bd5; }
 
-  /* ===== فهرست ===== */
+  /* ===== فهرست مطالب — اصلاح‌شده سطری ===== */
   .toc-page {
     background: #f5f9fd; border: 2px solid #5b9bd5;
     border-radius: 10px; padding: 26px 30px 30px;
@@ -179,35 +179,67 @@ window.MathJax = {
     text-align: center; color: #1a5276; font-size: 13px;
     font-style: italic; margin-bottom: 20px;
   }
-  .toc-list { list-style: none; padding: 0; margin: 0; counter-reset: toc-counter; }
-  .toc-list > li {
-    counter-increment: toc-counter; padding: 6px 0;
-    border-bottom: 1px dotted #a8c4e0;
-    display: flex; align-items: baseline;
-    justify-content: space-between; gap: 10px;
+
+  /* فهرست اصلی — سطری */
+  .toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    counter-reset: toc-counter;
   }
-  .toc-list > li:last-child { border-bottom: none; }
+  .toc-list > li {
+    counter-increment: toc-counter;
+    padding: 8px 34px 8px 0;
+    border-bottom: 1px dotted #a8c4e0;
+    position: relative;
+    line-height: 1.9;
+    text-align: right;
+  }
+  .toc-list > li:last-child {
+    border-bottom: none;
+  }
   .toc-list > li::before {
-    content: counter(toc-counter) "."; color: #1a5276;
-    font-weight: bold; font-size: 14px;
-    flex-shrink: 0; min-width: 26px;
-    text-align: left; direction: ltr;
+    content: counter(toc-counter) ".";
+    color: #1a5276;
+    font-weight: bold;
+    font-size: 14px;
+    position: absolute;
+    right: 0;
+    top: 8px;
+    width: 26px;
+    text-align: right;
   }
   .toc-item {
-    flex: 1; color: #0b3d91; font-weight: 500;
-    font-size: 14.5px; text-decoration: none;
+    color: #0b3d91;
+    font-weight: 500;
+    font-size: 14.5px;
+    text-decoration: none;
+    display: inline;
+    line-height: 1.9;
   }
+  .toc-item:hover {
+    color: #5b9bd5;
+  }
+
+  /* زیرشاخه‌ها — سطری */
   .toc-subitem {
-    list-style: none; padding-right: 30px; margin: 3px 0;
-    display: flex; align-items: baseline;
-    justify-content: space-between; gap: 10px;
-    font-size: 13px; color: #555;
+    list-style: none;
+    padding: 3px 28px 3px 0;
+    margin: 0;
+    font-size: 13px;
+    color: #555;
+    position: relative;
+    line-height: 1.85;
+    text-align: right;
   }
   .toc-subitem::before {
-    content: "◆"; color: #5b9bd5; font-size: 9px;
-    flex-shrink: 0; min-width: 20px; text-align: left;
+    content: "◆";
+    color: #5b9bd5;
+    font-size: 9px;
+    position: absolute;
+    right: 0;
+    top: 6px;
   }
-  .toc-subitem span:first-of-type { flex: 1; }
 
   /* ===== فرمول‌ها ===== */
   .eq {
@@ -567,49 +599,40 @@ window.MathJax = {
 <path d="M0,0 L0,6 L9,3 z" fill="#0b3d91"/>
 </marker>
 </defs>
-<!-- Block 1: Source -->
 <rect x="15" y="55" width="95" height="70" rx="6" fill="#eaf2f8" stroke="#0b3d91" stroke-width="2"/>
 <text x="62" y="85" text-anchor="middle" font-size="13" fill="#0b3d91" font-weight="bold">منبع</text>
 <text x="62" y="103" text-anchor="middle" font-size="12" fill="#0b3d91">اطلاعات</text>
 
-<!-- Block 2: Input transducer -->
 <rect x="140" y="55" width="95" height="70" rx="6" fill="#d6e6f5" stroke="#1a5276" stroke-width="2"/>
 <text x="187" y="85" text-anchor="middle" font-size="13" fill="#1a5276" font-weight="bold">مبدل</text>
 <text x="187" y="103" text-anchor="middle" font-size="12" fill="#1a5276">ورودی</text>
 
-<!-- Block 3: Transmitter -->
 <rect x="265" y="55" width="95" height="70" rx="6" fill="#eaf2f8" stroke="#0b3d91" stroke-width="2"/>
 <text x="312" y="93" text-anchor="middle" font-size="13" fill="#0b3d91" font-weight="bold">فرستنده</text>
 
-<!-- Block 4: Channel -->
 <rect x="390" y="55" width="95" height="70" rx="6" fill="#d6e6f5" stroke="#1a5276" stroke-width="2"/>
 <text x="437" y="85" text-anchor="middle" font-size="13" fill="#1a5276" font-weight="bold">کانال</text>
 <text x="437" y="103" text-anchor="middle" font-size="12" fill="#1a5276">مخابراتی</text>
 
-<!-- Block 5: Receiver -->
 <rect x="515" y="55" width="95" height="70" rx="6" fill="#eaf2f8" stroke="#0b3d91" stroke-width="2"/>
 <text x="562" y="93" text-anchor="middle" font-size="13" fill="#0b3d91" font-weight="bold">گیرنده</text>
 
-<!-- Block 6: Output transducer -->
 <rect x="640" y="55" width="95" height="70" rx="6" fill="#d6e6f5" stroke="#1a5276" stroke-width="2"/>
 <text x="687" y="85" text-anchor="middle" font-size="13" fill="#1a5276" font-weight="bold">مبدل</text>
 <text x="687" y="103" text-anchor="middle" font-size="12" fill="#1a5276">خروجی</text>
 
-<!-- Arrows -->
 <line x1="112" y1="90" x2="137" y2="90" stroke="#0b3d91" stroke-width="2" marker-end="url(#arr-blue)"/>
 <line x1="237" y1="90" x2="262" y2="90" stroke="#0b3d91" stroke-width="2" marker-end="url(#arr-blue)"/>
 <line x1="362" y1="90" x2="387" y2="90" stroke="#0b3d91" stroke-width="2" marker-end="url(#arr-blue)"/>
 <line x1="487" y1="90" x2="512" y2="90" stroke="#0b3d91" stroke-width="2" marker-end="url(#arr-blue)"/>
 <line x1="612" y1="90" x2="637" y2="90" stroke="#0b3d91" stroke-width="2" marker-end="url(#arr-blue)"/>
 
-<!-- Labels above arrows -->
 <text x="125" y="82" text-anchor="middle" font-size="10" fill="#555">پیام</text>
 <text x="250" y="82" text-anchor="middle" font-size="10" fill="#555">سیگنال</text>
 <text x="375" y="82" text-anchor="middle" font-size="10" fill="#555">سیگنال</text>
 <text x="500" y="82" text-anchor="middle" font-size="10" fill="#555">سیگنال</text>
 <text x="625" y="82" text-anchor="middle" font-size="10" fill="#555">پیام</text>
 
-<!-- Dots for continuity -->
 <text x="775" y="95" text-anchor="middle" font-size="20" fill="#0b3d91">...</text>
 </svg>
 <span class="fig-caption">شکل ۱: مدل کامل بلوکی سیستم مخابراتی — از منبع اطلاعات تا مقصد</span>
@@ -772,7 +795,7 @@ window.MathJax = {
 </div>
 </div>
 
-<!-- ==================== صفحه ۵: مثال ۱ — تبدیل فوریه پالس مستطیلی ==================== -->
+<!-- ==================== صفحه ۵: مثال ۱ ==================== -->
 <div class="page">
 
 <h2 id="s5">مثال ۱: تبدیل فوریه پالس مستطیلی</h2>
@@ -846,45 +869,37 @@ window.MathJax = {
 
 <div class="fig">
 <svg viewBox="0 0 780 340" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma">
-<!-- Axes -->
 <line x1="60" y1="200" x2="760" y2="200" stroke="#333" stroke-width="2"/>
 <line x1="400" y1="40" x2="400" y2="290" stroke="#333" stroke-width="2"/>
 <text x="410" y="30" font-size="14" fill="#333" font-style="italic">|X(f)|</text>
 <text x="755" y="220" font-size="14" fill="#333" font-style="italic">f</text>
 <text x="392" y="218" font-size="12" fill="#333">0</text>
 
-<!-- Sinc curve: main lobe and side lobes -->
-<!-- Right side -->
 <path d="M400,55 C430,55 460,90 475,145 C485,180 490,200 490,200" stroke="#0b3d91" stroke-width="2.5" fill="none"/>
 <path d="M490,200 C495,200 505,175 515,140 C530,85 555,55 590,55" stroke="#0b3d91" stroke-width="2.5" fill="none"/>
 <path d="M590,200 C595,200 610,175 625,140 C645,90 670,60 700,60" stroke="#0b3d91" stroke-width="2.5" fill="none"/>
 <path d="M700,200 C705,200 715,185 725,165 C740,140 755,125 760,125" stroke="#0b3d91" stroke-width="2.5" fill="none"/>
 
-<!-- Left side (mirror) -->
 <path d="M400,55 C370,55 340,90 325,145 C315,180 310,200 310,200" stroke="#0b3d91" stroke-width="2.5" fill="none"/>
 <path d="M310,200 C305,200 295,175 285,140 C270,85 245,55 210,55" stroke="#0b3d91" stroke-width="2.5" fill="none"/>
 <path d="M210,200 C205,200 190,175 175,140 C155,90 130,60 100,60" stroke="#0b3d91" stroke-width="2.5" fill="none"/>
 <path d="M100,200 C95,200 85,185 75,165 C60,140 45,125 40,125" stroke="#0b3d91" stroke-width="2.5" fill="none"/>
 
-<!-- Vertical dashed lines -->
 <line x1="400" y1="55" x2="400" y2="200" stroke="#333" stroke-width="1.5" stroke-dasharray="4,3"/>
 <line x1="490" y1="55" x2="490" y2="240" stroke="#c62828" stroke-width="1" stroke-dasharray="4,3"/>
 <line x1="310" y1="55" x2="310" y2="240" stroke="#c62828" stroke-width="1" stroke-dasharray="4,3"/>
 <line x1="590" y1="55" x2="590" y2="240" stroke="#c62828" stroke-width="1" stroke-dasharray="4,3"/>
 <line x1="210" y1="55" x2="210" y2="240" stroke="#c62828" stroke-width="1" stroke-dasharray="4,3"/>
 
-<!-- Labels -->
 <text x="475" y="35" font-size="13" fill="#8b0000" font-weight="bold">τ</text>
 <text x="485" y="258" font-size="11" fill="#c62828">1/τ</text>
 <text x="305" y="258" font-size="11" fill="#c62828">-1/τ</text>
 <text x="583" y="258" font-size="11" fill="#c62828">2/τ</text>
 <text x="203" y="258" font-size="11" fill="#c62828">-2/τ</text>
 
-<!-- Annotation for side lobe values -->
 <text x="600" y="90" font-size="11" fill="#8a6b1e" font-weight="bold">0.217τ</text>
 <text x="700" y="80" font-size="11" fill="#8a6b1e" font-weight="bold">0.128τ</text>
 
-<!-- Zero labels -->
 <text x="400" y="290" font-size="11" fill="#333" text-anchor="middle">0</text>
 </svg>
 <span class="fig-caption">شکل ۴: نمودار دامنه |X(f)| = τ|sinc(πfτ)| — لوب اصلی در f=0 و لوب‌های کناری با دامنه کاهش‌یابنده</span>
@@ -916,7 +931,6 @@ window.MathJax = {
 <text x="310" y="280" font-size="11" fill="#c62828" text-anchor="middle">-1/τ</text>
 <text x="210" y="280" font-size="11" fill="#c62828" text-anchor="middle">-2/τ</text>
 
-<!-- Phase plot -->
 <line x1="310" y1="150" x2="490" y2="150" stroke="#0b3d91" stroke-width="3"/>
 <line x1="490" y1="80" x2="590" y2="80" stroke="#0b3d91" stroke-width="3"/>
 <line x1="490" y1="80" x2="490" y2="150" stroke="#0b3d91" stroke-width="2" stroke-dasharray="3,2"/>
@@ -954,7 +968,7 @@ window.MathJax = {
 </div>
 </div>
 
-<!-- ==================== صفحه ۶: مثال ۲ — تابع علامت ==================== -->
+<!-- ==================== صفحه ۶: مثال ۲ ==================== -->
 <div class="page">
 
 <h2 id="s6">مثال ۲: تابع علامت (Sign Function) و تبدیل فوریه آن</h2>
@@ -996,7 +1010,7 @@ window.MathJax = {
 
 <h3>۱.۶.۲ تقریب نمایی</h3>
 
-<p>برای اینکه بتوانیم تبدیل فوریه سgn(t) را محاسبه کنیم، از تقریب زیر استفاده می‌کنیم:</p>
+<p>برای اینکه بتوانیم تبدیل فوریه sgn(t) را محاسبه کنیم، از تقریب زیر استفاده می‌کنیم:</p>
 
 <div class="eq">$$ n(t, \alpha) = e^{-\alpha |t|} \cdot \text{sgn}(t), \quad \alpha > 0 $$</div>
 
@@ -1010,11 +1024,8 @@ window.MathJax = {
 <line x1="250" y1="30" x2="250" y2="210" stroke="#333" stroke-width="2"/>
 <text x="450" y="126" font-size="14" fill="#333" font-style="italic">t</text>
 <text x="258" y="25" font-size="14" fill="#333" font-style="italic">n(t,α)</text>
-<!-- Small alpha curve -->
 <path d="M60,180 Q150,180 200,150 Q240,130 250,120 Q260,110 300,90 Q350,60 440,60" stroke="#0b3d91" stroke-width="2.5" fill="none"/>
-<!-- Large alpha curve -->
 <path d="M60,180 Q200,180 235,130 Q245,125 250,120 Q255,115 265,110 Q300,60 440,60" stroke="#c62828" stroke-width="2" fill="none" stroke-dasharray="5,3"/>
-<!-- Legend -->
 <text x="350" y="55" font-size="11" fill="#0b3d91">α کوچک</text>
 <text x="350" y="75" font-size="11" fill="#c62828">α بزرگ</text>
 <circle cx="250" cy="120" r="3" fill="#333"/>
