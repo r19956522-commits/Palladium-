@@ -25,6 +25,7 @@ window.MathJax = {
     font-size: 15px; color: #1a1a1a; background: #eaf2f8;
     padding: 16px 10px 80px;
     overflow-wrap: break-word; word-break: break-word;
+    counter-reset: page;
   }
 
   /* ===== دکمه‌های شناور ===== */
@@ -54,12 +55,24 @@ window.MathJax = {
     box-shadow: 0 0 0 5px #fdfdff, 0 0 0 7px #5b9bd5, 0 6px 24px rgba(11,61,145,.28);
     overflow-wrap: break-word; word-break: break-word;
     position: relative;
+    counter-increment: page;
   }
   .page::before {
     content: ""; position: absolute; top: -3px; right: 0; left: 0;
     height: 5px;
     background: linear-gradient(90deg, #0b3d91, #5b9bd5, #0b3d91);
     border-radius: 8px 8px 0 0;
+  }
+  /* شماره صفحه در انتهای هر صفحه */
+  .page::after {
+    content: "صفحه " counter(page);
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: #777;
+    font-weight: bold;
   }
 
   /* ===== جلد ===== */
@@ -332,12 +345,22 @@ window.MathJax = {
   }
 
   @media print {
-    @page { size: A4; margin: 8mm 6mm 20mm 6mm; }
+    @page { 
+      size: A4; 
+      margin: 8mm 6mm 20mm 6mm; 
+      @bottom-center {
+        content: "صفحه " counter(page);
+        font-family: "Vazirmatn", "Tahoma", sans-serif;
+        font-size: 10pt;
+        color: #555;
+      }
+    }
     body {
       background: #fff; padding: 0; margin: 0;
       font-size: 10pt;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
+      counter-reset: page;
     }
     .floating-bar { display: none !important; }
     .page {
@@ -346,8 +369,10 @@ window.MathJax = {
       border: 2.5px solid #0b3d91; border-radius: 6px;
       box-shadow: 0 0 0 4px #fdfdff, 0 0 0 5.5px #5b9bd5;
       page-break-after: always; break-after: page;
+      counter-increment: page;
     }
     .page:last-of-type { page-break-after: auto; break-after: auto; }
+    .page::after { display: none; } /* حذف شماره دستی و استفاده از شماره خودکار چاپ */
     .cover { padding: 50px 25px 30px; }
     .cover-bism { font-size: 24pt; }
     .cover-title { font-size: 22pt; }
@@ -379,7 +404,6 @@ window.MathJax = {
     .eq { overflow: visible !important; }
     .red-notice { font-size: 9.5pt; padding: 10px 14px; }
     .toc-page { padding: 14px 18px 18px; }
-    /* باکس یادداشت خالی — بدون هیچ متن اضافی */
     .page-notes {
       display: block !important; position: fixed;
       bottom: 3mm; left: 5mm; right: 5mm;
@@ -405,7 +429,7 @@ window.MathJax = {
 <body>
 
 <div class="floating-bar">
-  <button class="float-btn" id="downloadBtn">⬇ دانلود جزوه</button>
+  <button class="float-btn" id="downloadBtn">⬇ دانلود HTML</button>
   <button class="float-btn print" id="printBtn">🖨 چاپ / PDF</button>
 </div>
 
@@ -696,9 +720,7 @@ window.MathJax = {
 <h3>۱.۳.۱ تقویت (Amplification)</h3>
 <p>تقویت، فرآیند افزایش دامنه (و در نتیجه توان) سیگنال است. <b>هدف اصلی تقویت، جبران افت توان سیگنال در طول مسیر انتقال است.</b></p>
 
-<div class="why-box">
-در مسیر انتقال، سیگنال به دلیل مقاومت محیط، فاصله، و عوامل مختلف دچار افت توان می‌شود. اگر توان سیگنال کمتر از یک حد مشخص شود، در گیرنده قابل تشخیص نخواهد بود. پس از تقویت استفاده می‌کنیم تا توان سیگنال را به سطح قابل قبول برسانیم.
-</div>
+<p>در مسیر انتقال، سیگنال به دلیل مقاومت محیط، فاصله، و عوامل مختلف دچار افت توان می‌شود. اگر توان سیگنال کمتر از یک حد مشخص شود، در گیرنده قابل تشخیص نخواهد بود. پس از تقویت استفاده می‌کنیم تا توان سیگنال را به سطح قابل قبول برسانیم.</p>
 
 <h3>۱.۳.۲ فیلترکردن (Filtering)</h3>
 <p>فیلترکردن، فرآیند جداسازی بخش‌های مطلوب سیگنال از بخش‌های نامطلوب است. <b>اهداف اصلی فیلترکردن:</b></p>
@@ -708,9 +730,7 @@ window.MathJax = {
 <li><b>جلوگیری از تداخل:</b> جلوگیری از تداخل با سیگنال‌های دیگر</li>
 </ul>
 
-<div class="why-box">
-قوانین مخابراتی، پهنای باند مشخصی برای هر سرویس تعیین می‌کنند. فیلترکردن، سیگنال ما را در همان باند نگه می‌دارد تا هم با قوانین مطابقت داشته باشد و هم از تداخل با سایر سیستم‌ها جلوگیری کند. همچنین، بخش‌های خارج از باند سیگنال، حامل نویز هستند و حذف آن‌ها کیفیت سیگنال را بالا می‌برد.
-</div>
+<p>قوانین مخابراتی، پهنای باند مشخصی برای هر سرویس تعیین می‌کنند. فیلترکردن، سیگنال ما را در همان باند نگه می‌دارد تا هم با قوانین مطابقت داشته باشد و هم از تداخل با سایر سیستم‌ها جلوگیری کند. همچنین، بخش‌های خارج از باند سیگنال، حامل نویز هستند و حذف آن‌ها کیفیت سیگنال را بالا می‌برد.</p>
 
 <h3>۱.۳.۳ مدولاسیون و دمدولاسیون (Modulation / Demodulation)</h3>
 <p>مدولاسیون، فرآیند تغییر یکی از پارامترهای یک موج حامل (دامنه، فرکانس، یا فاز) به‌منظور انتقال اطلاعات است. دمدولاسیون، عکس این عمل است و در گیرنده انجام می‌شود.</p>
@@ -722,9 +742,7 @@ window.MathJax = {
 <li><b>مدولاسیون فاز (PM):</b> تغییر فاز موج حامل</li>
 </ul>
 
-<div class="why-box">
-برای انتقال اطلاعات در فواصل دور، نیاز داریم که سیگنال را روی یک موج با فرکانس بالا سوار کنیم. دلیل این کار این است که آنتن‌ها برای انتشار کارآمد امواج الکترومغناطیسی باید ابعادی متناسب با طول موج داشته باشند. فرکانس‌های پایین (مثل صدا) طول موج بسیار بزرگی دارند و آنتن‌های غول‌پیکر لازم دارند. مدولاسیون این مشکل را حل می‌کند و علاوه بر آن، امکان مالتی‌پلکس کردن چند سیگنال روی یک کانال را نیز فراهم می‌آورد.
-</div>
+<p>برای انتقال اطلاعات در فواصل دور، نیاز داریم که سیگنال را روی یک موج با فرکانس بالا سوار کنیم. دلیل این کار این است که آنتن‌ها برای انتشار کارآمد امواج الکترومغناطیسی باید ابعادی متناسب با طول موج داشته باشند. فرکانس‌های پایین (مثل صدا) طول موج بسیار بزرگی دارند و آنتن‌های غول‌پیکر لازم دارند. مدولاسیون این مشکل را حل می‌کند و علاوه بر آن، امکان مالتی‌پلکس کردن چند سیگنال روی یک کانال را نیز فراهم می‌آورد.</p>
 
 <h3>۱.۳.۴ خلاصه‌ای از عملیات کلیدی در فرستنده و گیرنده</h3>
 <table>
@@ -757,9 +775,7 @@ window.MathJax = {
 <div class="eq">$$ x(t) = \int_{-\infty}^{\infty} X(f)\, e^{j2\pi f t}\, df $$</div>
 <p class="eq-label">تبدیل معکوس فوریه</p>
 
-<div class="why-box">
-تبدیل فوریه به ما اجازه می‌دهد که هر سیگنال را به‌صورت مجموعی از موج‌های سینوسی با فرکانس‌های مختلف بنویسیم. این کار، تحلیل سیستم‌های LTI (خطی تغییرناپذیر با زمان) را بسیار ساده می‌کند، چون پاسخ یک سیستم LTI به هر سینوسی، یک سینوسی با همان فرکانس ولی دامنه و فاز متفاوت است.
-</div>
+<p>تبدیل فوریه به ما اجازه می‌دهد که هر سیگنال را به‌صورت مجموعی از موج‌های سینوسی با فرکانس‌های مختلف بنویسیم. این کار، تحلیل سیستم‌های LTI (خطی تغییرناپذیر با زمان) را بسیار ساده می‌کند، چون پاسخ یک سیستم LTI به هر سینوسی، یک سینوسی با همان فرکانس ولی دامنه و فاز متفاوت است.</p>
 
 <h3>۱.۴.۲ چگالی طیفی دامنه و فاز</h3>
 <p>$X(f)$ در حالت کلی یک تابع مختلط است و می‌توان آن را به‌صورت زیر نوشت:</p>
@@ -782,9 +798,7 @@ window.MathJax = {
 <div class="eq">$$ E = \int_{-\infty}^{\infty} |X(f)|^2\, df = \int_{-\infty}^{\infty} |x(t)|^2\, dt $$</div>
 <p class="eq-label">رابطه پارسوال — برابری انرژی در حوزه زمان و فرکانس</p>
 
-<div class="why-box">
-چگالی طیفی انرژی به ما می‌گوید که انرژی سیگنال چگونه در فرکانس‌های مختلف توزیع شده است. این مفهوم، پایه‌ای برای طراحی فیلترهای بهینه و تحلیل سیستم‌های مخابراتی از نظر مصرف انرژی است.
-</div>
+<p>چگالی طیفی انرژی به ما می‌گوید که انرژی سیگنال چگونه در فرکانس‌های مختلف توزیع شده است. این مفهوم، پایه‌ای برای طراحی فیلترهای بهینه و تحلیل سیستم‌های مخابراتی از نظر مصرف انرژی است.</p>
 </div>
 
 <!-- ==================== صفحه ۶: مثال ۱ — الف ==================== -->
@@ -796,7 +810,14 @@ window.MathJax = {
 <b>📋 صورت مسئله:</b>
 <br>
 یک پالس مستطیلی $x(t)$ با عرض $\tau$ و ارتفاع واحد در بازه $[-\tau/2, +\tau/2]$ داده شده است:
-<div class="eq">$$ x(t) = \begin{cases} 1 & |t| \le \tau/2 \\ 0 & \text{در غیر این صورت} \end{cases} $$</div>
+<!-- اصلاح نمایش تابع به صورت HTML خالص -->
+<div style="display: flex; justify-content: center; align-items: center; margin: 15px 0; direction: ltr; font-family: 'Times New Roman', Times, serif; font-size: 18px;">
+    <span style="font-size: 24px; margin-right: 10px;">x(t) = {</span>
+    <div style="display: flex; flex-direction: column; text-align: left; margin-right: 10px;">
+        <span style="border-bottom: 1.5px solid #333; padding-bottom: 4px; margin-bottom: 4px; min-width: 140px;">1 &nbsp;&nbsp;&nbsp; |t| &le; &tau;/2</span>
+        <span>0 &nbsp;&nbsp;&nbsp; در غیر این صورت</span>
+    </div>
+</div>
 <b>مطلوب است:</b>
 <br><b>الف)</b> تبدیل فوریه $X(f)$ را با استفاده از تعریف محاسبه کنید.
 <br><b>ب)</b> نمودار دامنه $|X(f)|$ و فاز $\angle X(f)$ را رسم و تحلیل کنید.
@@ -1338,23 +1359,22 @@ document.body.appendChild(a);
 a.click();
 document.body.removeChild(a);
 setTimeout(function(){URL.revokeObjectURL(url)},1500);
-showToast('✅ فایل با موفقیت دانلود شد');
+showToast('✅ فایل HTML دانلود شد. برای دریافت PDF از دکمه چاپ استفاده کنید.');
 }catch(e){alert('خطا: '+e.message)}
 });
 document.getElementById('printBtn').addEventListener('click',function(){
-showToast('⏳ آماده‌سازی...');
-setTimeout(function(){window.print()},400)
+window.print();
 });
 function showToast(msg){
 var t=document.createElement('div');
 t.textContent=msg;
-t.style.cssText='position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#0b3d91;color:#fff;padding:12px 24px;border-radius:30px;font-family:inherit;font-size:14px;font-weight:bold;z-index:99999;box-shadow:0 4px 12px rgba(0,0,0,0.3);opacity:0;transition:opacity 0.3s;';
+t.style.cssText='position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#0b3d91;color:#fff;padding:12px 24px;border-radius:30px;font-family:inherit;font-size:14px;font-weight:bold;z-index:99999;box-shadow:0 4px 12px rgba(0,0,0,0.3);opacity:0;transition:opacity 0.3s;text-align:center;max-width:90%;';
 document.body.appendChild(t);
 requestAnimationFrame(function(){t.style.opacity='1'});
 setTimeout(function(){
 t.style.opacity='0';
 setTimeout(function(){t.remove()},400)
-},2200)
+},3000)
 }
 })();
 </script>
