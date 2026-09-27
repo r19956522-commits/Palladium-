@@ -3,1381 +3,1116 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>جزوه اصول سیستم‌های مخابراتی | محمدرسول یزدیان</title>
-
+<title>جزوه کامل سیستم کنترل خطی — محمدرسول یزدیان</title>
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
 <script>
-window.MathJax = {
-  tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
-  options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] },
-  svg: { fontCache: 'global' }
+MathJax = {
+  tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']] },
+  svg: { fontCache: 'global' },
+  startup: {
+    ready: () => {
+      MathJax.startup.defaultReady();
+      MathJax.startup.promise.then(() => { window.mathJaxReady = true; });
+    }
+  }
 };
 </script>
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style>
-  *, *::before, *::after { box-sizing: border-box; }
-  @page { size: A4; margin: 10mm 8mm 26mm 8mm; }
-  html, body { margin: 0; padding: 0; }
-
-  body {
-    font-family: "Vazirmatn", "IRANSans", "Tahoma", sans-serif;
-    direction: rtl; text-align: justify; line-height: 1.95;
-    font-size: 15px; color: #1a1a1a; background: #eaf2f8;
-    padding: 16px 10px 80px;
-    overflow-wrap: break-word; word-break: break-word;
-    counter-reset: page;
-  }
-
-  /* ===== دکمه‌های شناور ===== */
-  .floating-bar {
-    position: fixed; top: 10px; left: 10px; z-index: 9999;
-    display: flex; flex-direction: column; gap: 6px;
-  }
-  .float-btn {
-    display: flex; align-items: center; gap: 5px;
-    padding: 9px 14px; font-family: inherit; font-size: 13px;
-    font-weight: bold; color: #fff;
-    background: linear-gradient(to bottom, #1a5276, #0b3d91);
-    border: 2px solid #5b9bd5; border-radius: 26px;
-    cursor: pointer; box-shadow: 0 3px 10px rgba(0,0,0,.25);
-    white-space: nowrap; direction: rtl;
-  }
-  .float-btn.print {
-    background: linear-gradient(to bottom, #2e7d32, #1b5e20);
-    border-color: #81c784;
-  }
-
-  /* ===== صفحه ===== */
-  .page {
-    max-width: 840px; width: 100%; margin: 0 auto 22px;
-    background: #fdfdff; padding: 32px 38px 40px;
-    border: 3px solid #0b3d91; border-radius: 10px;
-    box-shadow: 0 0 0 5px #fdfdff, 0 0 0 7px #5b9bd5, 0 6px 24px rgba(11,61,145,.28);
-    overflow-wrap: break-word; word-break: break-word;
-    position: relative;
-    counter-increment: page;
-  }
-  .page::before {
-    content: ""; position: absolute; top: -3px; right: 0; left: 0;
-    height: 5px;
-    background: linear-gradient(90deg, #0b3d91, #5b9bd5, #0b3d91);
-    border-radius: 8px 8px 0 0;
-  }
-  /* شماره صفحه در انتهای هر صفحه */
-  .page::after {
-    content: "صفحه " counter(page);
-    position: absolute;
-    bottom: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 12px;
-    color: #777;
-    font-weight: bold;
-  }
-
-  /* ===== جلد ===== */
-  .cover { text-align: center; padding: 40px 20px 20px; }
-  .cover-bism {
-    font-size: 34px; color: #1a5276; font-weight: bold;
-    margin-bottom: 20px; font-family: "Amiri", serif;
-  }
-  .cover-stars {
-    font-size: 18px; color: #5b9bd5; letter-spacing: 22px;
-    margin: 18px 0; padding-right: 22px;
-  }
-  .cover-title {
-    font-size: 30px; color: #0b3d91; font-weight: 900;
-    margin: 18px 0 10px; line-height: 1.5;
-  }
-  .cover-sub { font-size: 18px; color: #333; margin: 8px 0; font-weight: 600; }
-  .cover-chapter { font-size: 20px; color: #1a5276; font-weight: 700; margin: 14px 0; }
-  .cover-role { font-size: 15px; color: #555; margin-top: 30px; }
-  .cover-name {
-    font-size: 26px; color: #0b3d91; font-weight: 900;
-    margin: 10px 0; padding-bottom: 10px;
-    border-bottom: 2px solid #5b9bd5; display: inline-block;
-  }
-  .cover-degree { font-size: 15px; color: #444; margin-top: 8px; }
-  .cover-teacher {
-    margin-top: 30px; padding: 14px 20px;
-    background: #eaf2f8; border: 2px dashed #5b9bd5;
-    border-radius: 8px; display: inline-block;
-  }
-  .cover-teacher b { color: #1a5276; font-size: 14px; }
-  .cover-teacher span {
-    color: #0b3d91; font-weight: bold; font-size: 17px;
-    display: block; margin-top: 6px;
-  }
-  .cover-foot { font-size: 14px; color: #777; margin-top: 30px; font-style: italic; }
-
-  .red-notice {
-    margin: 22px 0 0; padding: 14px 20px;
-    background: #fff5f5; border: 2px solid #d32f2f;
-    border-right: 6px solid #c62828; border-radius: 8px;
-    color: #b71c1c; font-weight: bold; font-size: 14px;
-    line-height: 1.9; text-align: justify;
-    box-shadow: 0 0 0 3px #fff5f5, 0 0 0 4px #f5c5c5;
-  }
-  .red-notice::before {
-    content: "◈ توجه مهم ◈"; display: block;
-    font-size: 15px; color: #c62828; text-align: center;
-    margin-bottom: 8px; letter-spacing: 1px;
-  }
-
-  /* ===== تیترها ===== */
-  h1 {
-    text-align: center; border-bottom: 3px double #5b9bd5;
-    padding-bottom: 10px; margin: 0 0 18px;
-    font-size: 19px; color: #1a5276; line-height: 1.6;
-  }
-  h2 {
-    color: #0b3d91; border-right: 6px solid #5b9bd5;
-    background: #eaf2f8; padding: 7px 14px 7px 10px;
-    margin: 24px 0 14px; font-size: 16px;
-    border-radius: 0 6px 6px 0; line-height: 1.6;
-  }
-  h3 {
-    color: #1a5276; margin: 20px 0 10px;
-    font-size: 15.5px; border-bottom: 1.5px dashed #5b9bd5;
-    padding-bottom: 5px; line-height: 1.5;
-  }
-  h4 { color: #333; margin: 14px 0 6px; font-size: 14.5px; }
-
-  p { margin: 8px 0; text-align: justify; line-height: 1.95; }
-  ul, ol { padding-right: 24px; padding-left: 0; margin: 8px 0; }
-  li { margin: 4px 0; text-align: justify; line-height: 1.8; }
-
-  /* ===== کادرها ===== */
-  .problem, .solution, .note, .toc {
-    width: 100%; padding: 14px 18px; margin: 14px 0;
-    border-radius: 8px; overflow-wrap: break-word; word-break: break-word;
-  }
-  .problem {
-    background: #eaf2f8; border: 1.5px solid #a8c4e0;
-    border-right: 5px solid #0b3d91;
-  }
-  .problem b { color: #0b3d91; }
-  .solution {
-    background: #f5fff2; border: 1.5px solid #b8d8bb;
-    border-right: 5px solid #2e7d32;
-  }
-  .solution b { color: #2e7d32; }
-  .note {
-    background: #fffbe6; border: 1.5px solid #e6d488;
-    border-right: 5px solid #c9a227;
-  }
-  .note b { color: #8a6b1e; }
-  .toc { background: #eaf2f8; border: 1.5px solid #5b9bd5; }
-
-  /* ===== فهرست ===== */
-  .toc-page {
-    background: #f5f9fd; border: 2px solid #5b9bd5;
-    border-radius: 10px; padding: 26px 30px 30px;
-    margin: 10px 0;
-    box-shadow: 0 0 0 4px #fdfdff, 0 0 0 5.5px #5b9bd5;
-    position: relative;
-  }
-  .toc-page::before {
-    content: ""; position: absolute;
-    top: -3px; right: 0; left: 0; height: 5px;
-    background: linear-gradient(90deg, #0b3d91, #5b9bd5, #0b3d91);
-    border-radius: 10px 10px 0 0;
-  }
-  .toc-title {
-    text-align: center; color: #1a5276; font-size: 18px;
-    font-weight: bold; margin: 0 0 6px;
-    padding-bottom: 8px; border-bottom: 2px double #5b9bd5; line-height: 1.5;
-  }
-  .toc-subtitle {
-    text-align: center; color: #1a5276; font-size: 13px;
-    font-style: italic; margin-bottom: 20px;
-  }
-
-  .toc-list { list-style: none; padding: 0; margin: 0; counter-reset: toc-counter; }
-  .toc-list > li {
-    counter-increment: toc-counter;
-    padding: 8px 34px 8px 0;
-    border-bottom: 1px dotted #a8c4e0;
-    position: relative; line-height: 1.9; text-align: right;
-  }
-  .toc-list > li:last-child { border-bottom: none; }
-  .toc-list > li::before {
-    content: counter(toc-counter) ".";
-    color: #1a5276; font-weight: bold; font-size: 14px;
-    position: absolute; right: 0; top: 8px;
-    width: 26px; text-align: right;
-  }
-  .toc-item {
-    color: #0b3d91; font-weight: 500;
-    font-size: 14.5px; text-decoration: none;
-    display: inline; line-height: 1.9;
-  }
-  .toc-item:hover { color: #5b9bd5; }
-
-  .toc-subitem {
-    list-style: none; padding: 3px 28px 3px 0; margin: 0;
-    font-size: 13px; color: #555;
-    position: relative; line-height: 1.85; text-align: right;
-  }
-  .toc-subitem::before {
-    content: "◆"; color: #5b9bd5; font-size: 9px;
-    position: absolute; right: 0; top: 6px;
-  }
-
-  /* ===== فرمول‌ها ===== */
-  .eq {
-    direction: ltr; text-align: center; width: 100%;
-    margin: 10px 0; padding: 4px;
-    overflow-x: auto; overflow-y: hidden; line-height: 1.5;
-  }
-  mjx-container, mjx-container[display="true"], .MathJax {
-    direction: ltr !important; text-align: left !important;
-    max-width: 100% !important;
-    overflow-x: auto !important; overflow-y: hidden !important;
-    font-size: 105% !important;
-  }
-  mjx-container[display="true"] > svg { max-width: 100%; height: auto; }
-
-  .eq-label {
-    text-align: center; direction: rtl;
-    font-size: 13px; color: #555; font-style: italic;
-    margin: -2px 0 12px; padding: 0; line-height: 1.5;
-  }
-  .eq-row { display: flex; align-items: center; gap: 10px; margin: 10px 0; }
-  .eq-row .eq { flex: 1; margin: 0; }
-  .eq-row .eq-tag {
-    direction: rtl; font-size: 12.5px; color: #666;
-    font-style: italic; white-space: nowrap;
-    padding: 3px 10px; background: #eaf2f8;
-    border-radius: 6px; border: 1px solid #a8c4e0; flex-shrink: 0;
-  }
-
-  /* ===== جدول ===== */
-  table {
-    width: 100%; border-collapse: collapse; margin: 16px 0;
-    font-size: 13px; table-layout: fixed;
-    overflow-wrap: break-word; word-break: break-word;
-    background: #fff; border-radius: 6px;
-    overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.06);
-  }
-  th, td {
-    border: 1px solid #5b9bd5; padding: 7px 8px;
-    text-align: center; vertical-align: middle;
-    overflow-wrap: break-word; word-break: break-word; line-height: 1.6;
-  }
-  th { background: #d6e6f5; font-weight: bold; color: #1a5276; font-size: 13px; }
-  tbody tr:nth-child(even) { background: #f5f9fd; }
-  td.ltr { direction: ltr; text-align: center; overflow-x: auto; padding: 5px 6px; }
-
-  .answer {
-    display: inline-block; background: #e6f5e8;
-    border: 1.5px solid #2e7d32; padding: 3px 12px;
-    margin: 3px; border-radius: 6px;
-    font-weight: bold; color: #1b5e20;
-    white-space: normal; font-size: 13px;
-  }
-
-  .fig {
-    text-align: center; margin: 14px 0;
-    font-size: 12.5px; color: #555;
-    page-break-inside: avoid;
-  }
-  .fig svg { max-width: 92%; height: auto; display: block; margin: 0 auto; }
-  .fig-caption {
-    display: block; margin-top: 5px;
-    font-style: italic; color: #1a5276;
-    font-size: 12.5px; line-height: 1.4;
-  }
-
-  hr { border: none; border-top: 1.5px dashed #5b9bd5; margin: 18px 0; opacity: .6; }
-  .center { text-align: center; }
-  .end {
-    text-align: center; color: #1a5276; font-weight: bold;
-    font-size: 14px; margin-top: 20px; padding: 10px;
-    border-top: 2px double #5b9bd5;
-  }
-
-  .subtitle-step {
-    display: inline-block; background: #d6e6f5;
-    color: #0b3d91; font-weight: bold;
-    padding: 3px 12px; border-radius: 6px;
-    font-size: 13.5px; margin: 10px 0 4px;
-    border: 1px solid #a8c4e0;
-  }
-
-  .why-box {
-    background: #fdf2f8; border: 1.5px solid #e1bee7;
-    border-right: 5px solid #8e24aa;
-    padding: 10px 16px; margin: 10px 0;
-    border-radius: 6px; font-size: 13.5px;
-    line-height: 1.8;
-  }
-  .why-box b { color: #6a1b9a; }
-  .why-box::before {
-    content: "❓ چرا از این فرمول استفاده کردیم؟";
-    display: block; font-weight: bold;
-    color: #6a1b9a; font-size: 13px;
-    margin-bottom: 6px;
-  }
-
-  /* باکس یادداشت — بدون متن اضافی */
-  .page-notes { display: none; }
-
-  @media (max-width: 640px) {
-    body { padding: 10px 5px 60px; font-size: 14px; }
-    .page { padding: 18px 14px 24px; border-width: 2px; }
-    h1 { font-size: 16px; }
-    h2 { font-size: 14px; }
-    h3 { font-size: 13.5px; }
-    table { font-size: 11px; }
-    th, td { padding: 4px 4px; }
-    .problem, .solution, .note { padding: 10px 12px; margin: 10px 0; }
-    .cover-title { font-size: 22px; }
-    .cover-name { font-size: 20px; }
-    .cover-bism { font-size: 24px; }
-    .floating-bar { top: 6px; left: 6px; gap: 5px; }
-    .float-btn { padding: 7px 12px; font-size: 12px; }
-    .eq-row { flex-direction: column; align-items: stretch; gap: 4px; }
-    .eq-row .eq-tag { text-align: center; }
-    .fig svg { max-width: 100%; }
-    .red-notice { font-size: 13px; padding: 12px 14px; }
-    .toc-page { padding: 18px 16px 22px; }
-  }
-
-  @media print {
-    @page { 
-      size: A4; 
-      margin: 8mm 6mm 20mm 6mm; 
-      @bottom-center {
-        content: "صفحه " counter(page);
-        font-family: "Vazirmatn", "Tahoma", sans-serif;
-        font-size: 10pt;
-        color: #555;
-      }
-    }
-    body {
-      background: #fff; padding: 0; margin: 0;
-      font-size: 10pt;
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
-      counter-reset: page;
-    }
-    .floating-bar { display: none !important; }
-    .page {
-      max-width: 100%; width: 100%; margin: 0;
-      padding: 6mm 5mm 8mm;
-      border: 2.5px solid #0b3d91; border-radius: 6px;
-      box-shadow: 0 0 0 4px #fdfdff, 0 0 0 5.5px #5b9bd5;
-      page-break-after: always; break-after: page;
-      counter-increment: page;
-    }
-    .page:last-of-type { page-break-after: auto; break-after: auto; }
-    .page::after { display: none; } /* حذف شماره دستی و استفاده از شماره خودکار چاپ */
-    .cover { padding: 50px 25px 30px; }
-    .cover-bism { font-size: 24pt; }
-    .cover-title { font-size: 22pt; }
-    .cover-name { font-size: 20pt; }
-    h1 { font-size: 13pt; padding-bottom: 6px; margin-bottom: 8px; }
-    h2 { font-size: 12pt; margin: 12px 0 8px; padding: 4px 10px; }
-    h3 { font-size: 11pt; margin: 10px 0 5px; padding-bottom: 3px; }
-    h4 { font-size: 10.5pt; margin: 6px 0 3px; }
-    p, li { font-size: 10pt; line-height: 1.55; margin: 3px 0; }
-    ul, ol { padding-right: 18px; margin: 4px 0; }
-    .problem, .solution, .note, .toc { padding: 8px 12px; margin: 8px 0; font-size: 10pt; }
-    .eq { margin: 5px 0; padding: 2px; }
-    .eq-label { font-size: 9pt; margin: -1px 0 6px; }
-    .eq-row { margin: 5px 0; gap: 6px; }
-    .eq-row .eq-tag { font-size: 9pt; padding: 2px 8px; }
-    mjx-container, mjx-container[display="true"], .MathJax { font-size: 98% !important; }
-    table { font-size: 9pt; margin: 8px 0; }
-    th, td { padding: 4px 5px; font-size: 9pt; }
-    .answer { font-size: 10pt; padding: 2px 8px; margin: 2px; }
-    .fig { margin: 8px 0; }
-    .fig svg { max-width: 78%; }
-    .fig-caption { font-size: 9pt; }
-    .end { font-size: 11pt; margin-top: 12px; padding: 6px; }
-    .problem, .solution, .note, .toc, .fig, .red-notice, .toc-page, .why-box {
-      page-break-inside: avoid; break-inside: avoid;
-    }
-    h2, h3, h4 { page-break-after: avoid; }
-    tr { page-break-inside: avoid; }
-    .eq { overflow: visible !important; }
-    .red-notice { font-size: 9.5pt; padding: 10px 14px; }
-    .toc-page { padding: 14px 18px 18px; }
-    .page-notes {
-      display: block !important; position: fixed;
-      bottom: 3mm; left: 5mm; right: 5mm;
-      padding: 6px 12px 8px; background: #f5f9fd;
-      border: 1.5px solid #5b9bd5; border-radius: 5px;
-      z-index: 9999; page-break-inside: avoid;
-      min-height: 30px;
-    }
-    .page-notes .pn-title {
-      display: inline-block; background: #d6e6f5;
-      color: #1a5276; font-weight: bold; font-size: 8.5pt;
-      padding: 1px 9px; border-radius: 3px;
-      border: 1px solid #5b9bd5; margin-bottom: 3px;
-    }
-    .page-notes .pn-line {
-      border-bottom: 1px dashed #a8c4e0;
-      height: 14px; margin: 0;
-    }
-    .page-notes .pn-line:last-child { border-bottom: none; }
-  }
+:root { --gold: #d4af37; --dark-gold: #b8860b; --cream: #fffdf5; --text: #1f1f1f; }
+* { box-sizing: border-box; }
+body { font-family: 'Vazirmatn', Tahoma, sans-serif; background: #f3f3f3; color: var(--text); line-height: 2; margin: 0; padding: 20px; font-size: 15.5px; }
+.page { max-width: 210mm; margin: 0 auto 20px; background: var(--cream); padding: 22mm 18mm; box-shadow: 0 0 20px rgba(0,0,0,.15); border: 8px double var(--gold); position: relative; page-break-after: always; }
+.page::before { content: ""; position: absolute; inset: 8px; border: 2px solid var(--dark-gold); pointer-events: none; }
+.cover { text-align: center; padding: 35mm 20mm; }
+.cover h1 { font-size: 2.7rem; color: var(--dark-gold); margin-bottom: 10px; }
+.cover h2 { font-size: 1.5rem; color: #444; margin-top: 0; border: none; padding: 0; }
+h2 { color: var(--dark-gold); border-bottom: 2px solid var(--gold); padding-bottom: 6px; margin-top: 34px; font-size: 1.55rem; }
+h3 { color: #8b6508; margin-top: 26px; font-size: 1.22rem; border-right: 5px solid var(--gold); padding-right: 10px; }
+h4 { color: #1e3a8a; margin: 16px 0 8px; font-size: 1.08rem; }
+.note { background: #fff8dc; border-right: 6px solid var(--gold); padding: 12px 16px; margin: 16px 0; border-radius: 0 8px 8px 0; }
+.note strong { color: var(--dark-gold); }
+.example { background: #f0f8ff; border: 1px solid #b0c4de; border-radius: 8px; padding: 16px 20px; margin: 22px 0; }
+.solution { background: #f5f5f5; border-right: 4px solid #2e8b57; padding: 12px 16px; margin-top: 12px; border-radius: 0 6px 6px 0; }
+.solution strong { color: #2e7d32; }
+.formula { text-align: center; direction: ltr; margin: 14px 0; font-size: 1.05rem; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+th, td { border: 1px solid #ccc; padding: 9px; text-align: center; }
+th { background: #f0e6d2; color: #4a3000; }
+ul, ol { padding-right: 24px; }
+li { margin-bottom: 7px; }
+.ascii-plot { background: #f9f9f9; border: 1px solid #ccc; border-radius: 6px; padding: 15px; font-family: monospace; direction: ltr; white-space: pre; overflow-x: auto; font-size: 12px; line-height: 1.3; color: #333; margin: 15px 0; }
+.diagram { background: #fafafa; border: 1px dashed #999; padding: 15px; text-align: center; border-radius: 6px; margin: 15px 0; font-family: monospace; direction: ltr; line-height: 1.9; }
+#dlBtn:hover:not(:disabled) { transform: translateY(-3px) scale(1.05); }
+#dlBtn:disabled { opacity: 0.7; cursor: wait; }
+@media print { #downloadBtn { display: none !important; } .page { box-shadow: none; margin: 0; page-break-after: always; } body { background: white; padding: 0; } }
 </style>
 </head>
 <body>
 
-<div class="floating-bar">
-  <button class="float-btn" id="downloadBtn">⬇ دانلود HTML</button>
-  <button class="float-btn print" id="printBtn">🖨 چاپ / PDF</button>
-</div>
-
-<!-- ==================== صفحه ۱: جلد ==================== -->
-<div class="page">
-  <div class="cover">
-    <div class="cover-bism">بِسْمِ اللهِ الرَّحْمَنِ الرَّحِیم</div>
-    <div class="cover-stars">* * *</div>
-    <div class="cover-title">جزوه اصول سیستم‌های مخابراتی</div>
-    <div class="cover-sub">اصول سیستم‌های مخابراتی</div>
-    <div class="cover-chapter">مبانی، مدل سیستم، تبدیل فوریه، و کانولوشن</div>
-    <div class="cover-stars">* * *</div>
-    <div class="cover-role">تدوین و نگارش</div>
-    <div class="cover-name">محمدرسول یزدیان</div>
-    <div class="cover-degree">دانشجوی مهندسی برق</div>
-    <div class="cover-teacher">
-      <b>زیر نظر استاد گرانقدر:</b>
-      <span>استاد کریمخانی</span>
-    </div>
-    <div class="cover-foot">« به نام خداوند جان و خرد »</div>
-  </div>
-  <div class="red-notice">
-    دانشجویان گرامی، هدف از تدوین این جزوه، تنها فراهم‌کردن خلاصه‌ای از مطالب کلاسی است؛ اما به دلیل محدودیت‌های نوشتاری و برای رفع ابهامات احتمالی و درک عمیق‌تر مفاهیم، توصیه می‌شود <b>حضور منظم و پیوسته در کلاس درس</b> را جدی بگیرید. تجربه نشان داده است که یادگیری اصول سیستم‌های مخابراتی، بدون همراهی با توضیحات شفاهی استاد و پرسش و پاسخ در کلاس، کامل نمی‌شود. این جزوه مکمل کلاس است، نه جانشین آن.
-  </div>
-</div>
-
-<!-- ==================== صفحه ۲: فهرست مطالب ==================== -->
-<div class="page">
-  <h1 style="margin-bottom:22px;">فهرست مطالب</h1>
-
-  <div class="toc-page">
-    <div class="toc-title">جزوه اصول سیستم‌های مخابراتی</div>
-    <div class="toc-subtitle">زیر نظر استاد کریمخانی — تدوین: محمدرسول یزدیان</div>
-
-    <ol class="toc-list">
-      <li>
-        <a href="#s1" class="toc-item">مقدمه‌ای بر سیستم‌های مخابراتی</a>
-        <ul style="width:100%;padding:0;margin:4px 0;">
-          <li class="toc-subitem"><span>تاریخچه و تعاریف اولیه</span></li>
-          <li class="toc-subitem"><span>تحول تاریخی و اهمیت مخابرات</span></li>
-          <li class="toc-subitem"><span>تعریف سیستم مخابراتی</span></li>
-        </ul>
-      </li>
-      <li>
-        <a href="#s2" class="toc-item">مدل سیستم مخابراتی</a>
-        <ul style="width:100%;padding:0;margin:4px 0;">
-          <li class="toc-subitem"><span>بلوک دیاگرام مدل کامل ۶ بخشی</span></li>
-          <li class="toc-subitem"><span>منبع اطلاعات و مبدل ورودی</span></li>
-          <li class="toc-subitem"><span>فرستنده و کانال مخابراتی</span></li>
-          <li class="toc-subitem"><span>گیرنده و مقصد</span></li>
-          <li class="toc-subitem"><span>مدل ساده‌شده</span></li>
-        </ul>
-      </li>
-      <li>
-        <a href="#s3" class="toc-item">عملیات پردازشی در سیستم مخابراتی</a>
-        <ul style="width:100%;padding:0;margin:4px 0;">
-          <li class="toc-subitem"><span>تقویت (افزایش توان سیگنال)</span></li>
-          <li class="toc-subitem"><span>فیلترکردن (حذف نویز و انتخاب باند)</span></li>
-          <li class="toc-subitem"><span>مدولاسیون و دمدولاسیون</span></li>
-        </ul>
-      </li>
-      <li>
-        <a href="#s4" class="toc-item">تبدیل فوریه</a>
-        <ul style="width:100%;padding:0;margin:4px 0;">
-          <li class="toc-subitem"><span>تعریف تبدیل فوریه و تبدیل معکوس</span></li>
-          <li class="toc-subitem"><span>چگالی طیفی دامنه و فاز</span></li>
-          <li class="toc-subitem"><span>چگالی طیفی انرژی (ESD)</span></li>
-        </ul>
-      </li>
-      <li>
-        <a href="#s5" class="toc-item">مثال ۱: تبدیل فوریه پالس مستطیلی</a>
-        <ul style="width:100%;padding:0;margin:4px 0;">
-          <li class="toc-subitem"><span>حل الف: محاسبه X(f) — ۶ مرحله</span></li>
-          <li class="toc-subitem"><span>حل ب: نمودار دامنه |X(f)|</span></li>
-          <li class="toc-subitem"><span>حل ب (ادامه): نمودار فاز ∠X(f)</span></li>
-          <li class="toc-subitem"><span>حل ج: تحلیل پهنای باند</span></li>
-        </ul>
-      </li>
-      <li>
-        <a href="#s6" class="toc-item">مثال ۲: تابع علامت (Sign Function)</a>
-        <ul style="width:100%;padding:0;margin:4px 0;">
-          <li class="toc-subitem"><span>حل الف: محاسبه F{n(t,α)} — ۴ مرحله</span></li>
-          <li class="toc-subitem"><span>حل ب: حد α→0 و نتیجه نهایی</span></li>
-          <li class="toc-subitem"><span>حل ج: تحلیل ویژگی‌های sgn(t)</span></li>
-        </ul>
-      </li>
-      <li>
-        <a href="#s7" class="toc-item">کانولوشن و کاربرد در مخابرات</a>
-        <ul style="width:100%;padding:0;margin:4px 0;">
-          <li class="toc-subitem"><span>تعریف کانولوشن</span></li>
-          <li class="toc-subitem"><span>خواص کانولوشن</span></li>
-          <li class="toc-subitem"><span>قضیه کانولوشن</span></li>
-          <li class="toc-subitem"><span>کاربرد در سیستم‌های مخابراتی</span></li>
-        </ul>
-      </li>
-      <li>
-        <a href="#s8" class="toc-item">جدول خلاصه روابط</a>
-      </li>
-    </ol>
-
-    <hr style="margin:20px 0;">
-
-    <div class="toc-title" style="font-size:16px;border-bottom:1.5px dashed #5b9bd5;">فهرست شکل‌ها و نمودارها</div>
-
-    <ul style="list-style:none;padding:0;margin:8px 0;font-size:13px;">
-      <li style="padding:5px 0;border-bottom:1px dotted #a8c4e0;">◆ شکل ۱ — مدل کامل بلوکی سیستم مخابراتی (۶ بلوک)</li>
-      <li style="padding:5px 0;border-bottom:1px dotted #a8c4e0;">◆ شکل ۲ — مدل ساده‌شده سیستم مخابراتی</li>
-      <li style="padding:5px 0;border-bottom:1px dotted #a8c4e0;">◆ شکل ۳ — پالس مستطیلی x(t) در حوزه زمان</li>
-      <li style="padding:5px 0;border-bottom:1px dotted #a8c4e0;">◆ شکل ۴ — نمودار دامنه |X(f)| = τ|sinc(πfτ)|</li>
-      <li style="padding:5px 0;border-bottom:1px dotted #a8c4e0;">◆ شکل ۵ — نمودار فاز ∠X(f) پالس مستطیلی</li>
-      <li style="padding:5px 0;border-bottom:1px dotted #a8c4e0;">◆ شکل ۶ — تابع علامت sgn(t)</li>
-      <li style="padding:5px 0;border-bottom:1px dotted #a8c4e0;">◆ شکل ۷ — تابع n(t,α) = e^(-α|t|)·sgn(t)</li>
-      <li style="padding:5px 0;">◆ شکل ۸ — مدل کانولوشن در سیستم LTI</li>
-    </ul>
-  </div>
-</div>
-
-<!-- ==================== صفحه ۳: مقدمه و مدل ==================== -->
-<div class="page">
-<h1>فصل اول: مقدمه و مدل سیستم‌های مخابراتی</h1>
-
-<h2 id="s1">۱.۱ مقدمه‌ای بر سیستم‌های مخابراتی</h2>
-
-<h3>۱.۱.۱ تاریخچه و تحول مخابرات</h3>
-<p>مخابرات، از دیرباز یکی از نیازهای اساسی بشر بوده است. از signaling با آتش و دود تا سیستم‌های دیجیتال امروزی، انسان همواره در پی یافتن راه‌هایی برای انتقال اطلاعات در فواصل دور بوده است. سیر تحول مخابرات را می‌توان در چهار دوره اصلی خلاصه کرد:</p>
-
-<ul>
-<li><b>دوره علائم اولیه:</b> استفاده از آتش، دود، طبل، و پرچم برای انتقال پیام‌های ساده</li>
-<li><b>دوره تلگراف و تلفن:</b> اختراع تلگراف توسط مورس (۱۸۴۴) و تلفن توسط بل (۱۸۷۶)</li>
-<li><b>دوره رادیو و تلویزیون:</b> اختراع رادیو توسط مارکونی (۱۸۹۵) و آغاز مخابرات بی‌سیم</li>
-<li><b>دوره دیجیتال و اینترنت:</b> از نیمه قرن بیستم تا کنون، شاهد انقلاب دیجیتال و شبکه‌های جهانی هستیم</li>
-</ul>
-
-<h3>۱.۱.۲ اهمیت ریاضیات در تحلیل مخابرات</h3>
-<p>هدف اصلی از تحلیل ریاضی سیستم‌های مخابراتی، <b>مدل‌سازی دقیق رفتار سیستم</b> و <b>پیش‌بینی عملکرد آن در شرایط مختلف</b> است. به‌کمک ابزارهای ریاضی مثل تبدیل فوریه، لاپلاس، و آمار، می‌توان:</p>
-
-<ul>
-<li>رفتار سیگنال‌ها را در حوزه زمان و فرکانس تحلیل کرد</li>
-<li>نویز و اعوجاج سیستم را مدل‌سازی کرد</li>
-<li>پارامترهای طراحی سیستم (پهنای باند، توان، نرخ خطا) را بهینه کرد</li>
-</ul>
-
-<h3>۱.۱.۳ تعریف سیستم مخابراتی</h3>
-<p>یک <b>سیستم مخابراتی</b> مجموعه‌ای از اجزا و فرآیندهاست که با هدف انتقال اطلاعات از یک مبدأ (منبع) به یک مقصد (گیرنده) طراحی شده‌اند. این انتقال از طریق یک محیط فیزیکی به نام <b>کانال مخابراتی</b> انجام می‌شود.</p>
-
-<div class="note">
-<b>⚠ تعریف دقیق:</b>
-<br>
-سیستم مخابراتی، واسطه‌ای است که پیام (اطلاعات) را از یک مبدأ به یک مقصد منتقل می‌کند. این فرآیند شامل تبدیل شکل پیام به سیگنال مناسب، انتقال آن از طریق کانال، مقابله با نویز، و بازگرداندن آن به شکل اولیه در مقصد است.
-</div>
-
-<h2 id="s2">۱.۲ مدل سیستم مخابراتی</h2>
-<p>مدل اصلی و کامل یک سیستم مخابراتی شامل شش بلوک اصلی است. این مدل، پایه‌ای برای تحلیل هر سیستم مخابراتی، از سیستم‌های ساده تا پیچیده، فراهم می‌کند.</p>
-
-<div class="fig">
-<svg viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma">
-<defs>
-<marker id="arr-blue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
-<path d="M0,0 L0,6 L9,3 z" fill="#0b3d91"/>
-</marker>
-</defs>
-<rect x="15" y="55" width="95" height="70" rx="6" fill="#eaf2f8" stroke="#0b3d91" stroke-width="2"/>
-<text x="62" y="85" text-anchor="middle" font-size="13" fill="#0b3d91" font-weight="bold">منبع</text>
-<text x="62" y="103" text-anchor="middle" font-size="12" fill="#0b3d91">اطلاعات</text>
-
-<rect x="140" y="55" width="95" height="70" rx="6" fill="#d6e6f5" stroke="#1a5276" stroke-width="2"/>
-<text x="187" y="85" text-anchor="middle" font-size="13" fill="#1a5276" font-weight="bold">مبدل</text>
-<text x="187" y="103" text-anchor="middle" font-size="12" fill="#1a5276">ورودی</text>
-
-<rect x="265" y="55" width="95" height="70" rx="6" fill="#eaf2f8" stroke="#0b3d91" stroke-width="2"/>
-<text x="312" y="93" text-anchor="middle" font-size="13" fill="#0b3d91" font-weight="bold">فرستنده</text>
-
-<rect x="390" y="55" width="95" height="70" rx="6" fill="#d6e6f5" stroke="#1a5276" stroke-width="2"/>
-<text x="437" y="85" text-anchor="middle" font-size="13" fill="#1a5276" font-weight="bold">کانال</text>
-<text x="437" y="103" text-anchor="middle" font-size="12" fill="#1a5276">مخابراتی</text>
-
-<rect x="515" y="55" width="95" height="70" rx="6" fill="#eaf2f8" stroke="#0b3d91" stroke-width="2"/>
-<text x="562" y="93" text-anchor="middle" font-size="13" fill="#0b3d91" font-weight="bold">گیرنده</text>
-
-<rect x="640" y="55" width="95" height="70" rx="6" fill="#d6e6f5" stroke="#1a5276" stroke-width="2"/>
-<text x="687" y="85" text-anchor="middle" font-size="13" fill="#1a5276" font-weight="bold">مبدل</text>
-<text x="687" y="103" text-anchor="middle" font-size="12" fill="#1a5276">خروجی</text>
-
-<line x1="112" y1="90" x2="137" y2="90" stroke="#0b3d91" stroke-width="2" marker-end="url(#arr-blue)"/>
-<line x1="237" y1="90" x2="262" y2="90" stroke="#0b3d91" stroke-width="2" marker-end="url(#arr-blue)"/>
-<line x1="362" y1="90" x2="387" y2="90" stroke="#0b3d91" stroke-width="2" marker-end="url(#arr-blue)"/>
-<line x1="487" y1="90" x2="512" y2="90" stroke="#0b3d91" stroke-width="2" marker-end="url(#arr-blue)"/>
-<line x1="612" y1="90" x2="637" y2="90" stroke="#0b3d91" stroke-width="2" marker-end="url(#arr-blue)"/>
-
-<text x="125" y="82" text-anchor="middle" font-size="10" fill="#555">پیام</text>
-<text x="250" y="82" text-anchor="middle" font-size="10" fill="#555">سیگنال</text>
-<text x="375" y="82" text-anchor="middle" font-size="10" fill="#555">سیگنال</text>
-<text x="500" y="82" text-anchor="middle" font-size="10" fill="#555">سیگنال</text>
-<text x="625" y="82" text-anchor="middle" font-size="10" fill="#555">پیام</text>
-
-<text x="775" y="95" text-anchor="middle" font-size="20" fill="#0b3d91">...</text>
-</svg>
-<span class="fig-caption">شکل ۱: مدل کامل بلوکی سیستم مخابراتی — از منبع اطلاعات تا مقصد</span>
-</div>
-
-<h3>۱.۲.۱ توضیح بلوک‌های اصلی</h3>
-
-<span class="subtitle-step">۱) منبع اطلاعات (Information Source)</span>
-<p>منبع اطلاعات، مبدأ پیام است. این منبع می‌تواند یک انسان، یک کامپیوتر، یک سنسور، یا هر سیستمی باشد که اطلاعات تولید می‌کند. <b>خروجی این بلوک، پیام است.</b> پیام می‌تواند به شکل صدا، تصویر، متن، یا داده دیجیتال باشد.</p>
-
-<span class="subtitle-step">۲) مبدل ورودی (Input Transducer)</span>
-<p>مبدل ورودی، پیام را از شکل طبیعی آن به یک سیگنال الکتریکی مناسب برای انتقال تبدیل می‌کند. <b>هدف این بلوک، تبدیل فرمت پیام به سیگنال الکتریکی است.</b> مثال‌ها:</p>
-<ul>
-<li>میکروفن: صدا را به سیگنال الکتریکی تبدیل می‌کند</li>
-<li>دوربین: تصویر را به سیگنال الکتریکی تبدیل می‌کند</li>
-<li>کیبورد: فشردن کلید را به کد دیجیتال تبدیل می‌کند</li>
-</ul>
-
-<span class="subtitle-step">۳) فرستنده (Transmitter)</span>
-<p>فرستنده، سیگنال را برای ارسال از طریق کانال آماده می‌کند. <b>وظایف فرستنده شامل:</b></p>
-<ul>
-<li><b>مدولاسیون:</b> تغییر فرکانس یا دامنه سیگنال برای انتقال بهینه</li>
-<li><b>تقویت:</b> افزایش توان سیگنال برای غلبه بر افت کانال</li>
-<li><b>فیلترکردن:</b> محدودکردن پهنای باند سیگنال به باند مجاز</li>
-<li><b>کدگذاری:</b> افزودن افزونگی برای تشخیص و تصحیح خطا</li>
-</ul>
-
-<span class="subtitle-step">۴) کانال مخابراتی (Communication Channel)</span>
-<p>کانال، محیط فیزیکی انتقال سیگنال است. <b>کانال، منبع اصلی نویز و اعوجاج در سیستم است.</b> انواع کانال:</p>
-<ul>
-<li><b>سیم مسی:</b> برای تلفن و اینترنت سیمی</li>
-<li><b>فیبر نوری:</b> برای انتقال داده با پهنای باند بالا</li>
-<li><b>فضای آزاد:</b> برای امواج رادیویی، مایکروویو، ماهواره</li>
-<li><b>زیر آب:</b> برای مخابرات زیردریایی با امواج صوتی</li>
-</ul>
-
-<span class="subtitle-step">۵) گیرنده (Receiver)</span>
-<p>گیرنده، سیگنال را از کانال دریافت می‌کند و آن را به شکل اولیه بازمی‌گرداند. <b>وظایف گیرنده:</b></p>
-<ul>
-<li><b>تقویت:</b> بازگرداندن دامنه سیگنال ضعیف‌شده</li>
-<li><b>فیلترکردن:</b> حذف نویز و تداخل</li>
-<li><b>دمدولاسیون:</b> بازیابی پیام اصلی از سیگنال مدوله‌شده</li>
-<li><b>کدگشایی:</b> تصحیح خطاهای احتمالی</li>
-</ul>
-
-<span class="subtitle-step">۶) مقصد (Destination) / مبدل خروجی</span>
-<p>مبدل خروجی، سیگنال الکتریکی را به شکل اولیه پیام برمی‌گرداند. <b>هدف این بلوک، ارائه پیام به کاربر نهایی است.</b> مثال‌ها:</p>
-<ul>
-<li>بلندگو: سیگنال الکتریکی را به صدا تبدیل می‌کند</li>
-<li>مانیتور: سیگنال الکتریکی را به تصویر تبدیل می‌کند</li>
-<li>پرینتر: کد دیجیتال را روی کاغذ چاپ می‌کند</li>
-</ul>
-
-<h3>۱.۲.۲ مدل ساده‌شده</h3>
-<p>اگر بلوک‌های مبدل ورودی و خروجی را با مبدل‌های داخلی فرستنده و گیرنده ادغام کنیم، به مدل ساده‌شده زیر می‌رسیم که برای تحلیل‌های ریاضی مناسب‌تر است:</p>
-
-<div class="fig">
-<svg viewBox="0 0 620 140" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma">
-<defs>
-<marker id="arrow2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
-<path d="M0,0 L0,6 L9,3 z" fill="#0b3d91"/>
-</marker>
-</defs>
-<rect x="60" y="40" width="120" height="60" rx="6" fill="#eaf2f8" stroke="#0b3d91" stroke-width="2"/>
-<text x="120" y="75" text-anchor="middle" font-size="13" fill="#0b3d91" font-weight="bold">منبع پیام</text>
-<rect x="250" y="40" width="120" height="60" rx="6" fill="#d6e6f5" stroke="#1a5276" stroke-width="2"/>
-<text x="310" y="75" text-anchor="middle" font-size="13" fill="#1a5276" font-weight="bold">فرستنده</text>
-<rect x="440" y="40" width="120" height="60" rx="6" fill="#eaf2f8" stroke="#0b3d91" stroke-width="2"/>
-<text x="500" y="75" text-anchor="middle" font-size="13" fill="#0b3d91" font-weight="bold">گیرنده</text>
-<line x1="182" y1="70" x2="247" y2="70" stroke="#0b3d91" stroke-width="2" marker-end="url(#arrow2)"/>
-<line x1="372" y1="70" x2="437" y2="70" stroke="#0b3d91" stroke-width="2" marker-end="url(#arrow2)"/>
-<text x="215" y="62" text-anchor="middle" font-size="10" fill="#555">پیام</text>
-<text x="405" y="62" text-anchor="middle" font-size="10" fill="#555">پیام</text>
-<line x1="310" y1="30" x2="310" y2="15" stroke="#c62828" stroke-width="1.5" stroke-dasharray="4,3"/>
-<text x="310" y="12" text-anchor="middle" font-size="10" fill="#c62828">نویز</text>
-</svg>
-<span class="fig-caption">شکل ۲: مدل ساده‌شده سیستم مخابراتی</span>
-</div>
-
-<div class="note">
-<b>⚠ نکته مهم:</b>
-<br>
-در مدل ساده‌شده، کانال مخابراتی بین فرستنده و گیرنده قرار دارد و همواره با نویز و اعوجاج همراه است. یکی از مهم‌ترین اهداف طراحی سیستم‌های مخابراتی، مقابله با نویز کانال است.
-</div>
-</div>
-
-<!-- ==================== صفحه ۴: عملیات پردازشی ==================== -->
-<div class="page">
-
-<h2 id="s3">۱.۳ عملیات پردازشی در سیستم مخابراتی</h2>
-<p>در سیستم‌های مخابراتی، عملیات پردازشی متعددی روی سیگنال انجام می‌شود تا انتقال بهینه‌تری صورت گیرد. دو عملیات اصلی عبارتند از: <b>تقویت</b> و <b>فیلترکردن</b>.</p>
-
-<h3>۱.۳.۱ تقویت (Amplification)</h3>
-<p>تقویت، فرآیند افزایش دامنه (و در نتیجه توان) سیگنال است. <b>هدف اصلی تقویت، جبران افت توان سیگنال در طول مسیر انتقال است.</b></p>
-
-<p>در مسیر انتقال، سیگنال به دلیل مقاومت محیط، فاصله، و عوامل مختلف دچار افت توان می‌شود. اگر توان سیگنال کمتر از یک حد مشخص شود، در گیرنده قابل تشخیص نخواهد بود. پس از تقویت استفاده می‌کنیم تا توان سیگنال را به سطح قابل قبول برسانیم.</p>
-
-<h3>۱.۳.۲ فیلترکردن (Filtering)</h3>
-<p>فیلترکردن، فرآیند جداسازی بخش‌های مطلوب سیگنال از بخش‌های نامطلوب است. <b>اهداف اصلی فیلترکردن:</b></p>
-<ul>
-<li><b>حذف نویز:</b> از بین بردن نویزهای خارجی و داخلی</li>
-<li><b>انتخاب باند:</b> محدودکردن سیگنال به باند فرکانسی مجاز</li>
-<li><b>جلوگیری از تداخل:</b> جلوگیری از تداخل با سیگنال‌های دیگر</li>
-</ul>
-
-<p>قوانین مخابراتی، پهنای باند مشخصی برای هر سرویس تعیین می‌کنند. فیلترکردن، سیگنال ما را در همان باند نگه می‌دارد تا هم با قوانین مطابقت داشته باشد و هم از تداخل با سایر سیستم‌ها جلوگیری کند. همچنین، بخش‌های خارج از باند سیگنال، حامل نویز هستند و حذف آن‌ها کیفیت سیگنال را بالا می‌برد.</p>
-
-<h3>۱.۳.۳ مدولاسیون و دمدولاسیون (Modulation / Demodulation)</h3>
-<p>مدولاسیون، فرآیند تغییر یکی از پارامترهای یک موج حامل (دامنه، فرکانس، یا فاز) به‌منظور انتقال اطلاعات است. دمدولاسیون، عکس این عمل است و در گیرنده انجام می‌شود.</p>
-
-<p>انواع اصلی مدولاسیون:</p>
-<ul>
-<li><b>مدولاسیون دامنه (AM):</b> تغییر دامنه موج حامل</li>
-<li><b>مدولاسیون فرکانس (FM):</b> تغییر فرکانس موج حامل</li>
-<li><b>مدولاسیون فاز (PM):</b> تغییر فاز موج حامل</li>
-</ul>
-
-<p>برای انتقال اطلاعات در فواصل دور، نیاز داریم که سیگنال را روی یک موج با فرکانس بالا سوار کنیم. دلیل این کار این است که آنتن‌ها برای انتشار کارآمد امواج الکترومغناطیسی باید ابعادی متناسب با طول موج داشته باشند. فرکانس‌های پایین (مثل صدا) طول موج بسیار بزرگی دارند و آنتن‌های غول‌پیکر لازم دارند. مدولاسیون این مشکل را حل می‌کند و علاوه بر آن، امکان مالتی‌پلکس کردن چند سیگنال روی یک کانال را نیز فراهم می‌آورد.</p>
-
-<h3>۱.۳.۴ خلاصه‌ای از عملیات کلیدی در فرستنده و گیرنده</h3>
-<table>
-<thead>
-<tr><th style="width:50%">فرستنده</th><th style="width:50%">گیرنده</th></tr>
-</thead>
-<tbody>
-<tr><td>مدولاسیون سیگنال پیام</td><td>دمدولاسیون سیگنال دریافتی</td></tr>
-<tr><td>تقویت سیگنال برای ارسال</td><td>تقویت سیگنال دریافتی ضعیف</td></tr>
-<tr><td>فیلترکردن برای محدودسازی باند</td><td>فیلترکردن برای حذف نویز</td></tr>
-<tr><td>کدگذاری کانال</td><td>کدگشایی کانال</td></tr>
-</tbody>
-</table>
-</div>
-
-<!-- ==================== صفحه ۵: تبدیل فوریه ==================== -->
-<div class="page">
-
-<h2 id="s4">۱.۴ تبدیل فوریه</h2>
-<p>در تحلیل سیستم‌های مخابراتی، نمایش سیگنال‌ها در حوزه فرکانس (به کمک تبدیل فوریه) نقش کلیدی دارد. تبدیل فوریه، ابزار اصلی برای تحلیل طیف فرکانسی سیگنال‌ها و سیستم‌ها است.</p>
-
-<h3>۱.۴.۱ تعریف تبدیل فوریه</h3>
-<p>تبدیل فوریه یک سیگنال $x(t)$ به‌صورت زیر تعریف می‌شود:</p>
-
-<div class="eq">$$ X(f) = \int_{-\infty}^{\infty} x(t)\, e^{-j2\pi f t}\, dt $$</div>
-<p class="eq-label">تبدیل فوریه سیگنال $x(t)$ — نمایش در حوزه فرکانس</p>
-
-<p>تبدیل معکوس آن، سیگنال را از حوزه فرکانس به حوزه زمان بازمی‌گرداند:</p>
-
-<div class="eq">$$ x(t) = \int_{-\infty}^{\infty} X(f)\, e^{j2\pi f t}\, df $$</div>
-<p class="eq-label">تبدیل معکوس فوریه</p>
-
-<p>تبدیل فوریه به ما اجازه می‌دهد که هر سیگنال را به‌صورت مجموعی از موج‌های سینوسی با فرکانس‌های مختلف بنویسیم. این کار، تحلیل سیستم‌های LTI (خطی تغییرناپذیر با زمان) را بسیار ساده می‌کند، چون پاسخ یک سیستم LTI به هر سینوسی، یک سینوسی با همان فرکانس ولی دامنه و فاز متفاوت است.</p>
-
-<h3>۱.۴.۲ چگالی طیفی دامنه و فاز</h3>
-<p>$X(f)$ در حالت کلی یک تابع مختلط است و می‌توان آن را به‌صورت زیر نوشت:</p>
-
-<div class="eq">$$ X(f) = |X(f)|\, e^{j\angle X(f)} $$</div>
-
-<ul>
-<li>$|X(f)|$ : <b>چگالی طیفی دامنه</b> — نشان‌دهنده بزرگی هر مؤلفه فرکانسی</li>
-<li>$\angle X(f)$ : <b>چگالی طیفی فاز</b> — نشان‌دهنده اختلاف فاز هر مؤلفه فرکانسی</li>
-</ul>
-
-<h3>۱.۴.۳ چگالی طیفی انرژی (ESD)</h3>
-<p>برای سیگنال‌های انرژی‌محدود، می‌توان <b>چگالی طیفی انرژی</b> را به‌صورت زیر تعریف کرد:</p>
-
-<div class="eq">$$ E(f) = |X(f)|^2 $$</div>
-<p class="eq-label">چگالی طیفی انرژی (Energy Spectral Density)</p>
-
-<p>انرژی کل سیگنال برابر است با انتگرال چگالی طیفی انرژی روی تمام فرکانس‌ها (رابطه پارسوال):</p>
-
-<div class="eq">$$ E = \int_{-\infty}^{\infty} |X(f)|^2\, df = \int_{-\infty}^{\infty} |x(t)|^2\, dt $$</div>
-<p class="eq-label">رابطه پارسوال — برابری انرژی در حوزه زمان و فرکانس</p>
-
-<p>چگالی طیفی انرژی به ما می‌گوید که انرژی سیگنال چگونه در فرکانس‌های مختلف توزیع شده است. این مفهوم، پایه‌ای برای طراحی فیلترهای بهینه و تحلیل سیستم‌های مخابراتی از نظر مصرف انرژی است.</p>
-</div>
-
-<!-- ==================== صفحه ۶: مثال ۱ — الف ==================== -->
-<div class="page">
-
-<h2 id="s5">مثال ۱: تبدیل فوریه پالس مستطیلی</h2>
-
-<div class="problem">
-<b>📋 صورت مسئله:</b>
-<br>
-یک پالس مستطیلی $x(t)$ با عرض $\tau$ و ارتفاع واحد در بازه $[-\tau/2, +\tau/2]$ داده شده است:
-<!-- اصلاح نمایش تابع به صورت HTML خالص -->
-<div style="display: flex; justify-content: center; align-items: center; margin: 15px 0; direction: ltr; font-family: 'Times New Roman', Times, serif; font-size: 18px;">
-    <span style="font-size: 24px; margin-right: 10px;">x(t) = {</span>
-    <div style="display: flex; flex-direction: column; text-align: left; margin-right: 10px;">
-        <span style="border-bottom: 1.5px solid #333; padding-bottom: 4px; margin-bottom: 4px; min-width: 140px;">1 &nbsp;&nbsp;&nbsp; |t| &le; &tau;/2</span>
-        <span>0 &nbsp;&nbsp;&nbsp; در غیر این صورت</span>
-    </div>
-</div>
-<b>مطلوب است:</b>
-<br><b>الف)</b> تبدیل فوریه $X(f)$ را با استفاده از تعریف محاسبه کنید.
-<br><b>ب)</b> نمودار دامنه $|X(f)|$ و فاز $\angle X(f)$ را رسم و تحلیل کنید.
-<br><b>ج)</b> پهنای باند سیگنال و ارتباط آن با عرض پالس را بررسی کنید.
-</div>
-
-<div class="solution">
-<h4 style="color:#2e7d32;">حل الف — محاسبه تبدیل فوریه (۶ مرحله)</h4>
-
-<span class="subtitle-step">مرحله ۱: نوشتن انتگرال تبدیل فوریه</span>
-<p>از تعریف تبدیل فوریه شروع می‌کنیم:</p>
-<div class="eq">$$ X(f) = \int_{-\infty}^{\infty} x(t)\, e^{-j2\pi f t}\, dt $$</div>
-<p>چون $x(t)$ در خارج از بازه $[-\tau/2, +\tau/2]$ صفر است، حدود انتگرال را محدود می‌کنیم:</p>
-<div class="eq">$$ X(f) = \int_{-\tau/2}^{\tau/2} 1 \cdot e^{-j2\pi f t}\, dt $$</div>
-
-<span class="subtitle-step">مرحله ۲: محاسبه انتگرال نمایی</span>
-<p>انتگرال تابع نمایی به‌صورت $\int e^{at}\, dt = \dfrac{e^{at}}{a}$ محاسبه می‌شود. با $a = -j2\pi f$:</p>
-<div class="eq">$$ X(f) = \left[ \frac{e^{-j2\pi f t}}{-j2\pi f} \right]_{-\tau/2}^{\tau/2} $$</div>
-
-<span class="subtitle-step">مرحله ۳: جایگذاری حدود انتگرال</span>
-<div class="eq">$$ X(f) = \frac{e^{-j2\pi f (\tau/2)} - e^{-j2\pi f (-\tau/2)}}{-j2\pi f} $$</div>
-<div class="eq">$$ X(f) = \frac{e^{-j\pi f \tau} - e^{j\pi f \tau}}{-j2\pi f} $$</div>
-
-<span class="subtitle-step">مرحله ۴: استفاده از اتحاد مثلثاتی</span>
-<p>از اتحاد اویلر استفاده می‌کنیم:</p>
-<div class="eq">$$ \sin\theta = \frac{e^{j\theta} - e^{-j\theta}}{2j} $$</div>
-<p>پس:</p>
-<div class="eq">$$ e^{-j\theta} - e^{j\theta} = -2j\sin\theta $$</div>
-<p>با $\theta = \pi f \tau$:</p>
-<div class="eq">$$ X(f) = \frac{-2j\sin(\pi f \tau)}{-j2\pi f} = \frac{\sin(\pi f \tau)}{\pi f} $$</div>
-
-<span class="subtitle-step">مرحله ۵: بازنویسی با تابع sinc</span>
-<p>تابع sinc به‌صورت $\text{sinc}(u) = \dfrac{\sin(u)}{u}$ تعریف می‌شود. بنابراین:</p>
-<div class="eq">$$ \frac{\sin(\pi f \tau)}{\pi f} = \tau \cdot \frac{\sin(\pi f \tau)}{\pi f \tau} = \tau\, \text{sinc}(\pi f \tau) $$</div>
-
-<span class="subtitle-step">مرحله ۶: نتیجه نهایی</span>
-<div class="eq">$$ \boxed{\;X(f) = \tau\, \text{sinc}(\pi f \tau)\;} $$</div>
-<div class="center">
-<span class="answer">$X(f) = \tau\, \text{sinc}(\pi f \tau)$</span>
-</div>
-
-<div class="why-box">
-از اتحاد اویلر استفاده کردیم چون انتگرال تابع نمایی مختلط، به تابع سینوس منجر می‌شود. این نتیجه‌گیری، مبنای تحلیل طیف فرکانسی بسیاری از سیگنال‌های مخابراتی مثل پالس‌های دیجیتال است.
-</div>
-</div>
-</div>
-
-<!-- ==================== صفحه ۷: مثال ۱ — ب (دامنه و فاز) ==================== -->
-<div class="page">
-
-<div class="solution">
-<h4 style="color:#2e7d32;">حل ب — نمودار دامنه $|X(f)|$</h4>
-
-<p>دامنه تبدیل فوریه به‌صورت زیر است:</p>
-
-<div class="eq">$$ |X(f)| = |\tau\, \text{sinc}(\pi f \tau)| $$</div>
-
-<p>این تابع، یک تابع sinc با ویژگی‌های زیر است:</p>
-
-<ul>
-<li><b>مقدار در $f=0$:</b> $|X(0)| = \tau$ (بیشینه اصلی)</li>
-<li><b>صفرها:</b> در $f = \pm n/\tau$ برای $n = 1, 2, 3, \ldots$</li>
-<li><b>لوب اصلی (Main Lobe):</b> بین $-1/\tau$ تا $+1/\tau$</li>
-<li><b>لوب‌های کناری (Side Lobes):</b> با دامنه کاهش‌یابنده (تقریباً ۰.۲۱۷τ، ۰.۱۲۸τ، ...)</li>
-</ul>
-
-<!-- اصلاح شده: نمودار دامنه با اندازه‌های دقیق ریاضی -->
-<div class="fig">
-<svg viewBox="0 0 780 340" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma">
-<!-- Axes -->
-<line x1="60" y1="220" x2="760" y2="220" stroke="#333" stroke-width="2"/>
-<line x1="410" y1="40" x2="410" y2="300" stroke="#333" stroke-width="2"/>
-<text x="420" y="30" font-size="14" fill="#333" font-style="italic">|X(f)|</text>
-<text x="755" y="240" font-size="14" fill="#333" font-style="italic">f</text>
-<text x="402" y="240" font-size="12" fill="#333">0</text>
-
-<!-- Sinc curve — mathematically accurate representation -->
-<!-- Positive side -->
-<path d="M 50,220 C 65,220 80,205 95,205 C 110,205 125,220 140,220 C 155,220 170,200 185,200 C 200,200 215,220 230,220 C 245,220 260,186 275,186 C 290,186 305,220 320,220 C 350,220 380,60 410,60 C 440,60 470,220 500,220 C 515,220 530,186 545,186 C 560,186 575,220 590,220 C 605,220 620,200 635,200 C 650,200 665,220 680,220 C 695,220 710,205 725,205 C 740,205 755,220 770,220" stroke="#0b3d91" stroke-width="2.8" fill="none"/>
-
-<!-- Vertical dashed line at center -->
-<line x1="410" y1="60" x2="410" y2="220" stroke="#333" stroke-width="1.5" stroke-dasharray="4,3"/>
-
-<!-- Dashed markers for 1/τ and 2/τ -->
-<line x1="500" y1="70" x2="500" y2="245" stroke="#c62828" stroke-width="1" stroke-dasharray="4,3"/>
-<line x1="590" y1="70" x2="590" y2="245" stroke="#c62828" stroke-width="1" stroke-dasharray="4,3"/>
-<line x1="320" y1="70" x2="320" y2="245" stroke="#c62828" stroke-width="1" stroke-dasharray="4,3"/>
-<line x1="230" y1="70" x2="230" y2="245" stroke="#c62828" stroke-width="1" stroke-dasharray="4,3"/>
-
-<!-- Labels on X axis -->
-<text x="500" y="265" font-size="11" fill="#c62828" text-anchor="middle">1/τ</text>
-<text x="320" y="265" font-size="11" fill="#c62828" text-anchor="middle">-1/τ</text>
-<text x="590" y="265" font-size="11" fill="#c62828" text-anchor="middle">2/τ</text>
-<text x="230" y="265" font-size="11" fill="#c62828" text-anchor="middle">-2/τ</text>
-
-<!-- Value at peak -->
-<text x="410" y="50" font-size="13" fill="#8b0000" font-weight="bold" text-anchor="middle">τ</text>
-
-<!-- Side lobe value annotations -->
-<text x="555" y="180" font-size="11" fill="#8a6b1e" font-weight="bold">0.217τ</text>
-<text x="645" y="195" font-size="11" fill="#8a6b1e" font-weight="bold">0.128τ</text>
-</svg>
-<span class="fig-caption">شکل ۴: نمودار دامنه |X(f)| = τ|sinc(πfτ)| — لوب اصلی در f=0 با ارتفاع τ و لوب‌های کناری با دامنه کاهش‌یابنده</span>
-</div>
-
-<div class="why-box">
-تابع sinc به‌طور طبیعی از تبدیل فوریه پالس مستطیلی ظاهر می‌شود. این نشان می‌دهد که یک سیگنال با پهنای محدود در زمان، طیف نامحدودی در فرکانس دارد. این مفهوم، یکی از اصولی‌ترین مفاهیم در مخابرات است که به «رابطه عدم قطعیت» معروف است.
-</div>
-
-<h4 style="color:#2e7d32;">حل ب (ادامه) — نمودار فاز $\angle X(f)$</h4>
-
-<p>برای پالس مستطیلی متقارن، تابع تبدیل فوریه <b>حقیقی</b> است (چون سیگنال زوج است). بنابراین فاز فقط دو مقدار ۰° و ۱۸۰° می‌گیرد، بسته به علامت $\text{sinc}(\pi f \tau)$:</p>
-
-<ul>
-<li>وقتی $\text{sinc}(\pi f \tau) > 0$ باشد → فاز $= 0°$</li>
-<li>وقتی $\text{sinc}(\pi f \tau) < 0$ باشد → فاز $= 180°$ (یا $-180°$)</li>
-</ul>
-
-<p>در بازه‌های زیر فاز صفر است:</p>
-<ul>
-<li>لوب اصلی: $-1/\tau < f < 1/\tau$</li>
-<li>لوب فرعی دوم (سمت راست): $2/\tau < f < 3/\tau$</li>
-<li>لوب فرعی دوم (سمت چپ): $-3/\tau < f < -2/\tau$</li>
-</ul>
-
-<p>در بازه‌های زیر فاز ۱۸۰ درجه است:</p>
-<ul>
-<li>لوب فرعی اول (سمت راست): $1/\tau < f < 2/\tau$</li>
-<li>لوب فرعی اول (سمت چپ): $-2/\tau < f < -1/\tau$</li>
-</ul>
-
-<!-- اصلاح شده: نمودار فاز با مقادیر منفی در زیر محور -->
-<div class="fig">
-<svg viewBox="0 0 780 320" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma">
-<!-- Axes -->
-<line x1="60" y1="160" x2="760" y2="160" stroke="#333" stroke-width="2"/>
-<line x1="410" y1="30" x2="410" y2="290" stroke="#333" stroke-width="2"/>
-<text x="420" y="25" font-size="14" fill="#333" font-style="italic">∠X(f)</text>
-<text x="755" y="180" font-size="14" fill="#333" font-style="italic">f</text>
-<text x="402" y="180" font-size="12" fill="#333">0</text>
-
-<!-- Dashed markers -->
-<line x1="500" y1="40" x2="500" y2="280" stroke="#c62828" stroke-width="1" stroke-dasharray="4,3"/>
-<line x1="590" y1="40" x2="590" y2="280" stroke="#c62828" stroke-width="1" stroke-dasharray="4,3"/>
-<line x1="320" y1="40" x2="320" y2="280" stroke="#c62828" stroke-width="1" stroke-dasharray="4,3"/>
-<line x1="230" y1="40" x2="230" y2="280" stroke="#c62828" stroke-width="1" stroke-dasharray="4,3"/>
-
-<!-- Labels on axis -->
-<text x="500" y="300" font-size="11" fill="#c62828" text-anchor="middle">1/τ</text>
-<text x="590" y="300" font-size="11" fill="#c62828" text-anchor="middle">2/τ</text>
-<text x="320" y="300" font-size="11" fill="#c62828" text-anchor="middle">-1/τ</text>
-<text x="230" y="300" font-size="11" fill="#c62828" text-anchor="middle">-2/τ</text>
-
-<!-- Phase plot: Horizontal lines at 0° (y=160) and 180° (y=80), -180° (y=240) -->
-<!-- Main lobe: f in [-1/τ, 1/τ] → 0° -->
-<line x1="320" y1="160" x2="500" y2="160" stroke="#0b3d91" stroke-width="3"/>
-
-<!-- First side lobe right: f in [1/τ, 2/τ] → 180° -->
-<line x1="500" y1="160" x2="500" y2="80" stroke="#0b3d91" stroke-width="2" stroke-dasharray="3,2"/>
-<line x1="500" y1="80" x2="590" y2="80" stroke="#0b3d91" stroke-width="3"/>
-
-<!-- Second side lobe right: f in [2/τ, 3/τ] → 0° -->
-<line x1="590" y1="80" x2="590" y2="160" stroke="#0b3d91" stroke-width="2" stroke-dasharray="3,2"/>
-<line x1="590" y1="160" x2="680" y2="160" stroke="#0b3d91" stroke-width="3"/>
-
-<!-- First side lobe left: f in [-2/τ, -1/τ] → -180° -->
-<line x1="320" y1="160" x2="320" y2="240" stroke="#0b3d91" stroke-width="2" stroke-dasharray="3,2"/>
-<line x1="320" y1="240" x2="230" y2="240" stroke="#0b3d91" stroke-width="3"/>
-
-<!-- Second side lobe left: f in [-3/τ, -2/τ] → 0° -->
-<line x1="230" y1="240" x2="230" y2="160" stroke="#0b3d91" stroke-width="2" stroke-dasharray="3,2"/>
-<line x1="230" y1="160" x2="140" y2="160" stroke="#0b3d91" stroke-width="3"/>
-
-<!-- Labels -->
-<text x="670" y="152" font-size="13" fill="#0b3d91" font-weight="bold">0°</text>
-<text x="410" y="152" font-size="13" fill="#0b3d91" font-weight="bold" text-anchor="middle">0°</text>
-<text x="140" y="152" font-size="13" fill="#0b3d91" font-weight="bold">0°</text>
-<text x="545" y="72" font-size="13" fill="#8b0000" font-weight="bold">180°</text>
-<text x="275" y="255" font-size="13" fill="#8b0000" font-weight="bold">-180°</text>
-</svg>
-<span class="fig-caption">شکل ۵: نمودار فاز ∠X(f) — مقادیر ۰° در لوب اصلی و ۱۸۰°± در لوب‌های کناری</span>
-</div>
-
-<div class="why-box">
-تابع تبدیل فوریه پالس مستطیلی، حقیقی است. برای سیگنال‌های حقیقی، فاز فقط می‌تواند ۰° (مقادیر مثبت) یا ۱۸۰° (مقادیر منفی) باشد. این ویژگی، از زوج بودن پالس مستطیلی ناشی می‌شود. توجه کنید که فاز منفی (۱۸۰- درجه) در سمت چپ محور، زیر محور افقی رسم می‌شود.
-</div>
-</div>
-</div>
-
-<!-- ==================== صفحه ۸: مثال ۱ — ج ==================== -->
-<div class="page">
-
-<div class="solution">
-<h4 style="color:#2e7d32;">حل ج — تحلیل پهنای باند</h4>
-
-<p>پهنای باند اصلی سیگنال (Main Lobe Width) برابر است با فاصله بین دو صفر اول در دو طرف $f = 0$:</p>
-
-<div class="eq">$$ B_{\text{main}} = \frac{2}{\tau} $$</div>
-<p class="eq-label">پهنای باند اصلی سیگنال پالس مستطیلی</p>
-
-<p><b>نتیجه‌گیری مهم:</b></p>
-<ul>
-<li>هرچه <b>عرض پالس $\tau$ کوچک‌تر</b> باشد، پهنای باند سیگنال <b>بیشتر</b> می‌شود.</li>
-<li>هرچه <b>عرض پالس $\tau$ بزرگ‌تر</b> باشد، پهنای باند سیگنال <b>کمتر</b> می‌شود.</li>
-</ul>
-
-<div class="eq">$$ \tau \downarrow \;\Rightarrow\; B \uparrow \qquad,\qquad \tau \uparrow \;\Rightarrow\; B \downarrow $$</div>
-<p class="eq-label">رابطه معکوس بین پهنای زمان و پهنای فرکانس</p>
-
-<p>همچنین، پهنای باند کامل سیگنال (Null-to-Null Bandwidth) برابر است با:</p>
-
-<div class="eq">$$ B_{\text{null-to-null}} = \frac{2}{\tau} $$</div>
-
-<p>و پهنای باند ۹۰٪ انرژی (Essential Bandwidth) تقریباً برابر $1/\tau$ است.</p>
-
-<div class="why-box">
-این رابطه معکوس بین پهنای زمان و پهنای فرکانس، یکی از اصولی‌ترین نتایج مخابرات است که به «رابطه عدم قطعیت زمان-فرکانس» معروف است. در سیستم‌های مخابراتی، این رابطه تعیین‌کننده‌ی نرخ ارسال داده (Data Rate) و پهنای باند لازم است. برای ارسال داده با نرخ بالا، باید از پالس‌های با عرض کوچک استفاده کنیم که پهنای باند بیشتری نیاز دارند. این یکی از دلایل اصلی استفاده از مدولاسیون‌های پیشرفته و کدگذاری در سیستم‌های مخابراتی مدرن است.
-</div>
-
-<div class="note">
-<b>⚠ خلاصه‌ی حل مثال ۱:</b>
-<ul>
-<li><b>الف)</b> $X(f) = \tau\,\text{sinc}(\pi f\tau)$ با روش اتحاد اویلر</li>
-<li><b>ب)</b> دامنه $|X(f)|$ = تابع sinc با لوب اصلی به ارتفاع $\tau$ و لوب‌های کناری کاهش‌یابنده (۰.۲۱۷τ، ۰.۱۲۸τ، ...)</li>
-<li><b>ب — ادامه)</b> فاز $\angle X(f)$ فقط مقادیر ۰° و ۱۸۰° می‌گیرد (فاز منفی در سمت چپ نمودار)</li>
-<li><b>ج)</b> پهنای باند اصلی $B_{\text{main}} = 2/\tau$ و رابطه معکوس با $\tau$</li>
-</ul>
-</div>
-</div>
-</div>
-
-<!-- ==================== صفحه ۹: مثال ۲ ==================== -->
-<div class="page">
-
-<h2 id="s6">مثال ۲: تابع علامت (Sign Function) و تبدیل فوریه آن</h2>
-
-<div class="problem">
-<b>📋 صورت مسئله:</b>
-<br>
-تابع علامت به‌صورت زیر تعریف می‌شود:
-<div class="eq">$$ \text{sgn}(t) = \frac{t}{|t|} = \begin{cases} +1 & t > 0 \\ 0 & t = 0 \\ -1 & t < 0 \end{cases} $$</div>
-<b>مطلوب است:</b>
-<br><b>الف)</b> با استفاده از تقریب نمایی $n(t,\alpha) = e^{-\alpha|t|}\text{sgn}(t)$، تبدیل فوریه تابع علامت را محاسبه کنید.
-<br><b>ب)</b> حد $\alpha \to 0$ را گرفته و نتیجه نهایی را به‌دست آورید.
-<br><b>ج)</b> تابع علامت را رسم و ویژگی‌های آن را تحلیل کنید.
-</div>
-
-<h3>۱.۶.۱ تعریف و رسم تابع علامت</h3>
-
-<div class="fig">
-<svg viewBox="0 0 480 240" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma">
-<line x1="60" y1="120" x2="440" y2="120" stroke="#333" stroke-width="2"/>
-<line x1="250" y1="30" x2="250" y2="210" stroke="#333" stroke-width="2"/>
-<text x="450" y="126" font-size="14" fill="#333" font-style="italic">t</text>
-<text x="258" y="25" font-size="14" fill="#333" font-style="italic">sgn(t)</text>
-<line x1="250" y1="60" x2="440" y2="60" stroke="#0b3d91" stroke-width="3"/>
-<text x="350" y="52" font-size="13" fill="#0b3d91" font-weight="bold">+1</text>
-<line x1="60" y1="180" x2="250" y2="180" stroke="#0b3d91" stroke-width="3"/>
-<text x="150" y="200" font-size="13" fill="#0b3d91" font-weight="bold">-1</text>
-<line x1="250" y1="60" x2="250" y2="120" stroke="#0b3d91" stroke-width="1.5" stroke-dasharray="4,3"/>
-<line x1="250" y1="120" x2="250" y2="180" stroke="#0b3d91" stroke-width="1.5" stroke-dasharray="4,3"/>
-<circle cx="250" cy="120" r="4" fill="#c62828"/>
-<text x="240" y="140" font-size="11" fill="#333">0</text>
-</svg>
-<span class="fig-caption">شکل ۶: تابع علامت sgn(t) — مقدار +1 برای زمان مثبت و -1 برای زمان منفی</span>
-</div>
-
-<div class="why-box">
-تابع علامت، یک تابع پایه در تحلیل سیستم‌های مخابراتی است که در محاسبه پاسخ فرکانسی فیلتر هیلبرت، تحلیل سیگنال‌های تک‌قطبی، و بررسی سیستم‌های غیرخطی کاربرد دارد. چون این تابع در $t=0$ ناپیوستگی دارد، برای محاسبه تبدیل فوریه از تقریب نمایی استفاده می‌کنیم.
-</div>
-
-<h3>۱.۶.۲ تقریب نمایی</h3>
-
-<p>برای اینکه بتوانیم تبدیل فوریه sgn(t) را محاسبه کنیم، از تقریب زیر استفاده می‌کنیم:</p>
-
-<div class="eq">$$ n(t, \alpha) = e^{-\alpha |t|} \cdot \text{sgn}(t), \quad \alpha > 0 $$</div>
-
-<p>این تابع برای $\alpha > 0$ پیوسته است و به‌ازای مقادیر بزرگ $\alpha$، به‌سرعت به صفر می‌رسد. به‌عنوان $\alpha$ به صفر میل کند، به تابع علامت نزدیک می‌شود:</p>
-
-<div class="eq">$$ \lim_{\alpha \to 0} n(t, \alpha) = \text{sgn}(t) $$</div>
-
-<div class="fig">
-<svg viewBox="0 0 480 240" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma">
-<line x1="60" y1="120" x2="440" y2="120" stroke="#333" stroke-width="2"/>
-<line x1="250" y1="30" x2="250" y2="210" stroke="#333" stroke-width="2"/>
-<text x="450" y="126" font-size="14" fill="#333" font-style="italic">t</text>
-<text x="258" y="25" font-size="14" fill="#333" font-style="italic">n(t,α)</text>
-<path d="M60,180 Q150,180 200,150 Q240,130 250,120 Q260,110 300,90 Q350,60 440,60" stroke="#0b3d91" stroke-width="2.5" fill="none"/>
-<path d="M60,180 Q200,180 235,130 Q245,125 250,120 Q255,115 265,110 Q300,60 440,60" stroke="#c62828" stroke-width="2" fill="none" stroke-dasharray="5,3"/>
-<text x="350" y="55" font-size="11" fill="#0b3d91">α کوچک</text>
-<text x="350" y="75" font-size="11" fill="#c62828">α بزرگ</text>
-<circle cx="250" cy="120" r="3" fill="#333"/>
-</svg>
-<span class="fig-caption">شکل ۷: تابع n(t,α) = e^(-α|t|)·sgn(t) برای دو مقدار α — با کوچک شدن α، تابع به sgn(t) نزدیک‌تر می‌شود</span>
-</div>
-
-<h4 style="color:#2e7d32;">حل الف — محاسبه تبدیل فوریه $n(t,\alpha)$ (۴ مرحله)</h4>
-
-<div class="solution">
-<span class="subtitle-step">مرحله ۱: نوشتن انتگرال تبدیل فوریه</span>
-<div class="eq">$$ F\{n(t, \alpha)\} = \int_{-\infty}^{\infty} n(t, \alpha)\, e^{-j2\pi f t}\, dt $$</div>
-
-<span class="subtitle-step">مرحله ۲: تقسیم انتگرال به دو بخش</span>
-<p>با توجه به تعریف $n(t,\alpha)$:</p>
-<ul>
-<li>در $t < 0$: $\text{sgn}(t) = -1$، $|t| = -t$، پس $n(t,\alpha) = -e^{\alpha t}$</li>
-<li>در $t > 0$: $\text{sgn}(t) = +1$، $|t| = t$، پس $n(t,\alpha) = e^{-\alpha t}$</li>
-</ul>
-<p>پس:</p>
-<div class="eq">$$ F\{n(t, \alpha)\} = \int_{-\infty}^{0} (-e^{\alpha t})\, e^{-j2\pi f t}\, dt + \int_{0}^{\infty} (e^{-\alpha t})\, e^{-j2\pi f t}\, dt $$</div>
-
-<span class="subtitle-step">مرحله ۳: ترکیب توابع نمایی و محاسبه انتگرال‌ها</span>
-<div class="eq">$$ = -\int_{-\infty}^{0} e^{(\alpha - j2\pi f) t}\, dt + \int_{0}^{\infty} e^{-(\alpha + j2\pi f) t}\, dt $$</div>
-
-<p>محاسبه انتگرال اول:</p>
-<div class="eq">$$ -\int_{-\infty}^{0} e^{(\alpha - j2\pi f) t}\, dt = -\left[\frac{e^{(\alpha - j2\pi f) t}}{\alpha - j2\pi f}\right]_{-\infty}^{0} = -\frac{1}{\alpha - j2\pi f} $$</div>
-
-<p>محاسبه انتگرال دوم:</p>
-<div class="eq">$$ \int_{0}^{\infty} e^{-(\alpha + j2\pi f) t}\, dt = \left[\frac{-e^{-(\alpha + j2\pi f) t}}{\alpha + j2\pi f}\right]_{0}^{\infty} = \frac{1}{\alpha + j2\pi f} $$</div>
-
-<p>پس:</p>
-<div class="eq">$$ F\{n(t, \alpha)\} = -\frac{1}{\alpha - j2\pi f} + \frac{1}{\alpha + j2\pi f} $$</div>
-
-<span class="subtitle-step">مرحله ۴: ساده‌سازی کسرها</span>
-<p>با مخرج مشترک:</p>
-<div class="eq">$$ = \frac{-(\alpha + j2\pi f) + (\alpha - j2\pi f)}{(\alpha - j2\pi f)(\alpha + j2\pi f)} $$</div>
-<div class="eq">$$ = \frac{-2j2\pi f}{\alpha^2 + (2\pi f)^2} = \frac{-4\pi j f}{\alpha^2 + (2\pi f)^2} $$</div>
-
-<div class="center">
-<span class="answer">$F\{n(t,\alpha)\} = \dfrac{-4\pi j f}{\alpha^2 + (2\pi f)^2}$</span>
-</div>
-</div>
-</div>
-
-<!-- ==================== صفحه ۱۰: مثال ۲ — ب و ج ==================== -->
-<div class="page">
-
-<div class="solution">
-<h4 style="color:#2e7d32;">حل ب — حد $\alpha \to 0$ و نتیجه نهایی</h4>
-
-<p>حالا حد $\alpha \to 0$ را اعمال می‌کنیم:</p>
-
-<div class="eq">$$ F\{\text{sgn}(t)\} = \lim_{\alpha \to 0} F\{n(t, \alpha)\} = \lim_{\alpha \to 0} \frac{-4\pi j f}{\alpha^2 + (2\pi f)^2} $$</div>
-
-<p>وقتی $\alpha \to 0$، مخرج به $(2\pi f)^2$ میل می‌کند:</p>
-
-<div class="eq">$$ F\{\text{sgn}(t)\} = \frac{-4\pi j f}{(2\pi f)^2} = \frac{-4\pi j f}{4\pi^2 f^2} $$</div>
-
-<p>ساده‌سازی:</p>
-
-<div class="eq">$$ F\{\text{sgn}(t)\} = \frac{-j}{\pi f} $$</div>
-
-<p>با استفاده از رابطه $\dfrac{1}{j} = -j$، می‌توانیم بنویسیم:</p>
-
-<div class="eq">$$ \boxed{\;F\{\text{sgn}(t)\} = \frac{1}{j\pi f}\;} $$</div>
-
-<div class="center">
-<span class="answer">$F\{\text{sgn}(t)\} = \dfrac{1}{j\pi f}$</span>
-</div>
-
-<div class="why-box">
-تبدیل فوریه تابع علامت، یک تابع <b>موهومی و فرد</b> است. این نتیجه، از فرد بودن تابع sgn(t) و تبدیل فوریه سیگنال‌های فرد ناشی می‌شود. در سیستم‌های مخابراتی، این تبدیل در محاسبه پاسخ فرکانسی فیلتر هیلبرت (که برای تولید سیگنال تحلیلی استفاده می‌شود) کاربرد اساسی دارد.
-</div>
-
-<h4 style="color:#2e7d32;">حل ج — تحلیل ویژگی‌های تابع علامت</h4>
-
-<div class="note">
-<b>⚠ ویژگی‌های مهم تابع علامت:</b>
-<ul>
-<li><b>نوع تابع:</b> فرد (sgn(-t) = -sgn(t))</li>
-<li><b>ناپیوستگی:</b> در t=0 یک ناپیوستگی پرشی با دامنه ۲ دارد</li>
-<li><b>تبدیل فوریه:</b> $\frac{1}{j\pi f}$ — موهومی و فرد</li>
-<li><b>کاربرد در مخابرات:</b> فیلتر هیلبرت، سیگنال تحلیلی، مدولاسیون SSB</li>
-<li><b>رابطه با تابع پله:</b> $\text{sgn}(t) = 2u(t) - 1$</li>
-<li><b>انرژی:</b> $\int_{-\infty}^{\infty} |\text{sgn}(t)|^2 dt = \infty$ (سیگنال قدرت است، نه انرژی)</li>
-</ul>
-</div>
-</div>
-</div>
-
-<!-- ==================== صفحه ۱۱: کانولوشن ==================== -->
-<div class="page">
-
-<h2 id="s7">۱.۷ کانولوشن (Convolution)</h2>
-
-<p>کانولوشن، یکی از مهم‌ترین عملیات ریاضی در تحلیل سیستم‌های مخابراتی است. این عمل، پاسخ یک سیستم خطی تغییرناپذیر با زمان (LTI) را به یک ورودی دلخواه محاسبه می‌کند.</p>
-
-<h3>۱.۷.۱ تعریف کانولوشن</h3>
-<p>کانولوشن دو تابع $x(t)$ و $h(t)$ به‌صورت زیر تعریف می‌شود:</p>
-
-<div class="eq">$$ y(t) = x(t) * h(t) \triangleq \int_{-\infty}^{\infty} x(\tau)\, h(t - \tau)\, d\tau $$</div>
-<p class="eq-label">تعریف کانولوشن پیوسته (Continuous Convolution)</p>
-
-<p>یا به‌شکل معادل:</p>
-<div class="eq">$$ y(t) = \int_{-\infty}^{\infty} h(\tau)\, x(t - \tau)\, d\tau $$</div>
-
-<div class="why-box">
-کانولوشن به ما می‌گوید که پاسخ یک سیستم LTI به هر ورودی دلخواه، از جمع (انتگرال) پاسخ‌های سیستم به ضربه‌های واحد که در زمان‌های مختلف اعمال شده‌اند، به‌دست می‌آید. به زبان ساده‌تر، کانولوشن، «حافظه سیستم» را از پاسخ ضربه‌اش استخراج می‌کند.
-</div>
-
-<h3>۱.۷.۲ خواص کانولوشن</h3>
-
-<div class="note">
-<b>خواص مهم کانولوشن:</b>
-<ul>
-<li><b>جابجایی (Commutative):</b> $x(t) * h(t) = h(t) * x(t)$</li>
-<li><b>انجمنی (Associative):</b> $[x(t) * h_1(t)] * h_2(t) = x(t) * [h_1(t) * h_2(t)]$</li>
-<li><b>توزیعی (Distributive):</b> $x(t) * [h_1(t) + h_2(t)] = x(t) * h_1(t) + x(t) * h_2(t)$</li>
-<li><b>شرکت‌پذیری با مقیاس:</b> $a \cdot [x(t) * h(t)] = [a \cdot x(t)] * h(t)$</li>
-</ul>
-</div>
-
-<h3>۱.۷.۳ قضیه کانولوشن</h3>
-
-<p>یکی از زیباترین خواص کانولوشن، تبدیل آن به ضرب در حوزه فرکانس است:</p>
-
-<div class="eq">$$ x(t) * h(t) \;\longleftrightarrow\; X(f) \cdot H(f) $$</div>
-<p class="eq-label">قضیه کانولوشن — کانولوشن در زمان = ضرب در فرکانس</p>
-
-<p>این خاصیت، پایه و اساس تحلیل سیستم‌های LTI در حوزه فرکانس است. به‌جای محاسبه پیچیده کانولوشن در حوزه زمان، کافی است تبدیل فوریه دو سیگنال را در هم ضرب کنیم و سپس تبدیل معکوس بگیریم.</p>
-
-<div class="why-box">
-قضیه کانولوشن، محاسبات سیستم‌های LTI را بسیار ساده می‌کند. به‌جای انتگرال‌گیری پیچیده در حوزه زمان، فقط کافی است دو تابع $X(f)$ و $H(f)$ را در هم ضرب کنیم. این همان دلیلی است که در تحلیل فیلترها، همیشه از حوزه فرکانس استفاده می‌کنیم.
-</div>
-
-<h3>۱.۷.۴ کاربرد در سیستم‌های مخابراتی</h3>
-
-<p>در سیستم‌های مخابراتی، اگر $x(t)$ سیگنال ورودی به یک فیلتر با پاسخ ضربه $h(t)$ باشد، سیگنال خروجی $y(t)$ از کانولوشن این دو به‌دست می‌آید:</p>
-
-<div class="eq">$$ y(t) = x(t) * h(t) $$</div>
-
-<p><b>مثال‌های کاربردی:</b></p>
-<ul>
-<li><b>فیلتر پایین‌گذر:</b> با کانولوشن یک پالس با پاسخ ضربه فیلتر، شکل پالس تغییر می‌کند (پدیده گسترش پالس).</li>
-<li><b>سیستم‌های دیجیتال:</b> کانولوشن برای محاسبه پاسخ سیستم به دنباله‌های بیتی استفاده می‌شود.</li>
-<li><b>کانال مخابراتی:</b> اثر کانال بر سیگنال ارسالی، از طریق کانولوشن با پاسخ ضربه کانال مدل‌سازی می‌شود.</li>
-</ul>
-
-<div class="fig">
-<svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma">
-<defs>
-<marker id="arrow3" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
-<path d="M0,0 L0,6 L9,3 z" fill="#0b3d91"/>
-</marker>
-</defs>
-<rect x="40" y="70" width="120" height="60" rx="6" fill="#eaf2f8" stroke="#0b3d91" stroke-width="2"/>
-<text x="100" y="105" text-anchor="middle" font-size="13" fill="#0b3d91" font-weight="bold">x(t)</text>
-<text x="200" y="105" text-anchor="middle" font-size="22" fill="#1a5276" font-weight="bold">*</text>
-<rect x="240" y="70" width="120" height="60" rx="6" fill="#d6e6f5" stroke="#1a5276" stroke-width="2"/>
-<text x="300" y="105" text-anchor="middle" font-size="13" fill="#1a5276" font-weight="bold">h(t)</text>
-<line x1="365" y1="100" x2="435" y2="100" stroke="#0b3d91" stroke-width="2" marker-end="url(#arrow3)"/>
-<text x="400" y="92" text-anchor="middle" font-size="10" fill="#555">کانولوشن</text>
-<rect x="440" y="70" width="120" height="60" rx="6" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
-<text x="500" y="105" text-anchor="middle" font-size="13" fill="#1b5e20" font-weight="bold">y(t)</text>
-<text x="100" y="155" text-anchor="middle" font-size="11" fill="#555">سیگنال ورودی</text>
-<text x="300" y="155" text-anchor="middle" font-size="11" fill="#555">پاسخ ضربه سیستم</text>
-<text x="500" y="155" text-anchor="middle" font-size="11" fill="#555">سیگنال خروجی</text>
-</svg>
-<span class="fig-caption">شکل ۸: مدل کانولوشن در یک سیستم LTI — ورودی، پاسخ ضربه، و خروجی</span>
-</div>
-</div>
-
-<!-- ==================== صفحه ۱۲: جدول خلاصه و نکات ==================== -->
-<div class="page">
-
-<h2 id="s8">۱.۸ جدول خلاصه روابط</h2>
-
-<table>
-<thead>
-<tr><th style="width:30%">کمیت</th><th style="width:45%">رابطه</th><th style="width:25%">توضیح</th></tr>
-</thead>
-<tbody>
-<tr><td>تبدیل فوریه</td><td class="ltr">$X(f) = \int x(t)\, e^{-j2\pi f t}\, dt$</td><td>حوزه فرکانس</td></tr>
-<tr><td>تبدیل معکوس</td><td class="ltr">$x(t) = \int X(f)\, e^{j2\pi f t}\, df$</td><td>بازگشت به زمان</td></tr>
-<tr><td>پالس مستطیلی</td><td class="ltr">$X(f) = \tau\,\text{sinc}(\pi f\tau)$</td><td>عرض $\tau$</td></tr>
-<tr><td>دامنه پالس</td><td class="ltr">$|X(f)| = |\tau\,\text{sinc}(\pi f\tau)|$</td><td>لوب اصلی در f=0</td></tr>
-<tr><td>پهنای باند اصلی</td><td class="ltr">$B_{\text{main}} = 2/\tau$</td><td>رابطه معکوس با $\tau$</td></tr>
-<tr><td>تابع علامت</td><td class="ltr">$F\{\text{sgn}(t)\} = \dfrac{1}{j\pi f}$</td><td>تابع فرد و موهومی</td></tr>
-<tr><td>کانولوشن</td><td class="ltr">$y(t) = \int x(\tau) h(t-\tau)\, d\tau$</td><td>حوزه زمان</td></tr>
-<tr><td>قضیه کانولوشن</td><td class="ltr">$x(t)*h(t) \leftrightarrow X(f)\cdot H(f)$</td><td>ضرب در فرکانس</td></tr>
-<tr><td>رابطه پارسوال</td><td class="ltr">$E = \int |x(t)|^2 dt = \int |X(f)|^2 df$</td><td>برابری انرژی</td></tr>
-</tbody>
-</table>
-
-<div class="note">
-<b>⚠ نکات کلیدی برای امتحان:</b>
-<ul>
-<li>تبدیل فوریه پالس مستطیلی را حتماً به‌خاطر بسپارید: $\tau\,\text{sinc}(\pi f\tau)$</li>
-<li>رابطه بین پهنای پالس $\tau$ و پهنای باند سیگنال (رابطه عکس): $\tau \downarrow \Rightarrow B \uparrow$</li>
-<li>تابع علامت و تبدیل فوریه آن $\dfrac{1}{j\pi f}$ در تحلیل فیلتر هیلبرت کاربرد دارد.</li>
-<li>قضیه کانولوشن، پایه تحلیل سیستم‌های LTI در حوزه فرکانس است.</li>
-<li>در محاسبه انتگرال‌های تبدیل فوریه، از اتحاد اویلر استفاده کنید.</li>
-<li>واحدها را یکدست کنید (متر، ثانیه، هرتز، ولت، تسلا).</li>
-<li>همیشه واحد فرکانس (Hz) و زمان (s) را چک کنید.</li>
-<li>در سیستم‌های LTI، پاسخ فرکانسی $H(f)$ = تبدیل فوریه پاسخ ضربه $h(t)$</li>
-<li>فیلترکردن در حوزه فرکانس = ضرب، در حوزه زمان = کانولوشن</li>
-</ul>
-</div>
-
-<h2 style="text-align:center">✎ صفحه یادداشت</h2>
-<div style="height:24px;border-bottom:1px dashed #a8c4e0"></div>
-<div style="height:24px;border-bottom:1px dashed #a8c4e0"></div>
-<div style="height:24px;border-bottom:1px dashed #a8c4e0"></div>
-<div style="height:24px;border-bottom:1px dashed #a8c4e0"></div>
-<div style="height:24px;border-bottom:1px dashed #a8c4e0"></div>
-<div style="height:24px;border-bottom:1px dashed #a8c4e0"></div>
-<div style="height:24px;border-bottom:1px dashed #a8c4e0"></div>
-<div style="height:24px;border-bottom:1px dashed #a8c4e0"></div>
-<div style="height:24px;border-bottom:1px dashed #a8c4e0"></div>
-<div style="height:24px;border-bottom:1px dashed #a8c4e0"></div>
-<div style="height:24px;border-bottom:1px dashed #a8c4e0"></div>
-<div style="height:24px;border-bottom:1px dashed #a8c4e0"></div>
-
-<div class="end">
-✦ پایان فصل اول ✦<br>
-<span style="font-size:12px;font-weight:normal">تدوین و نگارش: محمدرسول یزدیان — دانشجوی مهندسی برق</span><br>
-<span style="font-size:11px;font-weight:normal">زیر نظر استاد گرانقدر: استاد کریمخانی</span>
-</div>
-</div>
-
-<!-- باکس یادداشت خالی در پایین هر صفحه چاپی — بدون هیچ متن اضافی -->
-<div class="page-notes" aria-hidden="true">
-<span class="pn-title">✎ یادداشت‌های من</span>
-<div class="pn-line"></div>
-<div class="pn-line"></div>
+<!-- ===== دکمه دانلود PDF ===== -->
+<div id="downloadBtn" style="position:fixed; bottom:30px; left:30px; z-index:99999;">
+  <button onclick="downloadAsPDF()" id="dlBtn" style="
+    background: linear-gradient(135deg, #d4af37, #b8860b);
+    color: white; border: 3px solid #fff; padding: 14px 28px;
+    border-radius: 50px; font-family: 'Vazirmatn', Tahoma;
+    font-size: 16px; font-weight: bold; cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3); transition: all 0.3s;">
+    📥 دانلود جزوه PDF
+  </button>
 </div>
 
 <script>
-(function(){
-document.getElementById('downloadBtn').addEventListener('click',function(){
-try{
-var html='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
-var blob=new Blob([html],{type:'text/html;charset=utf-8'});
-var url=URL.createObjectURL(blob);
-var a=document.createElement('a');
-a.href=url;
-a.download='جزوه-اصول-سیستم-مخابراتی.html';
-document.body.appendChild(a);
-a.click();
-document.body.removeChild(a);
-setTimeout(function(){URL.revokeObjectURL(url)},1500);
-showToast('✅ فایل HTML دانلود شد. برای دریافت PDF از دکمه چاپ استفاده کنید.');
-}catch(e){alert('خطا: '+e.message)}
-});
-document.getElementById('printBtn').addEventListener('click',function(){
-window.print();
-});
-function showToast(msg){
-var t=document.createElement('div');
-t.textContent=msg;
-t.style.cssText='position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#0b3d91;color:#fff;padding:12px 24px;border-radius:30px;font-family:inherit;font-size:14px;font-weight:bold;z-index:99999;box-shadow:0 4px 12px rgba(0,0,0,0.3);opacity:0;transition:opacity 0.3s;text-align:center;max-width:90%;';
-document.body.appendChild(t);
-requestAnimationFrame(function(){t.style.opacity='1'});
-setTimeout(function(){
-t.style.opacity='0';
-setTimeout(function(){t.remove()},400)
-},3000)
+async function downloadAsPDF() {
+  const btn = document.getElementById('dlBtn');
+  const btnContainer = document.getElementById('downloadBtn');
+  if (!window.mathJaxReady) {
+    btn.innerHTML = '⏳ آماده‌سازی...';
+    btn.disabled = true;
+    await new Promise(resolve => {
+      const check = setInterval(() => {
+        if (window.mathJaxReady) { clearInterval(check); resolve(); }
+      }, 200);
+    });
+  }
+  btn.innerHTML = '⏳ ساخت PDF...';
+  btn.disabled = true;
+  btnContainer.style.display = 'none';
+  const scrollY = window.scrollY;
+  window.scrollTo(0, 0);
+  const opt = {
+    margin: [8, 8, 8, 8],
+    filename: 'جزوه-کنترل-خطی-یزدیان.pdf',
+    image: { type: 'jpeg', quality: 0.95 },
+    html2canvas: { scale: 2, useCORS: true, backgroundColor: '#fffdf5', logging: false },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true },
+    pagebreak: { mode: ['css', 'legacy'], avoid: ['.example', '.note', 'table'] }
+  };
+  try {
+    await html2pdf().set(opt).from(document.body).save();
+    btn.innerHTML = '✅ دانلود شد!';
+    setTimeout(() => {
+      btn.innerHTML = '📥 دانلود جزوه PDF';
+      btn.disabled = false;
+      btnContainer.style.display = 'block';
+      window.scrollTo(0, scrollY);
+    }, 2000);
+  } catch (error) {
+    alert('خطا: ' + error.message);
+    btn.innerHTML = '📥 دانلود جزوه PDF';
+    btn.disabled = false;
+    btnContainer.style.display = 'block';
+  }
 }
-})();
+setTimeout(() => { window.mathJaxReady = true; }, 5000);
 </script>
 
+<!-- ============ جلد ============ -->
+<div class="page cover">
+  <h1>جزوه سیستم کنترل خطی</h1>
+  <h2>درس: کنترل خطی</h2>
+  <p style="margin-top:40px; font-size:1.3rem;"><strong>با تدوین و نگارش: محمدرسول یزدیان</strong></p>
+  <p style="font-size:1.2rem;">استاد درس: <strong>کاظمی</strong></p>
+  <p style="direction:ltr;">ckazemy.mihanblog.com</p>
+  <p style="margin-top:30px;"><strong>میان‌ترم:</strong> ۹۸/۸/۹ | <strong>پایان‌ترم:</strong> ۱۴ | <strong>حضور و غیاب:</strong> ۲ نمره</p>
+  <p><strong>منابع:</strong> دورف — اوگاتا — دکتر مزینانی</p>
+</div>
+
+<!-- ============ فهرست ============ -->
+<div class="page">
+  <h2>فهرست مطالب</h2>
+  <ol style="line-height:2.3;">
+    <li>مقدمه و مفاهیم پایه کنترل</li>
+    <li>سیستم حلقه بسته و تبدیل لاپلاس</li>
+    <li>تابع تبدیل و حل معادلات دیفرانسیل</li>
+    <li>تبدیل معکوس لاپلاس و کسرهای جزئی</li>
+    <li>ادامه کسرهای جزئی</li>
+    <li>قضیه مقدار اولیه و مقدار نهایی</li>
+    <li>مدل‌سازی سیستم‌های مکانیکی</li>
+    <li>تابع تبدیل عمومی</li>
+    <li>صفر و قطب و معادله مشخصه</li>
+    <li>کاهش بلوک دیاگرام</li>
+    <li>نمودار جریان سیگنال و فرمول میسون</li>
+    <li>خطای حالت ماندگار</li>
+    <li>تحلیل کامل خطا</li>
+    <li>حساسیت سیستم کنترل</li>
+    <li>سیستم مرتبه اول</li>
+    <li>سیستم مرتبه دوم</li>
+    <li>تأثیر مکان قطب</li>
+    <li>صفر و قطب اضافی</li>
+    <li>رسم دقیق پاسخ مرتبه دوم</li>
+    <li>تقریب مرتبه بالا</li>
+    <li>تأخیر و تقریب پده</li>
+    <li>طراحی جامع</li>
+    <li>نکات استاد و جمع‌بندی</li>
+  </ol>
+</div>
+
+<!-- ============ فصل ۱ ============ -->
+<div class="page">
+  <h2>فصل ۱: مقدمه و مفاهیم پایه کنترل</h2>
+  <h3>۱-۱ تعریف سیستم کنترل</h3>
+  <p>سیستم کنترل مجموعه‌ای از اجزای به هم پیوسته است که با دریافت ورودی، خروجی مطلوب را تولید می‌کند. در سیستم‌های کنترل خطی، اصل برهم‌نهی برقرار است.</p>
+  <h3>۱-۲ اهداف اصلی کنترل</h3>
+  <ul><li>پایدارسازی</li><li>ردیابی ورودی مرجع</li><li>کاهش اثر اغتشاش</li><li>بهبود پاسخ گذرا</li></ul>
+
+  <h3>۱-۳ مثال ۱: کنترل سطح مخزن (کامل تشریحی)</h3>
+  <div class="example">
+    <h4>صورت مسئله</h4>
+    <p>مخزنی با شیر ورودی $Q_{in}$، خروجی $Q_{out}$ و ارتفاع آب $H$ را در نظر بگیرید. می‌خواهیم ارتفاع را در مقدار مطلوب $H_{ref}$ نگه داریم.</p>
+    <h4>دیاگرام</h4>
+    <div class="diagram">
+        ┌──────┐  Q_in
+        │      │ ────┐
+H_ref ─►│ ⊕    │     ▼
+        │کنترل │   ┌─────┐
+        └──────┘   │مخزن │  H
+           ▲       └─────┘──►
+           │       سنسور
+           └──────────┘
+    </div>
+    <div class="solution">
+      <strong>حل تشریحی مرحله به مرحله:</strong>
+      <p><strong>مرحله ۱: معادله پیوستگی (بقای جرم)</strong></p>
+      <div class="formula">$$ A \frac{dH}{dt} = Q_{in} - Q_{out} $$</div>
+      <p><strong>مرحله ۲: حالت حلقه باز</strong> — با افزایش $Q_{out}$، ارتفاع کاهش می‌یابد و سیستم قادر به اصلاح نیست.</p>
+      <p><strong>مرحله ۳: حالت حلقه بسته</strong> — سنسور ارتفاع را می‌سنجد:</p>
+      <div class="formula">$$ e = H_{ref} - H, \quad Q_{in} = K_c \cdot e $$</div>
+      <p><strong>مرحله ۴: معادله دینامیکی</strong></p>
+      <div class="formula">$$ A \frac{dH}{dt} + K_c H = K_c H_{ref} - Q_{out} $$</div>
+      <p><strong>مرحله ۵: تابع تبدیل (با $Q_{out}=0$)</strong></p>
+      <div class="formula">$$ \frac{H(s)}{H_{ref}(s)} = \frac{K_c}{As + K_c} = \frac{1}{\frac{A}{K_c}s + 1} $$</div>
+      <p>سیستم مرتبه اول با ثابت زمانی $T = A/K_c$ و پایدار.</p>
+    </div>
+  </div>
+  <h3>۱-۴ اجزای سیستم کنترل</h3>
+  <ol><li>مقایسه‌کننده</li><li>کنترل‌کننده</li><li>فرآیند</li><li>سنسور</li><li>سیستم کنترل</li><li>متغیرهای سیستم</li></ol>
+</div>
+
+<!-- ============ فصل ۲ ============ -->
+<div class="page">
+  <h2>فصل ۲: سیستم حلقه بسته و تبدیل لاپلاس</h2>
+  <h3>۲-۱ بلوک دیاگرام استاندارد</h3>
+  <div class="diagram">
+R(s) ──► ⊕ ──► [ G(s) ] ──┬──► C(s)
+         ▲                │
+         │                │
+         └──[ H(s) ]◄─────┘
+  </div>
+  <h3>۲-۲ تابع تبدیل حلقه بسته</h3>
+  <div class="formula">$$ T(s) = \frac{G(s)}{1 + G(s)H(s)} $$</div>
+  <div class="note"><strong>معادله مشخصه:</strong> $1 + G(s)H(s) = 0$</div>
+  <h3>۲-۳ جدول تبدیل لاپلاس</h3>
+  <table>
+    <tr><th>$f(t)$</th><th>$F(s)$</th></tr>
+    <tr><td>$\delta(t)$</td><td>$1$</td></tr>
+    <tr><td>$u(t)$</td><td>$\frac{1}{s}$</td></tr>
+    <tr><td>$t u(t)$</td><td>$\frac{1}{s^2}$</td></tr>
+    <tr><td>$e^{-at} u(t)$</td><td>$\frac{1}{s+a}$</td></tr>
+    <tr><td>$\sin(\omega t)$</td><td>$\frac{\omega}{s^2 + \omega^2}$</td></tr>
+    <tr><td>$\cos(\omega t)$</td><td>$\frac{s}{s^2 + \omega^2}$</td></tr>
+  </table>
+  <h3>۲-۴ خواص لاپلاس</h3>
+  <ul>
+    <li>$\mathcal{L}\{\frac{dy}{dt}\} = sY(s) - y(0)$</li>
+    <li>$\mathcal{L}\{\frac{d^2y}{dt^2}\} = s^2Y(s) - sy(0) - y'(0)$</li>
+    <li>$\mathcal{L}\{e^{-at} f(t)\} = F(s+a)$</li>
+    <li>$\mathcal{L}\{t f(t)\} = -\frac{d}{ds}F(s)$</li>
+  </ul>
+  <h3>۲-۵ مزایا و معایب</h3>
+  <table>
+    <tr><th>مزایا</th><th>معایب</th></tr>
+    <tr><td>کاهش خطا</td><td>هزینه بیشتر</td></tr>
+    <tr><td>حساسیت کمتر به G</td><td>احتمال ناپایداری</td></tr>
+    <tr><td>کاهش اثر اغتشاش</td><td>نیاز به سنسور</td></tr>
+    <tr><td>بهبود پاسخ گذرا</td><td>حساسیت به نویز</td></tr>
+  </table>
+</div>
+
+<!-- ============ فصل ۳ ============ -->
+<div class="page">
+  <h2>فصل ۳: تابع تبدیل و حل معادلات دیفرانسیل</h2>
+  <div class="formula">$$ G(s) = \frac{Y(s)}{X(s)}\bigg|_{\text{I.C.}=0} $$</div>
+
+  <h3>مثال ۲: حل کامل معادله دیفرانسیل</h3>
+  <div class="example">
+    <h4>صورت مسئله</h4>
+    <div class="formula">$$ \frac{d^2y}{dt^2} + 4\frac{dy}{dt} + 3y = 2x(t) $$</div>
+    <div class="solution">
+      <strong>حل تشریحی کامل:</strong>
+      <p><strong>مرحله ۱: اعمال لاپلاس با شرایط اولیه صفر</strong></p>
+      <div class="formula">$$ s^2 Y(s) + 4s Y(s) + 3 Y(s) = 2 X(s) $$</div>
+      <p><strong>مرحله ۲: فاکتورگیری</strong></p>
+      <div class="formula">$$ (s^2 + 4s + 3) Y(s) = 2 X(s) $$</div>
+      <p><strong>مرحله ۳: تابع تبدیل</strong></p>
+      <div class="formula">$$ G(s) = \frac{2}{s^2 + 4s + 3} = \frac{2}{(s+1)(s+3)} $$</div>
+      <p><strong>مرحله ۴: با ورودی پله $X(s)=1/s$</strong></p>
+      <div class="formula">$$ Y(s) = \frac{2}{s(s+1)(s+3)} $$</div>
+      <p><strong>مرحله ۵: کسرهای جزئی</strong></p>
+      <div class="formula">$$ Y(s) = \frac{a}{s} + \frac{b}{s+1} + \frac{c}{s+3} $$</div>
+      <p><strong>محاسبه $a$:</strong> $a = \lim_{s\to 0} sY(s) = \frac{2}{(1)(3)} = \frac{2}{3}$</p>
+      <p><strong>محاسبه $b$:</strong> $b = \lim_{s\to -1} (s+1)Y(s) = \frac{2}{(-1)(2)} = -1$</p>
+      <p><strong>محاسبه $c$:</strong> $c = \lim_{s\to -3} (s+3)Y(s) = \frac{2}{(-3)(-2)} = \frac{1}{3}$</p>
+      <p><strong>مرحله ۶: نتیجه</strong></p>
+      <div class="formula">$$ Y(s) = \frac{2/3}{s} - \frac{1}{s+1} + \frac{1/3}{s+3} $$</div>
+      <p><strong>مرحله ۷: تبدیل معکوس</strong></p>
+      <div class="formula">$$ y(t) = \left( \frac{2}{3} - e^{-t} + \frac{1}{3}e^{-3t} \right) u(t) $$</div>
+      <p>بررسی: $y(0) = 2/3 - 1 + 1/3 = 0$ ✓، $y(\infty) = 2/3$ ✓</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ فصل ۴ ============ -->
+<div class="page">
+  <h2>فصل ۴: تبدیل معکوس لاپلاس</h2>
+  <ul>
+    <li>قطب ساده: $\frac{A}{s+a} \to A e^{-at}u(t)$</li>
+    <li>قطب تکراری: $\frac{A}{(s+a)^n} \to \frac{A t^{n-1}}{(n-1)!} e^{-at}u(t)$</li>
+    <li>قطب مختلط: $\frac{As+B}{s^2+\omega^2} \to A\cos(\omega t) + \frac{B}{\omega}\sin(\omega t)$</li>
+  </ul>
+
+  <h3>مثال ۳: ساده‌سازی</h3>
+  <div class="example">
+    <div class="formula">$$ H(s) = \frac{s^2 + s - 2}{s^2 + 3s + 2} $$</div>
+    <div class="solution">
+      <p><strong>مرحله ۱:</strong> تجزیه صورت و مخرج</p>
+      <p>صورت: $(s+2)(s-1)$، مخرج: $(s+1)(s+2)$</p>
+      <p><strong>مرحله ۲:</strong> ساده‌سازی</p>
+      <div class="formula">$$ H(s) = \frac{s-1}{s+1} $$</div>
+      <p><strong>مرحله ۳:</strong> تقسیم چند جمله‌ای</p>
+      <div class="formula">$$ H(s) = 1 - \frac{2}{s+1} $$</div>
+      <p><strong>مرحله ۴:</strong> تبدیل معکوس</p>
+      <div class="formula">$$ h(t) = \delta(t) - 2e^{-t}u(t) $$</div>
+    </div>
+  </div>
+
+  <h3>مثال ۴: قطب تکراری مرتبه ۳</h3>
+  <div class="example">
+    <div class="formula">$$ F(s) = \frac{s^2 + 2s + 3}{(s+1)^3} $$</div>
+    <div class="solution">
+      <p><strong>مرحله ۱: فرم کسرهای جزئی</strong></p>
+      <div class="formula">$$ F(s) = \frac{A}{(s+1)^3} + \frac{B}{(s+1)^2} + \frac{C}{s+1} $$</div>
+      <p><strong>مرحله ۲: محاسبه $A$</strong></p>
+      <div class="formula">$$ A = (s^2+2s+3)|_{s=-1} = 2 $$</div>
+      <p><strong>مرحله ۳: محاسبه $B$</strong></p>
+      <div class="formula">$$ B = \frac{d}{ds}(s^2+2s+3)|_{s=-1} = 0 $$</div>
+      <p><strong>مرحله ۴: محاسبه $C$</strong></p>
+      <div class="formula">$$ C = \frac{1}{2!}\frac{d^2}{ds^2}(s^2+2s+3)|_{s=-1} = 1 $$</div>
+      <p><strong>مرحله ۵: نتیجه</strong></p>
+      <div class="formula">$$ F(s) = \frac{2}{(s+1)^3} + \frac{1}{s+1} $$</div>
+      <div class="formula">$$ f(t) = (t^2 + 1)e^{-t} u(t) $$</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ فصل ۵ ============ -->
+<div class="page">
+  <h2>فصل ۵: ادامه کسرهای جزئی</h2>
+  <h3>خواص لاپلاس</h3>
+  <ul>
+    <li>$\mathcal{L}\{t \cdot e^{-t} u(t)\} = \frac{1}{(s+1)^2}$</li>
+    <li>$\mathcal{L}\{t^2 \cdot e^{-t} u(t)\} = \frac{2}{(s+1)^3}$</li>
+    <li>$\mathcal{L}\{t^n e^{-at} u(t)\} = \frac{n!}{(s+a)^{n+1}}$</li>
+  </ul>
+
+  <h3>مثال ۵: درجه بالاتر</h3>
+  <div class="example">
+    <div class="formula">$$ F(s) = \frac{s^2 + 5s + 7}{(s+1)^2 (s+2)} $$</div>
+    <div class="solution">
+      <p><strong>مرحله ۱: فرم کسرهای جزئی</strong></p>
+      <div class="formula">$$ F(s) = \frac{A}{s+2} + \frac{B}{s+1} + \frac{C}{(s+1)^2} $$</div>
+      <p><strong>مرحله ۲: ضرب در مخرج مشترک</strong></p>
+      <div class="formula">$$ A(s+1)^2 + B(s+1)(s+2) + C(s+2) = s^2 + 5s + 7 $$</div>
+      <p><strong>مرحله ۳: بسط</strong></p>
+      <div class="formula">$$ (A+B)s^2 + (2A+3B+C)s + (A+2B+2C) = s^2+5s+7 $$</div>
+      <p><strong>مرحله ۴: تطبیق ضرایب و حل</strong></p>
+      <p>$A=1, B=0, C=3$</p>
+      <p><strong>مرحله ۵: نتیجه</strong></p>
+      <div class="formula">$$ F(s) = \frac{1}{s+2} + \frac{3}{(s+1)^2} $$</div>
+      <div class="formula">$$ f(t) = (e^{-2t} + 3t e^{-t})u(t) $$</div>
+    </div>
+  </div>
+
+  <h3>مثال ۶: قطب مختلط</h3>
+  <div class="example">
+    <div class="formula">$$ F(s) = \frac{s^2 + 5s + 7}{(s^2+1)(s+2)} $$</div>
+    <div class="solution">
+      <p><strong>مرحله ۱: فرم کسرها</strong></p>
+      <div class="formula">$$ F(s) = \frac{A}{s+2} + \frac{Bs+C}{s^2+1} $$</div>
+      <p><strong>مرحله ۲: تطبیق ضرایب</strong></p>
+      <div class="formula">$$ (A+B)s^2 + (2B+C)s + (A+2C) = s^2+5s+7 $$</div>
+      <p><strong>مرحله ۳: حل دستگاه</strong></p>
+      <p>$A=3, B=-2, C=2$</p>
+      <p><strong>مرحله ۴: نتیجه</strong></p>
+      <div class="formula">$$ f(t) = (3e^{-2t} - 2\cos(t) + 2\sin(t))u(t) $$</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ فصل ۶ ============ -->
+<div class="page">
+  <h2>فصل ۶: قضیه مقدار اولیه و مقدار نهایی</h2>
+  <div class="formula">$$ x(0^+) = \lim_{s\to \infty} s X(s) $$</div>
+  <div class="formula">$$ x(\infty) = \lim_{s\to 0} s X(s) $$</div>
+  <div class="note"><strong>شرط مقدار نهایی:</strong> تمام قطب‌های $sX(s)$ باید در نیم‌صفحه چپ $s$ باشند (به جز حداکثر یک قطب در مبدأ).</div>
+
+  <h3>مثال ۷: بررسی قضایا</h3>
+  <div class="example">
+    <p>برای $x(t) = e^{-t}u(t)$ با $X(s) = \frac{1}{s+1}$:</p>
+    <div class="solution">
+      <p><strong>مرحله ۱: مقدار اولیه</strong></p>
+      <div class="formula">$$ x(0^+) = \lim_{s\to\infty} \frac{s}{s+1} = 1 $$</div>
+      <p><strong>مرحله ۲: مقدار نهایی</strong></p>
+      <div class="formula">$$ x(\infty) = \lim_{s\to 0} \frac{s}{s+1} = 0 $$</div>
+      <p><strong>مرحله ۳: بررسی با تابع زمانی</strong></p>
+      <p>$x(0) = e^0 = 1$ ✓، $x(\infty) = e^{-\infty} = 0$ ✓</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ فصل ۷ ============ -->
+<div class="page">
+  <h2>فصل ۷: مدل‌سازی سیستم‌های مکانیکی</h2>
+  <h3>عناصر پایه</h3>
+  <p><strong>فنر:</strong> $F_s = k(x_1 - x_2) \xrightarrow{\mathcal{L}} F_s = k(X_1 - X_2)$</p>
+  <p><strong>میراکننده:</strong> $F_B = B\frac{dy}{dt} \xrightarrow{\mathcal{L}} F_B = Bs(X-Y)$</p>
+  <p><strong>جرم:</strong> $F_M = M\frac{d^2y}{dt^2} \xrightarrow{\mathcal{L}} F_M = Ms^2 Y(s)$</p>
+
+  <h3>مثال ۸: دو جرم، دو فنر، میراکننده</h3>
+  <div class="example">
+    <h4>صورت مسئله</h4>
+    <p>جرم $M_1$ با فنر $k_1$ به دیوار چپ، جرم $M_2$ با فنر $k_r$ به دیوار راست. بین دو جرم فنر $B$ و میراکننده $B_1$. نیروی $f(t)$ به $M_1$ وارد می‌شود.</p>
+    <div class="diagram">
+دیوار ─k₁─ [M₁] ─B,B₁─ [M₂] ─k_r─ دیوار
+              ↑
+              f(t)
+    </div>
+    <div class="solution">
+      <strong>حل تشریحی کامل:</strong>
+      <p><strong>مرحله ۱: نیروهای وارد بر $M_1$</strong></p>
+      <ul>
+        <li>نیروی فنر $k_1$: $-k_1 x_1$</li>
+        <li>نیروی میراکننده $B_1$: $-B_1 \frac{dx_1}{dt}$</li>
+        <li>نیروی فنر $B$: $+B(x_2 - x_1)$</li>
+      </ul>
+      <div class="formula">$$ M_1 \frac{d^2 x_1}{dt^2} = -k_1 x_1 - B_1 \frac{dx_1}{dt} + B(x_2 - x_1) + f(t) $$</div>
+      <p><strong>مرحله ۲: تبدیل لاپلاس معادله اول</strong></p>
+      <div class="formula">$$ (M_1 s^2 + B_1 s + k_1 + B)X_1(s) - B X_2(s) = F(s) \quad (1) $$</div>
+      <p><strong>مرحله ۳: معادله جرم $M_2$</strong></p>
+      <div class="formula">$$ (M_2 s^2 + B_1 s + k_r + B)X_2(s) - B X_1(s) = 0 \quad (2) $$</div>
+      <p><strong>مرحله ۴: استخراج تابع تبدیل از (2)</strong></p>
+      <div class="formula">$$ X_2(s) = \frac{B X_1(s)}{M_2 s^2 + B_1 s + k_r + B} $$</div>
+      <p><strong>مرحله ۵: جایگذاری در (1)</strong></p>
+      <div class="formula">$$ \frac{X_1(s)}{F(s)} = \frac{M_2 s^2 + B_1 s + k_r + B}{(M_1 s^2+B_1 s+k_1+B)(M_2 s^2+B_1 s+k_r+B) - B^2} $$</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ فصل ۸ ============ -->
+<div class="page">
+  <h2>فصل ۸: تابع تبدیل عمومی</h2>
+  <div class="formula">$$ G(s) = \frac{b_m s^m + \cdots + b_0}{s^n + a_{n-1}s^{n-1} + \cdots + a_0} $$</div>
+  <table>
+    <tr><th>نوع</th><th>شرط</th><th>توضیح</th></tr>
+    <tr><td>Proper (سره)</td><td>$m \leq n$</td><td>درجه صورت ≤ مخرج</td></tr>
+    <tr><td>Strictly Proper</td><td>$m < n$</td><td>فیزیکی</td></tr>
+    <tr><td>Improper (ناسره)</td><td>$m > n$</td><td>غیرفیزیکی</td></tr>
+    <tr><td>Biproper (دوطرفه)</td><td>$m = n$</td><td>درجات برابر</td></tr>
+  </table>
+
+  <h3>مثال ۹: تشخیص نوع</h3>
+  <div class="example">
+    <p>$G_1 = \frac{s+1}{s^2+3s+2}$ → Strictly Proper</p>
+    <p>$G_2 = \frac{s^2+1}{s^2+3s+2}$ → Biproper</p>
+    <p>$G_3 = \frac{s^3+s}{s^2+1}$ → Improper (غیرفیزیکی)</p>
+  </div>
+</div>
+
+<!-- ============ فصل ۹ ============ -->
+<div class="page">
+  <h2>فصل ۹: صفر و قطب و معادله مشخصه</h2>
+  <h3>۹-۱ تعاریف</h3>
+  <p><strong>صفر:</strong> ریشه‌های صورت $B(s) = 0$</p>
+  <p><strong>قطب:</strong> ریشه‌های مخرج $A(s) = 0$</p>
+  <h3>۹-۲ تابع تبدیل حلقه بسته</h3>
+  <div class="formula">$$ T(s) = \frac{G(s)}{1 + G(s)H(s)} $$</div>
+  <h3>۹-۳ تابع تبدیل حلقه</h3>
+  <div class="formula">$$ L(s) = G(s)H(s) $$</div>
+  <h3>۹-۴ معادله مشخصه</h3>
+  <div class="formula">$$ 1 + G(s)H(s) = 0 $$</div>
+
+  <h3>مثال ۱۰: محاسبه صفر و قطب</h3>
+  <div class="example">
+    <div class="formula">$$ G(s) = \frac{s^2 + 4s + 3}{s^3 + 6s^2 + 11s + 6} $$</div>
+    <div class="solution">
+      <p><strong>صفرها:</strong> $s^2 + 4s + 3 = (s+1)(s+3) = 0 \Rightarrow s = -1, -3$</p>
+      <p><strong>قطب‌ها:</strong> $s^3 + 6s^2 + 11s + 6 = (s+1)(s+2)(s+3) = 0 \Rightarrow s = -1, -2, -3$</p>
+      <p><strong>حذف قطب-صفر:</strong> در $s=-1$ و $s=-3$، سیستم مؤثر $G(s) = \frac{1}{s+2}$</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ فصل ۱۰ ============ -->
+<div class="page">
+  <h2>فصل ۱۰: کاهش بلوک دیاگرام</h2>
+  <h3>قواعد اصلی</h3>
+  <ul>
+    <li>اتصال سری: $G_1 G_2$</li>
+    <li>اتصال موازی: $G_1 + G_2$</li>
+    <li>فیدبک منفی: $\frac{G}{1+GH}$</li>
+    <li>فیدبک مثبت: $\frac{G}{1-GH}$</li>
+  </ul>
+  <div class="formula">$$ T(s) = \frac{AD}{BD+AC} \quad \text{اگر} \quad G=\frac{A}{B}, H=\frac{C}{D} $$</div>
+
+  <h3>مثال ۱۱: سیستم دو حلقه‌ای</h3>
+  <div class="example">
+    <div class="diagram">
+R(s) ──► ⊕ ──► [ G1 ] ──► ⊕ ──► [ G2 ] ──► Y(s)
+         ▲                 ▲
+         │                 │
+         └──[ H1 ]◄────────┘
+         │
+         └──[ H2 ]◄────────────────────────┘
+    </div>
+    <div class="solution">
+      <strong>حل تشریحی:</strong>
+      <p><strong>مرحله ۱: کاهش حلقه داخلی</strong></p>
+      <div class="formula">$$ G_{inner} = \frac{G_1}{1 + G_1 H_1} $$</div>
+      <p><strong>مرحله ۲: اتصال سری با $G_2$</strong></p>
+      <div class="formula">$$ G_{fwd} = \frac{G_1 G_2}{1 + G_1 H_1} $$</div>
+      <p><strong>مرحله ۳: فیدبک بیرونی $H_2$</strong></p>
+      <div class="formula">$$ T(s) = \frac{G_1 G_2}{1 + G_1 H_1 + G_1 G_2 H_2} $$</div>
+    </div>
+  </div>
+
+  <h3>مثال ۱۲: بلوک موازی با فیدبک</h3>
+  <div class="example">
+    <div class="diagram">
+R(s) ──► ⊕ ──► [ G1 ] ──┬──► Y(s)
+         ▲              │
+         │              ├── [ G2 ] ──┤
+         │              │
+         └────[ H ]◄────┘
+    </div>
+    <div class="solution">
+      <p><strong>مرحله ۱: ترکیب موازی</strong> $G_{eq} = G_1 + G_2$</p>
+      <p><strong>مرحله ۲: اعمال فیدبک $H$</strong></p>
+      <div class="formula">$$ T(s) = \frac{G_1 + G_2}{1 + (G_1 + G_2)H} $$</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ فصل ۱۱ ============ -->
+<div class="page">
+  <h2>فصل ۱۱: نمودار جریان سیگنال و میسون</h2>
+  <h3>فرمول میسون</h3>
+  <div class="formula">$$ T(s) = \frac{1}{\Delta} \sum_k P_k \Delta_k $$</div>
+  <div class="formula">$$ \Delta = 1 - \sum L_i + \sum L_i L_j - \sum L_i L_j L_k + \cdots $$</div>
+
+  <h3>مثال ۱۳: گراف با ۳ مسیر مستقیم و ۴ حلقه</h3>
+  <div class="example">
+    <h4>صورت مسئله</h4>
+    <div class="diagram">
+R ──●── G1 ──●── G2 ──●── G3 ──●── C
+        │         │         │
+        H1        H2        G4
+        │         │         │
+        ●◄── G5 ──●─────────●
+    </div>
+    <div class="solution">
+      <strong>حل تشریحی کامل:</strong>
+      <p><strong>مرحله ۱: مسیرهای مستقیم</strong></p>
+      <ul>
+        <li>$P_1 = G_1 G_2 G_3$</li>
+        <li>$P_2 = G_1 G_4$</li>
+        <li>$P_3 = G_1 G_5 G_3$</li>
+      </ul>
+      <p><strong>مرحله ۲: حلقه‌ها</strong></p>
+      <ul>
+        <li>$L_1 = -G_1 H_1$</li>
+        <li>$L_2 = -G_2 H_2$</li>
+        <li>$L_3 = -G_3 G_4 H_1$</li>
+        <li>$L_4 = -G_2 G_5 H_2$</li>
+      </ul>
+      <p><strong>مرحله ۳: محاسبه $\Delta$</strong></p>
+      <p>حلقه‌های بدون تماس دوتایی: $(L_1,L_2), (L_1,L_4), (L_2,L_4), (L_3,L_4)$</p>
+      <p>حلقه‌های بدون تماس سه‌تایی: $(L_1,L_2,L_4)$</p>
+      <div class="formula">$$ \Delta = 1 - (L_1+L_2+L_3+L_4) + (L_1 L_2+L_1 L_4+L_2 L_4+L_3 L_4) - L_1 L_2 L_4 $$</div>
+      <p><strong>مرحله ۴: کوفاکتورها</strong></p>
+      <ul>
+        <li>$\Delta_1 = 1$</li>
+        <li>$\Delta_2 = 1 + G_2 H_2$</li>
+        <li>$\Delta_3 = 1 + G_1 H_1 + G_2 H_2$</li>
+      </ul>
+      <p><strong>مرحله ۵: نتیجه نهایی</strong></p>
+      <div class="formula">$$ T(s) = \frac{P_1 \Delta_1 + P_2 \Delta_2 + P_3 \Delta_3}{\Delta} $$</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ فصل ۱۲ ============ -->
+<div class="page">
+  <h2>فصل ۱۲: خطای حالت ماندگار</h2>
+  <h3>تابع تبدیل خطا</h3>
+  <div class="formula">$$ \frac{E(s)}{R(s)} = \frac{1}{1 + G(s)H(s)} $$</div>
+  <div class="formula">$$ e_{ss} = \lim_{s\to 0} \frac{s R(s)}{1 + G(s)H(s)} $$</div>
+  <h3>نوع سیستم</h3>
+  <div class="formula">$$ G(s) H(s) = \frac{K(T_a s+1)\cdots}{s^N(T_1 s+1)\cdots} $$</div>
+  <p>$N$ = تعداد قطب‌های مبدأ</p>
+  <table>
+    <tr><th>ورودی</th><th>ضریب</th><th>خطا</th></tr>
+    <tr><td>پله</td><td>$K_p = \lim_{s\to 0} G H$</td><td>$\frac{1}{1+K_p}$</td></tr>
+    <tr><td>شیب</td><td>$K_v = \lim_{s\to 0} s G H$</td><td>$\frac{1}{K_v}$</td></tr>
+    <tr><td>سهمی</td><td>$K_a = \lim_{s\to 0} s^2 G H$</td><td>$\frac{1}{K_a}$</td></tr>
+  </table>
+</div>
+
+<!-- ============ فصل ۱۳ ============ -->
+<div class="page">
+  <h2>فصل ۱۳: تحلیل کامل خطا</h2>
+
+  <h3>مثال ۱۴: ورودی شیب</h3>
+  <div class="example">
+    <div class="solution">
+      <div class="formula">$$ E(s) = \frac{1}{s^2} \cdot \frac{1}{1+GH} $$</div>
+      <div class="formula">$$ e_{ss} = \lim_{s\to 0} \frac{1}{s G(s)H(s)} = \frac{1}{K_v} $$</div>
+      <table>
+        <tr><th>نوع</th><th>$K_v$</th><th>$e_{ss}$</th></tr>
+        <tr><td>N=0</td><td>0</td><td>∞</td></tr>
+        <tr><td>N=1</td><td>K</td><td>1/K</td></tr>
+        <tr><td>N≥2</td><td>∞</td><td>0</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <h3>مثال ۱۵: ورودی سهمی</h3>
+  <div class="example">
+    <div class="solution">
+      <div class="formula">$$ e_{ss} = \lim_{s\to 0} \frac{1}{s^2[1+GH]} = \frac{1}{K_a} $$</div>
+      <table>
+        <tr><th>نوع</th><th>$K_a$</th><th>$e_{ss}$</th></tr>
+        <tr><td>N=0</td><td>0</td><td>∞</td></tr>
+        <tr><td>N=1</td><td>0</td><td>∞</td></tr>
+        <tr><td>N=2</td><td>K</td><td>1/K</td></tr>
+        <tr><td>N≥3</td><td>∞</td><td>0</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <h3>مثال ۱۶: سیستم نوع ۱</h3>
+  <div class="example">
+    <p>برای $G(s) = \frac{10}{s(s+2)}$ با فیدبک واحد:</p>
+    <div class="solution">
+      <p><strong>پله:</strong> $K_p = \lim_{s\to 0} \frac{10}{s(s+2)} = \infty \Rightarrow e_{ss}=0$</p>
+      <p><strong>شیب:</strong> $K_v = \lim_{s\to 0} s \cdot \frac{10}{s(s+2)} = \frac{10}{2}=5$</p>
+      <div class="formula">$$ e_{ss} = \frac{1}{K_v} = 0.2 $$</div>
+    </div>
+  </div>
+
+  <h3>جدول جامع</h3>
+  <table>
+    <tr><th>نوع</th><th>پله</th><th>شیب</th><th>سهمی</th></tr>
+    <tr><td>N=0</td><td>محدود</td><td>∞</td><td>∞</td></tr>
+    <tr><td>N=1</td><td>0</td><td>محدود</td><td>∞</td></tr>
+    <tr><td>N=2</td><td>0</td><td>0</td><td>محدود</td></tr>
+    <tr><td>N≥3</td><td>0</td><td>0</td><td>0</td></tr>
+  </table>
+
+  <div class="note">
+    <strong>مثال واقعی:</strong><br>
+    <strong>مخزن آب:</strong> نیاز به N=1 برای خطای صفر در پله.<br>
+    <strong>ماهواره:</strong> برای ردیابی سهمی، N=2 لازم است.
+  </div>
+</div>
+
+<!-- ============ فصل ۱۴ ============ -->
+<div class="page">
+  <h2>فصل ۱۴: حساسیت</h2>
+  <div class="formula">$$ S_\alpha^M = \frac{\partial M}{\partial \alpha} \cdot \frac{\alpha}{M} $$</div>
+
+  <h3>مثال ۱۷: حساسیت کامل</h3>
+  <div class="example">
+    <p>سیستم $G = \frac{K}{s(s+a)}$ با $H = \beta$</p>
+    <div class="solution">
+      <p><strong>مرحله ۱:</strong> تابع تبدیل حلقه بسته</p>
+      <div class="formula">$$ T(s) = \frac{K}{s^2 + as + K\beta} $$</div>
+      <p><strong>مرحله ۲: حساسیت به K</strong></p>
+      <div class="formula">$$ \frac{\partial T}{\partial K} = \frac{s^2+as}{(s^2+as+K\beta)^2} $$</div>
+      <div class="formula">$$ S_K^T = \frac{s^2+as}{s^2+as+K\beta} $$</div>
+      <p><strong>مرحله ۳: حساسیت به a</strong></p>
+      <div class="formula">$$ S_a^T = \frac{-Kas}{s^2+as+K\beta} $$</div>
+    </div>
+  </div>
+
+  <h3>اثبات کاهش حساسیت با فیدبک</h3>
+  <div class="solution">
+    <div class="formula">$$ T = \frac{G}{1+GH}, \quad S_G^T = \frac{1}{1+GH} $$</div>
+    <div class="formula">$$ \left|S_G^T\right| = \left|\frac{1}{1+GH}\right| < 1 = \left|S_G^G\right| $$</div>
+  </div>
+
+  <h3>نمودار $|S(j\omega)|$</h3>
+  <div class="ascii-plot">
+|S|
+ │ ████          (فرکانس پایین)
+ │ █████
+ │ ████████
+ │ ██████████████
+ │ ████████████████████
+0└───────────────────────→ ω
+  ω_low              ω_high
+  </div>
+
+  <div class="note">
+    <strong>نکته:</strong> فیدبک حساسیت به $G$ را کاهش، به $H$ را افزایش می‌دهد.
+  </div>
+</div>
+
+<!-- ============ فصل ۱۵ ============ -->
+<div class="page">
+  <h2>فصل ۱۵: سیستم مرتبه اول</h2>
+  <div class="formula">$$ T(s) = \frac{1}{1 + Ts} $$</div>
+  <div class="formula">$$ T\frac{dc(t)}{dt} + c(t) = r(t) $$</div>
+
+  <h3>مثال ۱۸: پاسخ پله (کامل)</h3>
+  <div class="example">
+    <h4>صورت مسئله</h4>
+    <p>پاسخ پله واحد $r(t) = u(t)$ را بیابید.</p>
+    <div class="solution">
+      <strong>حل تشریحی:</strong>
+      <p><strong>مرحله ۱:</strong> $R(s) = 1/s$</p>
+      <p><strong>مرحله ۲:</strong> $C(s) = \frac{1}{s(1+Ts)}$</p>
+      <p><strong>مرحله ۳: کسرهای جزئی</strong></p>
+      <div class="formula">$$ C(s) = \frac{1}{s} - \frac{T}{1+Ts} = \frac{1}{s} - \frac{1}{s+1/T} $$</div>
+      <p><strong>مرحله ۴: تبدیل معکوس</strong></p>
+      <div class="formula">$$ c(t) = (1 - e^{-t/T})u(t) $$</div>
+      <p><strong>مرحله ۵: رسم</strong></p>
+      <div class="ascii-plot">
+c(t)
+ 1 ┤         _______________
+   │       /
+0.63├───/─── (t=T)
+   │  /
+  0└──┴────┴────┴────┴────→ t
+     0   T   2T   3T   4T
+  </div>
+      <p><strong>مرحله ۶: زمان نشست</strong> $t_s \approx 4T$ (کران ۲٪)</p>
+    </div>
+  </div>
+
+  <h3>مثال ۱۹: پاسخ شیب</h3>
+  <div class="example">
+    <div class="solution">
+      <p><strong>مرحله ۱:</strong> $R(s) = 1/s^2$</p>
+      <p><strong>مرحله ۲:</strong> $C(s) = \frac{1}{s^2(1+Ts)}$</p>
+      <p><strong>مرحله ۳: کسرهای جزئی</strong></p>
+      <div class="formula">$$ C(s) = \frac{1}{s^2} - \frac{T}{s} + \frac{T^2}{1+Ts} $$</div>
+      <p><strong>مرحله ۴: تبدیل معکوس</strong></p>
+      <div class="formula">$$ c(t) = (t - T + Te^{-t/T})u(t) $$</div>
+      <p><strong>مرحله ۵: خطای ماندگار</strong></p>
+      <div class="formula">$$ e(t) = T(1-e^{-t/T})u(t), \quad e_{ss} = T $$</div>
+      <p><strong>مرحله ۶: $K_v$</strong></p>
+      <div class="formula">$$ K_v = \lim_{s\to 0} \frac{s}{1+Ts} = \frac{1}{T}, \quad e_{ss} = T \quad \checkmark $$</div>
+      <div class="ascii-plot">
+c(t)
+ │                   /
+ │                 /  ← پاسخ
+ │               /
+ │     _________/
+ │    /  ← ورودی
+ 0└──┴───────────→ t
+      ← T →  (خطا)
+  </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ فصل ۱۶ ============ -->
+<div class="page">
+  <h2>فصل ۱۶: سیستم مرتبه دوم</h2>
+  <div class="formula">$$ T(s) = \frac{\omega_n^2}{s^2 + 2\zeta\omega_n s + \omega_n^2} $$</div>
+  <div class="formula">$$ s_{1,2} = -\zeta\omega_n \pm j\omega_n\sqrt{1-\zeta^2} $$</div>
+  <div class="formula">$$ \omega_d = \omega_n\sqrt{1-\zeta^2} $$</div>
+
+  <h3>انواع میرایی</h3>
+  <table>
+    <tr><th>$\zeta$</th><th>نوع</th><th>رفتار</th></tr>
+    <tr><td>0</td><td>بدون میرایی</td><td>نوسان پایدار</td></tr>
+    <tr><td>0&lt;ζ&lt;1</td><td>زیر میرایی</td><td>نوسانی میرا</td></tr>
+    <tr><td>1</td><td>بحرانی</td><td>سریع بدون فراجهش</td></tr>
+    <tr><td>&gt;1</td><td>فوق میرایی</td><td>کند</td></tr>
+  </table>
+
+  <h3>پاسخ‌های زمانی</h3>
+  <p><strong>$\zeta = 1$:</strong></p>
+  <div class="formula">$$ c(t) = [1 - (1+\omega_n t)e^{-\omega_n t}]u(t) $$</div>
+  <p><strong>$0 < \zeta < 1$:</strong></p>
+  <div class="formula">$$ c(t) = 1 - \frac{e^{-\zeta\omega_n t}}{\sqrt{1-\zeta^2}}\sin(\omega_d t + \theta) $$</div>
+  <p>$\theta = \cos^{-1}\zeta$</p>
+
+  <h3>مشخصات پاسخ</h3>
+  <div class="formula">$$ M_p = e^{-\pi\zeta/\sqrt{1-\zeta^2}} $$</div>
+  <div class="formula">$$ t_p = \frac{\pi}{\omega_d}, \quad t_s \approx \frac{4}{\zeta\omega_n} $$</div>
+  <div class="formula">$$ t_r = \frac{\pi - \cos^{-1}\zeta}{\omega_d}, \quad \cos\theta = \zeta $$</div>
+  <div class="formula">$$ N \approx \frac{4}{\pi}\cdot\frac{\sqrt{1-\zeta^2}}{\zeta} $$</div>
+</div>
+
+<!-- ============ فصل ۱۷ ============ -->
+<div class="page">
+  <h2>فصل ۱۷: تأثیر مکان قطب</h2>
+
+  <h3>$\zeta = 1$ (میرایی بحرانی)</h3>
+  <div class="ascii-plot">
+صفحه s:                    پاسخ c(t):
+    jω                          │
+     ↑                          │  ╭────
+─────┼────→ σ              1├──/
+     ●                       0└──┴────→ t
+   -ωn
+  </div>
+
+  <h3>$\zeta = 0$ (بدون میرایی)</h3>
+  <div class="ascii-plot">
+    jω                          │  ╭╮   ╭╮
+     ↑                          │ /  \ /  \
+     ●                          │/    \/    \
+─────┼────→ σ              1├──────────────
+     ●                       0└──────────────→ t
+  </div>
+
+  <h3>$0 < \zeta < 1$ (زیر میرایی)</h3>
+  <div class="ascii-plot">
+     ● s₁                       │  ╭╮
+    /│                          │ /  \  ╭╮
+───/─┼──→ σ                1├──/────\─/──\──
+  /  │                          │      \_  \_
+ ● s₂                      0└───────────────→ t
+  </div>
+
+  <h3>نواحی LHP و RHP</h3>
+  <div class="ascii-plot">
+                jω
+                 ↑
+        RHP      │      LHP
+   (ناپایدار)    │  (پایدار)
+    ─────────────┼─────────────→ σ
+  </div>
+
+  <table>
+    <tr><th>مکان قطب</th><th>سرعت</th><th>میرایی</th></tr>
+    <tr><td>دور از مبدأ LHP</td><td>سریع</td><td>زیاد</td></tr>
+    <tr><td>نزدیک مبدأ LHP</td><td>کند</td><td>کم</td></tr>
+    <tr><td>روی محور jω</td><td>نوسان</td><td>بدون میرایی</td></tr>
+    <tr><td>در RHP</td><td>واگرا</td><td>ناپایدار</td></tr>
+  </table>
+</div>
+
+<!-- ============ فصل ۱۸ ============ -->
+<div class="page">
+  <h2>فصل ۱۸: صفر و قطب اضافی</h2>
+  <h3>اثر صفرها</h3>
+  <ul>
+    <li>صفر LHP: افزایش فراجهش، پاسخ تندتر</li>
+    <li>صفر RHP: Undershoot (افت اولیه معکوس)</li>
+    <li>صفر نزدیک مبدأ: اثر بیشتر</li>
+  </ul>
+
+  <h3>مثال ۲۰: صفر RHP</h3>
+  <div class="example">
+    <div class="diagram">
+R(s) ──► ⊕ ──► [ γδ/(s²+s) ] ──┬──► C(s)
+         ▲                      │
+         └────[ -α ]◄───────────┘
+    </div>
+    <div class="solution">
+      <p><strong>مرحله ۱: تابع تبدیل حلقه بسته</strong></p>
+      <div class="formula">$$ T(s) = \frac{\gamma\delta}{s^2+s-\alpha\gamma\delta} $$</div>
+      <p><strong>مرحله ۲: معادله مشخصه</strong></p>
+      <div class="formula">$$ s^2+s-\alpha\gamma\delta = 0 $$</div>
+      <p><strong>مرحله ۳: تحلیل</strong></p>
+      <p>مقایسه با فرم استاندارد: $2\zeta\omega_n = 1$، $\omega_n^2 = -\alpha\gamma\delta$</p>
+      <p>اگر $\alpha>0$ → یکی از قطب‌ها در RHP → Undershoot</p>
+      <div class="ascii-plot">
+c(t)
+ │     ╭───────
+ │    /
+0├───/─────
+ │   \
+ │    \_ Undershoot
+0└──┴────────→ t
+      </div>
+    </div>
+  </div>
+
+  <h3>حذف قطب-صفر</h3>
+  <div class="note">
+    اگر صفر و قطبی نزدیک به هم باشند، تقریباً یکدیگر را حذف می‌کنند.
+  </div>
+</div>
+
+<!-- ============ فصل ۱۹ ============ -->
+<div class="page">
+  <h2>فصل ۱۹: رسم دقیق پاسخ مرتبه دوم</h2>
+
+  <h3>مثال ۲۱: $\omega_n=5, \zeta=0.5$</h3>
+  <div class="example">
+    <h4>صورت مسئله</h4>
+    <p>سیستم با $\omega_n = 5$ rad/s و $\zeta = 0.5$. پاسخ پله را تحلیل کنید.</p>
+    <div class="solution">
+      <strong>حل تشریحی مرحله به مرحله:</strong>
+      <p><strong>مرحله ۱: فرکانس میرایی‌شده</strong></p>
+      <div class="formula">$$ \omega_d = \omega_n\sqrt{1-\zeta^2} = 5\sqrt{0.75} = 4.33 \text{ rad/s} $$</div>
+      <p><strong>مرحله ۲: زاویه قطب</strong></p>
+      <div class="formula">$$ \theta = \cos^{-1}(0.5) = 60° = \pi/3 \text{ rad} $$</div>
+      <p><strong>مرحله ۳: قطب‌ها</strong></p>
+      <div class="formula">$$ s_{1,2} = -2.5 \pm j4.33 $$</div>
+      <p><strong>رسم قطب‌ها:</strong></p>
+      <div class="ascii-plot">
+        jω
+         ↑
+     ● s₁ = -2.5 + j4.33
+       /│
+      / │ 4.33
+     /  │
+    /   │
+───●────┼────→ σ
+-2.5    │
+     ● s₂
+      </div>
+      <p><strong>مرحله ۴: فراجهش</strong></p>
+      <div class="formula">$$ M_p = e^{-\pi(0.5)/0.866} = e^{-1.814} = 0.163 $$</div>
+      <p>۱۶.۳٪ → مقدار پیک ۱.۱۶۳</p>
+      <p><strong>مرحله ۵: زمان اوج</strong></p>
+      <div class="formula">$$ t_p = \frac{\pi}{4.33} = 0.725 \text{ s} $$</div>
+      <p><strong>مرحله ۶: زمان نشست</strong></p>
+      <div class="formula">$$ t_s = \frac{4}{2.5} = 1.6 \text{ s} $$</div>
+      <p><strong>مرحله ۷: زمان صعود</strong></p>
+      <div class="formula">$$ t_r = \frac{\pi - \pi/3}{4.33} = \frac{2.094}{4.33} = 0.484 \text{ s} $$</div>
+      <p><strong>مرحله ۸: رسم پاسخ</strong></p>
+      <div class="ascii-plot">
+c(t)
+1.16┤    ╭─╮
+1.0 ├───/─\─────/╮───
+    │  /   \___/  \___
+0   └──┴───┴───┴───→ t
+    0 .48 .725 1.6
+      </div>
+      <p><strong>مرحله ۹: پاسخ کامل</strong></p>
+      <div class="formula">$$ c(t) = 1 - \frac{e^{-2.5t}}{0.866}\sin(4.33t + 60°) $$</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ فصل ۲۰ ============ -->
+<div class="page">
+  <h2>فصل ۲۰: تقریب مرتبه بالا با مرتبه دوم</h2>
+  <div class="formula">$$ |s_{extra}| \geq 5 |s_{dominant}| $$</div>
+
+  <h3>مثال ۲۲: تقریب مرتبه سوم</h3>
+  <div class="example">
+    <div class="formula">$$ T(s) = \frac{100}{(s+10)(s^2+4s+100)} $$</div>
+    <div class="solution">
+      <p><strong>مرحله ۱: قطب‌های غالب</strong></p>
+      <div class="formula">$$ s = \frac{-4 \pm \sqrt{16-400}}{2} = -2 \pm j9.8 $$</div>
+      <p>$\zeta\omega_n = 2$، $\omega_n = 10$، $\zeta = 0.2$</p>
+      <p><strong>مرحله ۲: بررسی قطب اضافی</strong></p>
+      <p>قطب $s=-10$، فاصله از مبدأ: ۱۰</p>
+      <p>معیار: $10 \geq 5\times 2 = 10$ ✓</p>
+      <p><strong>مرحله ۳: تقریب</strong></p>
+      <div class="formula">$$ T_{approx}(s) = \frac{10}{s^2+4s+100} $$</div>
+      <p><strong>مرحله ۴: مشخصات</strong></p>
+      <div class="formula">$$ M_p = e^{-\pi(0.2)/\sqrt{0.96}} = 0.527 $$</div>
+      <div class="formula">$$ t_p = \pi/9.8 = 0.32 \text{ s}, \quad t_s = 4/2 = 2 \text{ s} $$</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ فصل ۲۱ ============ -->
+<div class="page">
+  <h2>فصل ۲۱: تأخیر و تقریب پده</h2>
+  <div class="formula">$$ x(t-t_0)u(t-t_0) \xrightarrow{\mathcal{L}} e^{-st_0}X(s) $$</div>
+  <div class="formula">$$ e^{-st_0}X(s) \xrightarrow{\mathcal{L}^{-1}} x(t-t_0)u(t-t_0) $$</div>
+  <div class="formula">$$ e^{st_0}X(s) \xrightarrow{\mathcal{L}^{-1}} x(t+t_0)u(t+t_0) $$</div>
+
+  <h3>تقریب پده</h3>
+  <div class="formula">$$ e^{-Ts} \approx \frac{1-Ts/2}{1+Ts/2} \quad (\text{مرتبه ۱}) $$</div>
+  <div class="formula">$$ e^{-Ts} \approx \frac{1-Ts/2+(Ts)^2/12}{1+Ts/2+(Ts)^2/12} \quad (\text{مرتبه ۲}) $$</div>
+  <div class="formula">$$ e^{-Ts} \approx \frac{1}{1+Ts} \quad (\text{ساده}) $$</div>
+
+  <h3>مثال ۲۳: سیستم با تأخیر</h3>
+  <div class="example">
+    <div class="formula">$$ G(s) = \frac{K(1+s)}{s^2(s+1)} e^{-Ts} $$</div>
+    <div class="solution">
+      <p><strong>مرحله ۱: اعمال تقریب پده</strong></p>
+      <div class="formula">$$ e^{-Ts} \approx \frac{1-Ts/2}{1+Ts/2} $$</div>
+      <p><strong>مرحله ۲: جایگذاری</strong></p>
+      <div class="formula">$$ G(s) \approx \frac{K(1+s)}{s^2(s+1)} \cdot \frac{1-Ts/2}{1+Ts/2} $$</div>
+      <p><strong>مرحله ۳: ساده‌سازی</strong> $(1+s)$ و $(s+1)$ حذف می‌شوند:</p>
+      <div class="formula">$$ G(s) \approx \frac{K(1-Ts/2)}{s^2(1+Ts/2)} $$</div>
+    </div>
+  </div>
+
+  <h3>جدول تقریب‌ها</h3>
+  <table>
+    <tr><th>مرتبه</th><th>تقریب</th><th>دقت</th></tr>
+    <tr><td>ساده</td><td>$\frac{1}{1+Ts}$</td><td>کم</td></tr>
+    <tr><td>پده ۱</td><td>$\frac{1-Ts/2}{1+Ts/2}$</td><td>متوسط</td></tr>
+    <tr><td>پده ۲</td><td>$\frac{1-Ts/2+(Ts)^2/12}{1+Ts/2+(Ts)^2/12}$</td><td>خوب</td></tr>
+  </table>
+</div>
+
+<!-- ============ فصل ۲۲ ============ -->
+<div class="page">
+  <h2>فصل ۲۲: طراحی جامع</h2>
+
+  <h3>مثال ۲۴: طراحی کامل $K$ و $a$</h3>
+  <div class="example">
+    <h4>صورت مسئله</h4>
+    <p>سیستم زیر را در نظر بگیرید و $K, a$ را طوری بیابید که $M_p \leq 0.163$ و $t_s = 1.5$ s.</p>
+    <div class="diagram">
+R(s) ──► ⊕ ──► [ K(s+a)/(s²(s+b)) ] ──┬──► Y(s)
+         ▲                             │
+         └─────────────────────────────┘
+    </div>
+    <div class="solution">
+      <strong>حل تشریحی کامل ۱۰ مرحله‌ای:</strong>
+
+      <p><strong>مرحله ۱: محاسبه $\zeta$ از $M_p$</strong></p>
+      <div class="formula">$$ M_p = e^{-\pi\zeta/\sqrt{1-\zeta^2}} = 0.163 $$</div>
+      <p>گرفتن $\ln$:</p>
+      <div class="formula">$$ \ln(0.163) = -1.814 = \frac{-\pi\zeta}{\sqrt{1-\zeta^2}} $$</div>
+      <div class="formula">$$ \frac{\pi\zeta}{\sqrt{1-\zeta^2}} = 1.814 \Rightarrow \zeta \approx 0.5 $$</div>
+
+      <p><strong>مرحله ۲: محاسبه $\omega_n$ از $t_s$</strong></p>
+      <div class="formula">$$ t_s = \frac{4}{\zeta\omega_n} = 1.5 \Rightarrow \omega_n = \frac{4}{0.5\times 1.5} = 5.33 \text{ rad/s} $$</div>
+
+      <p><strong>مرحله ۳: معادله مشخصه مطلوب مرتبه دوم</strong></p>
+      <div class="formula">$$ s^2 + 2\zeta\omega_n s + \omega_n^2 = s^2 + 5.33 s + 28.4 = 0 $$</div>
+
+      <p><strong>مرحله ۴: قطب‌های مطلوب</strong></p>
+      <div class="formula">$$ s_{1,2} = -2.67 \pm j4.61 $$</div>
+
+      <p><strong>مرحله ۵: تابع تبدیل حلقه بسته</strong></p>
+      <div class="formula">$$ T(s) = \frac{K(s+a)}{s^2(s+b)+K(s+a)} = \frac{K(s+a)}{s^3+bs^2+Ks+Ka} $$</div>
+
+      <p><strong>مرحله ۶: معادله مشخصه مرتبه سوم</strong></p>
+      <div class="formula">$$ s^3 + bs^2 + Ks + Ka = 0 $$</div>
+
+      <p><strong>مرحله ۷: فرم فاکتوری با قطب سوم $\beta$</strong></p>
+      <div class="formula">$$ (s+\beta)(s^2 + 2\zeta\omega_n s + \omega_n^2) = 0 $$</div>
+      <p>بسط:</p>
+      <div class="formula">$$ s^3 + (2\zeta\omega_n+\beta)s^2 + (\omega_n^2+2\beta\zeta\omega_n)s + \beta\omega_n^2 = 0 $$</div>
+
+      <p><strong>مرحله ۸: تطبیق ضرایب</strong></p>
+      <ul>
+        <li>$b = 2\zeta\omega_n+\beta$</li>
+        <li>$K = \omega_n^2+2\beta\zeta\omega_n$</li>
+        <li>$Ka = \beta\omega_n^2$</li>
+      </ul>
+
+      <p><strong>مرحله ۹: انتخاب $\beta = 10\zeta\omega_n = 26.7$</strong></p>
+      <ul>
+        <li>$b = 5.33 + 26.7 = 32$</li>
+        <li>$K = 28.4 + 5.33\times 26.7 = 170.7$</li>
+        <li>$a = \frac{28.4\times 26.7}{170.7} = 4.44$</li>
+      </ul>
+
+      <p><strong>مرحله ۱۰: بررسی نهایی</strong></p>
+      <p>سیستم دارای قطب دور $s=-26.7$ و دو قطب غالب $s = -2.67 \pm j4.61$ است.</p>
+    </div>
+  </div>
+
+  <h3>مثال ۲۵: تقریب پده در طراحی</h3>
+  <div class="example">
+    <div class="formula">$$ G(s) = \frac{5(1+s)}{s^2(s+1)}e^{-s} $$</div>
+    <div class="solution">
+      <p><strong>مرحله ۱:</strong> تقریب $e^{-s} \approx \frac{2-s}{2+s}$</p>
+      <p><strong>مرحله ۲:</strong> جایگذاری</p>
+      <div class="formula">$$ G(s) \approx \frac{5(2-s)}{s^2(2+s)} $$</div>
+      <p><strong>مرحله ۳:</strong> معادله مشخصه با فیدبک واحد</p>
+      <div class="formula">$$ s^2(2+s) + 5(2-s) = 0 \Rightarrow s^3+2s^2-5s+10=0 $$</div>
+      <p><strong>مرحله ۴:</strong> معیار راث: ضرایب $[1,2,-5,10]$ — ضریب منفی → ناپایدار</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ فصل ۲۳ ============ -->
+<div class="page">
+  <h2>فصل ۲۳: نکات استاد و جمع‌بندی</h2>
+
+  <h3>۱۵ نکته کلیدی استاد</h3>
+  <ol>
+    <li>قبل از تحلیل، <strong>پایداری</strong> را بررسی کنید.</li>
+    <li><strong>معادله مشخصه</strong> $1+G(s)H(s)=0$ را بنویسید.</li>
+    <li>کاهش بلوک از <strong>حلقه داخلی</strong> شروع شود.</li>
+    <li>فرمول میسون: $\Delta$ کامل، $\Delta_k$ با حذف حلقه‌های تماس‌دار.</li>
+    <li><strong>نوع سیستم N</strong> برای خطای ماندگار.</li>
+    <li>فیدبک حساسیت به $G$ را کاهش، به $H$ را افزایش می‌دهد.</li>
+    <li>$\zeta$ و $\omega_n$ را از $M_p, t_p, t_s$ استخراج کنید.</li>
+    <li>$\zeta$ مطلوب: <strong>۰.۵ تا ۰.۷</strong>.</li>
+    <li>قطب دور از jω → پاسخ سریع‌تر.</li>
+    <li><strong>صفر RHP → Undershoot</strong>.</li>
+    <li>قطب دورتر از ۵ برابر را نادیده بگیرید.</li>
+    <li>تأخیر: از <strong>تقریب پده</strong> استفاده کنید.</li>
+    <li>بهره بالا خطا را کم می‌کند اما حاشیه پایداری را کاهش می‌دهد.</li>
+    <li>دقت سنسور مهم است (حساسیت به $H$).</li>
+    <li>تعادل بین دقت، سرعت و پایداری.</li>
+  </ol>
+
+  <h3>جدول جامع فرمول‌ها</h3>
+  <table>
+    <tr><th>مفهوم</th><th>فرمول</th></tr>
+    <tr><td>تابع تبدیل حلقه بسته</td><td>$T = \frac{G}{1+GH}$</td></tr>
+    <tr><td>معادله مشخصه</td><td>$1+GH=0$</td></tr>
+    <tr><td>فرمول میسون</td><td>$T = \frac{1}{\Delta}\sum P_k \Delta_k$</td></tr>
+    <tr><td>حساسیت</td><td>$S_\alpha^T = \frac{\partial T}{\partial\alpha}\cdot\frac{\alpha}{T}$</td></tr>
+    <tr><td>خطای پله</td><td>$e_{ss}=\frac{1}{1+K_p}$</td></tr>
+    <tr><td>خطای شیب</td><td>$e_{ss}=\frac{1}{K_v}$</td></tr>
+    <tr><td>خطای سهمی</td><td>$e_{ss}=\frac{1}{K_a}$</td></tr>
+    <tr><td>فراجهش</td><td>$M_p = e^{-\pi\zeta/\sqrt{1-\zeta^2}}$</td></tr>
+    <tr><td>زمان اوج</td><td>$t_p = \frac{\pi}{\omega_d}$</td></tr>
+    <tr><td>زمان نشست</td><td>$t_s \approx \frac{4}{\zeta\omega_n}$</td></tr>
+    <tr><td>زمان صعود</td><td>$t_r = \frac{\pi-\cos^{-1}\zeta}{\omega_d}$</td></tr>
+    <tr><td>رابطه $\zeta$ و زاویه</td><td>$\cos\theta = \zeta$</td></tr>
+    <tr><td>تأخیر لاپلاس</td><td>$x(t-t_0) \xrightarrow{\mathcal{L}} e^{-st_0}X(s)$</td></tr>
+    <tr><td>تقریب پده ۱</td><td>$e^{-Ts} \approx \frac{1-Ts/2}{1+Ts/2}$</td></tr>
+    <tr><td>پاسخ پله مرتبه ۱</td><td>$c(t) = (1-e^{-t/T})u(t)$</td></tr>
+    <tr><td>پاسخ شیب مرتبه ۱</td><td>$c(t) = (t-T+Te^{-t/T})u(t)$</td></tr>
+    <tr><td>پاسخ $\zeta=1$</td><td>$[1-(1+\omega_n t)e^{-\omega_n t}]u(t)$</td></tr>
+    <tr><td>پاسخ $0<\zeta<1$</td><td>$1-\frac{e^{-\zeta\omega_n t}}{\sqrt{1-\zeta^2}}\sin(\omega_d t+\theta)$</td></tr>
+  </table>
+
+  <h3>جدول جامع خطا و نوع سیستم</h3>
+  <table>
+    <tr><th>نوع</th><th>پله</th><th>شیب</th><th>سهمی</th></tr>
+    <tr><td>N=0</td><td>محدود</td><td>∞</td><td>∞</td></tr>
+    <tr><td>N=1</td><td>0</td><td>محدود</td><td>∞</td></tr>
+    <tr><td>N=2</td><td>0</td><td>0</td><td>محدود</td></tr>
+    <tr><td>N≥3</td><td>0</td><td>0</td><td>0</td></tr>
+  </table>
+
+  <h3>روند حل مسائل控制系统</h3>
+  <ol>
+    <li>مدل‌سازی سیستم</li>
+    <li>کاهش بلوک (یا میسون)</li>
+    <li>تابع تبدیل حلقه بسته $T(s) = \frac{G}{1+GH}$</li>
+    <li>بررسی پایداری</li>
+    <li>تحلیل خطای ماندگار</li>
+    <li>تحلیل پاسخ گذرا ($M_p$, $t_p$, $t_s$)</li>
+    <li>تحلیل حساسیت</li>
+    <li>طراحی جبران‌ساز در صورت نیاز</li>
+  </ol>
+
+  <h3>جمع‌بندی نهایی</h3>
+  <p>این جزوه شامل تمام مباحث کلیدی درس کنترل خطی: مفاهیم پایه، لاپلاس، مدل‌سازی مکانیکی، تابع تبدیل، صفر و قطب، کاهش بلوک، میسون، خطای ماندگار، حساسیت، مرتبه اول و دوم، مکان قطب، تقریب مرتبه بالا، تأخیر و پده، و مثال‌های طراحی جامع است. مجموعاً <strong>۲۵ مثال کامل تشریحی</strong> با نمودارها و محاسبات گام‌به‌گام.</p>
+
+  <div class="note" style="text-align:center; margin-top:35px; font-size:1.1rem; line-height:2.5;">
+    <strong>با تدوین و نگارش: محمدرسول یزدیان</strong><br>
+    استاد درس: کاظمی<br>
+    منابع: دورف — اوگاتا — دکتر مزینانی<br>
+    وبلاگ: ckazemy.mihanblog.com
+  </div>
+</div>
+
 </body>
-      </html>
+    </html>
